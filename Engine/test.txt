@@ -1,0 +1,15 @@
+"NULL"
+{
+(PhysObject)"ManMarker.bmp"[50,50]
+{
+(PhysObject)"Man.bmp"[50,50]
+}
+(PhysObject)"Man.bmp"[100,100]
+}
+"NULL"
+{
+"NULL"
+{
+(PhysObject)"Man.bmp"[60,0]
+}
+}
