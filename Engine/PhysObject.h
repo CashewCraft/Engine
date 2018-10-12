@@ -7,13 +7,9 @@
 #include "Hierachy.h"
 #include "Move.h"
 #include "Vector2.h"
-#include "Time.h"
-#include "MoveCap.h"
 
 class PhysObject : public Object
 { 
-	Move* base;
-	Move* index;
 	Vector2 Velocity = Vector2();
 
 	public:
@@ -22,7 +18,7 @@ class PhysObject : public Object
 
 	void Nudge(bool dir = true);
 
-	void AddMove(Move *ToAdd);
+	void AddMove(Vector2 ToAdd);
 
 	virtual void Update();
 

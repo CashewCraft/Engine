@@ -2,22 +2,21 @@
 #define TIME_H
 
 #include <iostream>
+#include <SDL.h>
+#include <chrono>
 
 class Time
 {
 	static unsigned int Frame;
-	static unsigned int FrameLimit;
+	static std::chrono::time_point<std::chrono::high_resolution_clock> t;
+	static float dt;
 
 	public:
 
-	static bool UpdateFlag;
-	static bool UpdateDir;
-	static bool LastDir;
-
-	static bool Ticking;
-
-	static void Incr(bool dir);
+	static void Incr();
 	static unsigned int GetFrame();
+
+	static float deltaTime();
 };
 
 #endif

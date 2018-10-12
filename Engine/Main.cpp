@@ -9,7 +9,7 @@
 #include "Hierachy.h"
 #include "LoaderTool.h"
 #include "CharController.h"
-#include "TimeControl.h"
+#include "Time.h"
 
 
 //Screen dimension constants
@@ -72,8 +72,6 @@ int main(int argc, char* args[])
 	SDL_Event e;
 
 	CharController a = CharController(Workspace.GetChildren()[0]->GetChildren()[0]->GetChildren()[0]);
-	
-	TimeControl b = TimeControl();
 
 	//WHAT YOU WERE LAST DOING:
 
@@ -82,7 +80,6 @@ int main(int argc, char* args[])
 
 	while (running)
 	{
-		Time::UpdateFlag = false;
 		SDL_FillRect(MainSurface, NULL, SDL_MapRGB(MainSurface->format, 0xFF, 0xFF, 0xFF));
 
 		while (SDL_PollEvent(&e) != 0)
@@ -95,10 +92,10 @@ int main(int argc, char* args[])
 			KeyHooks::Execute(e); //Run any callback functions attached to this key
 		}
 
-		if (Time::Ticking) { Time::Incr(true); std::cout << "tick\n"; }
-
 		Workspace.OnTick();
 		SDL_UpdateWindowSurface(Window);
+
+		Time::Incr();
 	}
 
 	SDL_DestroyWindow(Window);

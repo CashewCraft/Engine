@@ -6,7 +6,7 @@
 #include "KeyHooks.h"
 #include "Hook.h"
 #include "PhysObject.h"
-#include "Move.h"
+#include "Time.h"
 #include <iostream>
 #include <functional>
 
@@ -20,6 +20,6 @@ class CharController : public Script
 	CharController(Object* a) : Script(a) { GameObject = (PhysObject *)Linked; InitHooks(); };
 
 	void AddMoveLeft();
-	void ReMoveLeft();
+	void AddMoveRight();
 };
 

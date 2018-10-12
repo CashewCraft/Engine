@@ -1,30 +1,19 @@
 #include "time.h"
 
 unsigned int Time::Frame = 0;
-unsigned int Time::FrameLimit = 128;
+std::chrono::high_resolution_clock::time_point t = std::chrono::high_resolution_clock::now();
 
-bool Time::Ticking = false;
-
-bool Time::UpdateFlag = false;
-bool Time::UpdateDir = true;
-bool Time::LastDir = true;
-
-void Time::Incr(bool dir)
+void Time::Incr()
 {
-	LastDir = UpdateDir;
-	UpdateDir = dir;
-
-	if ((dir && Frame == FrameLimit) || (!dir && Frame == 0))
-	{
-		return;
-	}
-
-	UpdateFlag = true;
-
-	Frame += (dir) ? 1 : -1;
+	std::chrono::high_resolution_clock::time_point t2;
+	dt = std::chrono::duration_cast<std::chrono::duration<float>>(t2 - t).count();
+	t = t2;
+	Frame++;
 }
 
 unsigned int Time::GetFrame()
 {
 	return Frame;
 }
+
+float Time::deltaTime() { return dt; }

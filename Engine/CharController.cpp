@@ -2,18 +2,18 @@
 
 void CharController::InitHooks()
 {
-	KeyHooks::Register(Hook(true, SDLK_RIGHT), std::bind(&CharController::AddMoveLeft, this));
-	KeyHooks::Register(Hook(false, SDLK_RIGHT), std::bind(&CharController::ReMoveLeft, this));
+	KeyHooks::Register(Hook(true, SDLK_RIGHT), std::bind(&CharController::AddMoveRight, this));
+	KeyHooks::Register(Hook(false, SDLK_RIGHT), std::bind(&CharController::AddMoveLeft, this));
+	KeyHooks::Register(Hook(true, SDLK_LEFT), std::bind(&CharController::AddMoveLeft, this));
+	KeyHooks::Register(Hook(false, SDLK_LEFT), std::bind(&CharController::AddMoveRight, this));
 	std::cout << "Hooking complete!";
 }
 
+void CharController::AddMoveRight()
+{
+	GameObject->AddMove(Vector2(0.1f * Time::deltaTime(), 0));
+}
 void CharController::AddMoveLeft()
 {
-	GameObject->AddMove(new Move(Vector2(2, 0)));
-	Time::Ticking = true;
-}
-void CharController::ReMoveLeft()
-{
-	GameObject->AddMove(new Move(Vector2(-2, 0)));
-	Time::Ticking = false;
+	GameObject->AddMove(Vector2(-0.1f * Time::deltaTime(), 0));
 }
