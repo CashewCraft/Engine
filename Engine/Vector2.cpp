@@ -12,6 +12,21 @@ Vector2::Vector2(double X, double Y)
 	y = Y;
 }
 
+Vector2 Vector2::Truncate(float To)
+{
+	return Normalize() * To;
+}
+
+Vector2 Vector2::Normalize()
+{
+	return (*this / Magnitude());
+}
+
+float Vector2::Magnitude()
+{
+	return std::sqrt((x*x) + (y*y));
+}
+
 bool Vector2::operator==(const Vector2 &rhs)
 {
 	return (x == rhs.x && y == rhs.y);

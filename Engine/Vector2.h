@@ -14,6 +14,12 @@ class Vector2
 	Vector2();
 	Vector2(double X, double Y);
 
+	Vector2 Truncate(float To = 1);
+
+	Vector2 Normalize();
+
+	float Magnitude();
+
 	operator std::string() const
 	{
 		return std::to_string(x)+","+std::to_string(y);

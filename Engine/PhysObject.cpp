@@ -1,22 +1,13 @@
 #include "PhysObject.h"
 
-PhysObject::PhysObject(SDL_Surface *sprite) : Object(sprite) {}
-
-void PhysObject::Nudge(bool dir)
+PhysObject::PhysObject(SDL_Surface *sprite) : Object(sprite) 
 {
-	short icr = ((dir) ? 1 : -1);
-
-	Shift(Velocity*icr);
-}
-
-void PhysObject::AddMove(Vector2 Move)
-{
-	Velocity += Move;
+	body = Vehicle(&Transform.Position, &Transform.Rotation);
 }
 
 void PhysObject::Update()
 {
-	Nudge(true);
+	body.Simulate();
 }
 
 Object* PhysObject::Clone(SDL_Surface *sprite, transform pos)

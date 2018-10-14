@@ -6,19 +6,16 @@
 #include <iostream>
 #include "Hierachy.h"
 #include "Move.h"
+#include "Vehicle.h"
 #include "Vector2.h"
 
 class PhysObject : public Object
 { 
-	Vector2 Velocity = Vector2();
-
 	public:
 
+	Vehicle body;
+
 	PhysObject(SDL_Surface *sprite);
-
-	void Nudge(bool dir = true);
-
-	void AddMove(Vector2 ToAdd);
 
 	virtual void Update();
 
