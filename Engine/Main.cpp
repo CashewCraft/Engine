@@ -72,6 +72,7 @@ int main(int argc, char* args[])
 	SDL_Event e;
 
 	CharController a = CharController(Workspace.GetChildren()[0]->GetChildren()[0]->GetChildren()[0]);
+	Workspace.GetChildren()[0]->GetChildren()[0]->GetChildren()[0]->Name = "Player";
 
 	//WHAT YOU WERE LAST DOING:
 

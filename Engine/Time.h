@@ -4,19 +4,21 @@
 #include <iostream>
 #include <SDL.h>
 #include <chrono>
+typedef std::chrono::high_resolution_clock Clock;
+typedef std::chrono::steady_clock::time_point TimePoint;
 
 class Time
 {
 	static unsigned int Frame;
-	static std::chrono::time_point<std::chrono::high_resolution_clock> t;
-	static float dt;
+	static TimePoint t;
+	static double dt;
 
 	public:
 
 	static void Incr();
 	static unsigned int GetFrame();
 
-	static float deltaTime();
+	static double deltaTime();
 };
 
 #endif

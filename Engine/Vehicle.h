@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Vector2.h"
+#include "Time.h"
 
 class Vehicle
 {

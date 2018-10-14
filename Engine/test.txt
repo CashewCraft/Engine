@@ -1,10 +1,10 @@
 "NULL"
 {
-(PhysObject)"ManMarker.bmp"[50,50]
+(PhysObject)"ManMarker.bmp"[50,-50]
 {
-(PhysObject)"Man.bmp"[50,50]
+(PhysObject)"Man.bmp"[50,-50]
 }
-(PhysObject)"Man.bmp"[100,100]
+(PhysObject)"Man.bmp"[100,-100]
 }
 "NULL"
 {

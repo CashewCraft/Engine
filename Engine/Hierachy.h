@@ -16,13 +16,13 @@ class Object
 
 	SDL_Surface *Sprite;
 
-	std::string Name;
-
 	public:
 
 	//factory methods
 	static void AddPrototype(std::string key, Object *ToClone);
 	static Object* GetNew(std::string key, SDL_Surface *sprite, transform pos);
+
+	std::string Name;
 
 	static SDL_Surface *Main;
 	transform Transform;

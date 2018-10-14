@@ -21,5 +21,7 @@ class CharController : public Script
 
 	void AddMoveLeft();
 	void AddMoveRight();
+	void AddMoveUp();
+	void AddMoveDown();
 };
 

@@ -2,7 +2,7 @@
 
 PhysObject::PhysObject(SDL_Surface *sprite) : Object(sprite) 
 {
-	body = Vehicle(&Transform.Position, &Transform.Rotation);
+	body = Vehicle(&Transform.Position, &Transform.Rotation, 100);
 }
 
 void PhysObject::Update()
