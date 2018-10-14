@@ -1,4 +1,0 @@
-﻿  Rect.cpp
-c:\users\joshua\source\repos\engine\engine\rect.cpp(7): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-c:\users\joshua\source\repos\engine\engine\rect.cpp(8): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-  Engine.vcxproj -> C:\Users\Joshua\Source\Repos\Engine\Debug\Engine.exe

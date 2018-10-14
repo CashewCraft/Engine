@@ -1,5 +1,0 @@
-﻿  LoaderTool.cpp
-c:\users\joshua manders-jones\source\repos\engine\engine\loadertool.cpp(18): warning C4101: 'LatestChild': unreferenced local variable
-  Main.cpp
-  Generating Code...
-  Engine.vcxproj -> C:\Users\Joshua Manders-Jones\source\repos\Engine\x64\Debug\Engine.exe
