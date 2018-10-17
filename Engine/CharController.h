@@ -19,6 +19,8 @@ class CharController : public Script
 
 	CharController(Object* a) : Script(a) { GameObject = (PhysObject *)Linked; InitHooks(); };
 
+	void Update();
+
 	void AddMoveLeft();
 	void AddMoveRight();
 	void AddMoveUp();

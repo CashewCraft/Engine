@@ -13,6 +13,14 @@ void CharController::InitHooks()
 	std::cout << "Hooking complete!";
 }
 
+void CharController::Update() 
+{
+	int x, y;
+	SDL_GetMouseState(&x, &y);
+
+	GameObject->Update
+}
+
 void CharController::AddMoveRight()
 {
 	GameObject->body.AddForce(Vector2(1, 0));
