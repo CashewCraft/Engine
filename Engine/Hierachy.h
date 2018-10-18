@@ -7,6 +7,12 @@
 #include <string>
 #include "Transform.h"
 #include "Rect.h"
+//#include "Script.h"
+
+class Script; 
+{
+	void Update();
+}
 
 class Object
 {
@@ -14,20 +20,22 @@ class Object
 
 	std::vector<Object*> Children;
 
-	SDL_Surface *Sprite;
+	SDL_Texture *Sprite;
 
-	std::string Name;
+	std::vector<Script*> AttachedScripts;
 
 	public:
 
 	//factory methods
 	static void AddPrototype(std::string key, Object *ToClone);
-	static Object* GetNew(std::string key, SDL_Surface *sprite, transform pos);
+	static Object* GetNew(std::string key, SDL_Texture *sprite, transform pos);
 
-	static SDL_Surface *Main;
+	std::string Name;
+
+	static SDL_Renderer *Main;
 	transform Transform;
 
-	Object(SDL_Surface *sprite);
+	Object(SDL_Texture *sprite);
 	~Object(); //Make sure children are deleted since we only use references
 
 	std::vector<Object*> GetChildren();
@@ -50,7 +58,7 @@ class Object
 
 	void Shift(Vector2 Change, int Mult = 1);
 
-	virtual void Draw(SDL_Surface *To);
+	virtual void Draw();
 
 	protected: 
 
@@ -59,7 +67,7 @@ class Object
 	void ForgetChild(Object *p);
 
 	//Factory Method
-	virtual Object* Clone(SDL_Surface *sprite, transform pos);
+	virtual Object* Clone(SDL_Texture *sprite, transform pos);
 };
 
 #endif

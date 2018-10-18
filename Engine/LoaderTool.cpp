@@ -9,7 +9,7 @@ void LoaderTool::init()
 	Object::AddPrototype("PhysObject", new PhysObject(NULL));
 }
 
-int LoaderTool::LoadScene(Object *ToParent, const char *filename)
+int LoaderTool::LoadScene(Object *ToParent, const char *filename, SDL_Renderer *r)
 {
 	std::ifstream From;
 	From.open(filename);
@@ -25,8 +25,6 @@ int LoaderTool::LoadScene(Object *ToParent, const char *filename)
 	Parent.push(ToParent);
 
 	std::string Line;
-
-	Object *LatestChild;
 
 	while (std::getline(From, Line))
 	{
@@ -92,7 +90,7 @@ int LoaderTool::LoadScene(Object *ToParent, const char *filename)
 					transform temp;
 					temp.Position = Vector2(pos[0], pos[1]);
 
-					CreatedScope = Object::GetNew(Type, SDL_LoadBMP(Name.c_str()), temp);
+					CreatedScope = Object::GetNew(Type, SDL_CreateTextureFromSurface(r, SDL_LoadBMP(Name.c_str())), temp);
 					Parent.top()->AddChild(CreatedScope);
 					Type = "";
 					Name = "";

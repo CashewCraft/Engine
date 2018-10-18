@@ -14,7 +14,7 @@ class LoaderTool
 {
 	public:
 	static void init();
-	static int LoadScene(Object *ToParent, const char *filename);
+	static int LoadScene(Object *ToParent, const char *filename, SDL_Renderer *r);
 };
 
 #endif

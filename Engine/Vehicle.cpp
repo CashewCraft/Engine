@@ -16,9 +16,10 @@ void Vehicle::AddForce(Vector2 f)
 	Vector2 Steer = f.Truncate(MaxForce);
 	Vector2 Acc = (Steer / Mass);
 	Velocity = (Velocity + Acc).Truncate(MaxSpeed);
+	std::cout << *Position << "\n";
 }
 
 void Vehicle::Simulate()
 {
-	*Position += Velocity;
+	*Position += Velocity * Time::deltaTime();
 }

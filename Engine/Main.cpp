@@ -10,7 +10,7 @@
 #include "LoaderTool.h"
 #include "CharController.h"
 #include "Time.h"
-
+#include "Mouse.h"
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 640;
@@ -24,6 +24,8 @@ int main(int argc, char* args[])
 
 	//The surface that will be pasted onto the window
 	SDL_Surface* MainSurface = NULL;
+
+	SDL_Renderer* Renderer = NULL;
 
 	//Initialize SDL
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -43,8 +45,11 @@ int main(int argc, char* args[])
 			//Get window surface
 			MainSurface = SDL_GetWindowSurface(Window);
 
+			//Create a renderer
+			Renderer = SDL_CreateRenderer(Window, -1, SDL_RENDERER_ACCELERATED);
+
 			//Tell all the objects where to paste to
-			Object::Main = MainSurface;
+			Object::Main = Renderer;
 
 			//Fill the surface white
 			SDL_FillRect(MainSurface, NULL, SDL_MapRGB(MainSurface->format, 0xFF, 0xFF, 0xFF));
@@ -57,12 +62,14 @@ int main(int argc, char* args[])
 		}
 	}
 
+	Mouse::SetPos();
+
 	LoaderTool::init(); //Setup dictionaries for object creation
 
 	printf("Successfully initalised, begining load process.\n");
 
 	Object Workspace = Object(NULL);
-	if (LoaderTool::LoadScene(&Workspace, "test.txt") < 0)
+	if (LoaderTool::LoadScene(&Workspace, "test.txt", Renderer) < 0)
 	{
 		std::cin.get();
 		return -1;
@@ -72,16 +79,22 @@ int main(int argc, char* args[])
 	SDL_Event e;
 
 	CharController a = CharController(Workspace.GetChildren()[0]->GetChildren()[0]->GetChildren()[0]);
+	Workspace.GetChildren()[0]->GetChildren()[0]->GetChildren()[0]->Name = "Player";
 
 	//WHAT YOU WERE LAST DOING:
 
 	//Need to fix issue where moves aren't being properly reversed when going back in time
 	//they seem to have some wierd issues related to switching between them?
 
+	SDL_SetRenderDrawColor(Renderer, 255, 255, 255, 255);
+
 	while (running)
 	{
-		SDL_FillRect(MainSurface, NULL, SDL_MapRGB(MainSurface->format, 0xFF, 0xFF, 0xFF));
+		//SDL_FillRect(MainSurface, NULL, SDL_MapRGB(MainSurface->format, 0xFF, 0xFF, 0xFF));
 
+		SDL_RenderClear(Renderer);
+
+		Mouse::SetPos(); //Update the mouse position
 		while (SDL_PollEvent(&e) != 0)
 		{
 			if (e.type == SDL_QUIT)
@@ -93,7 +106,9 @@ int main(int argc, char* args[])
 		}
 
 		Workspace.OnTick();
-		SDL_UpdateWindowSurface(Window);
+
+		SDL_RenderPresent(Renderer);
+		//SDL_UpdateWindowSurface(Window);
 
 		Time::Incr();
 	}

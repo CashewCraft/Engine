@@ -14,6 +14,7 @@ class Script
 
 	public:
 
+	virtual void Update() = 0;
 };
 
 #endif

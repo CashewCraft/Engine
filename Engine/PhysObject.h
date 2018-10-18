@@ -15,13 +15,13 @@ class PhysObject : public Object
 
 	Vehicle body;
 
-	PhysObject(SDL_Surface *sprite);
+	PhysObject(SDL_Texture *sprite);
 
 	virtual void Update();
 
 	protected:
 
-	virtual Object* Clone(SDL_Surface *sprite, transform pos);
+	virtual Object* Clone(SDL_Texture *sprite, transform pos);
 };
 
 #endif

@@ -1,13 +1,15 @@
 #include "time.h"
 
 unsigned int Time::Frame = 0;
-std::chrono::high_resolution_clock::time_point t = std::chrono::high_resolution_clock::now();
+TimePoint Time::t = Clock::now();
+double Time::dt = 0;
 
 void Time::Incr()
 {
-	std::chrono::high_resolution_clock::time_point t2;
-	dt = std::chrono::duration_cast<std::chrono::duration<float>>(t2 - t).count();
-	t = t2;
+	//std::cout << std::chrono::duration_cast<std::chrono::microseconds>(Clock::now() - t).count() * 0.000001 << "\n";
+	dt = std::chrono::duration_cast<std::chrono::microseconds>(Clock::now() - t).count() * 0.01;
+	t = Clock::now();
+
 	Frame++;
 }
 
@@ -16,4 +18,4 @@ unsigned int Time::GetFrame()
 	return Frame;
 }
 
-float Time::deltaTime() { return dt; }
+double Time::deltaTime() { return dt; }

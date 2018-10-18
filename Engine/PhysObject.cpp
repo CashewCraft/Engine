@@ -1,8 +1,8 @@
 #include "PhysObject.h"
 
-PhysObject::PhysObject(SDL_Surface *sprite) : Object(sprite) 
+PhysObject::PhysObject(SDL_Texture *sprite) : Object(sprite) 
 {
-	body = Vehicle(&Transform.Position, &Transform.Rotation);
+	body = Vehicle(&Transform.Position, &Transform.Rotation, 100);
 }
 
 void PhysObject::Update()
@@ -10,7 +10,7 @@ void PhysObject::Update()
 	body.Simulate();
 }
 
-Object* PhysObject::Clone(SDL_Surface *sprite, transform pos)
+Object* PhysObject::Clone(SDL_Texture *sprite, transform pos)
 {
 	PhysObject *temp = new PhysObject(sprite);
 	temp->Transform = pos;

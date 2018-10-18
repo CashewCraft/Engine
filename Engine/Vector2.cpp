@@ -14,7 +14,14 @@ Vector2::Vector2(double X, double Y)
 
 Vector2 Vector2::Truncate(float To)
 {
-	return Normalize() * To;
+	if (Magnitude() > To)
+	{
+		return Normalize() * To;
+	}
+	else
+	{
+		return *this;
+	}
 }
 
 Vector2 Vector2::Normalize()
@@ -60,25 +67,25 @@ Vector2& Vector2::operator/=(const Vector2 &rhs)
 	this->y = this->y / rhs.y;
 	return *this;
 }
-Vector2& Vector2::operator+=(const int &rhs)
+Vector2& Vector2::operator+=(const double &rhs)
 {
 	this->x = this->x + rhs;
 	this->y = this->y + rhs;
 	return *this;
 }
-Vector2& Vector2::operator-=(const int &rhs)
+Vector2& Vector2::operator-=(const double &rhs)
 {
 	this->x = this->x - rhs;
 	this->y = this->y - rhs;
 	return *this;
 }
-Vector2& Vector2::operator*=(const int &rhs)
+Vector2& Vector2::operator*=(const double &rhs)
 {
 	this->x = this->x  * rhs;
 	this->y = this->y  * rhs;
 	return *this;
 }
-Vector2& Vector2::operator/=(const int &rhs)
+Vector2& Vector2::operator/=(const double &rhs)
 {
 	this->x = this->x / rhs;
 	this->y = this->y / rhs;
@@ -113,28 +120,28 @@ Vector2 Vector2::operator/(const Vector2 &rhs)
 	n.y = this->y / rhs.y;
 	return n;
 }
-Vector2 Vector2::operator+(const int &rhs)
+Vector2 Vector2::operator+(const double &rhs)
 {
 	Vector2 n;
 	n.x = this->x + rhs;
 	n.y = this->y + rhs;
 	return n;
 }
-Vector2 Vector2::operator-(const int &rhs)
+Vector2 Vector2::operator-(const double &rhs)
 {
 	Vector2 n;
 	n.x = this->x - rhs;
 	n.y = this->y - rhs;
 	return n;
 }
-Vector2 Vector2::operator*(const int &rhs)
+Vector2 Vector2::operator*(const double &rhs)
 {
 	Vector2 n;
 	n.x = this->x * rhs;
 	n.y = this->y * rhs;
 	return n;
 }
-Vector2 Vector2::operator/(const int &rhs)
+Vector2 Vector2::operator/(const double &rhs)
 {
 	Vector2 n;
 	n.x = this->x / rhs;
