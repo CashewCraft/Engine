@@ -2,13 +2,13 @@
 
 std::map<std::string, Object*> Object::PrototypeDict;
 
-SDL_Surface* Object::Main = nullptr;
+SDL_Renderer* Object::Main = nullptr;
 
 void Object::AddPrototype(std::string key, Object *ToClone)
 {
 	PrototypeDict[key] = ToClone;
 }
-Object* Object::GetNew(std::string type, SDL_Surface *sprite, transform pos)
+Object* Object::GetNew(std::string type, SDL_Texture *sprite, transform pos)
 {
 	if (PrototypeDict.find(type) == PrototypeDict.end())
 	{
@@ -20,7 +20,7 @@ Object* Object::GetNew(std::string type, SDL_Surface *sprite, transform pos)
 	}
 }
 
-Object::Object(SDL_Surface *sprite)
+Object::Object(SDL_Texture *sprite)
 {
 	Sprite = sprite;
 }
@@ -78,13 +78,23 @@ void Object::DelSelf()
 
 Rect Object::GetRect()
 {
-	return Rect(Transform.Position, 1, 1);//Sprite->w, Sprite->h);
+	int w, h;
+	SDL_QueryTexture(Sprite, NULL, NULL, &w, &h);
+	printf("%s: (%i,%i)\n", Name.c_str(), w, h);
+	return Rect(Transform.Position, w, h);//Sprite->w, Sprite->h);
 }
 
 void Object::OnTick()
 {
+
+	for (Script *i : AttachedScripts)
+	{
+		i->Update();
+	}
+
 	Update();
-	Draw(Main);
+	Draw();
+
 	for (Object *i : Children)
 	{
 		i->OnTick();
@@ -102,10 +112,11 @@ void Object::Shift(Vector2 c, int m)
 	}
 }
 
-void Object::Draw(SDL_Surface *To)
+void Object::Draw()
 {
 	SDL_Rect PosRect = GetRect().SDLf;
-	SDL_BlitSurface(Sprite, NULL, To, &PosRect);
+	SDL_RenderCopyEx(Object::Main, Sprite, NULL, &PosRect, Transform.GetRotAngle(), NULL, SDL_RendererFlip::SDL_FLIP_NONE);
+	//SDL_BlitSurface(Sprite, NULL, To, &PosRect);
 }
 
 void Object::ForgetChild(Object *p)
@@ -124,4 +135,4 @@ void Object::ForgetChild(Object *p)
 }
 
 //Factory method, children should ALL overwrite this if they want to be created properly at stage load
-Object* Object::Clone(SDL_Surface *sprite, transform pos) { return new Object(NULL); }
+Object* Object::Clone(SDL_Texture *sprite, transform pos) { return new Object(NULL); }

@@ -15,10 +15,7 @@ void CharController::InitHooks()
 
 void CharController::Update() 
 {
-	int x, y;
-	SDL_GetMouseState(&x, &y);
-
-	GameObject->Update
+	GameObject->Transform.Rotation = Mouse::Pos;
 }
 
 void CharController::AddMoveRight()

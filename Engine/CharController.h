@@ -7,6 +7,7 @@
 #include "Hook.h"
 #include "PhysObject.h"
 #include "Time.h"
+#include "Mouse.h"
 #include <iostream>
 #include <functional>
 

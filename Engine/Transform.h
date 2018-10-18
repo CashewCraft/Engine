@@ -8,6 +8,8 @@ class transform
 	public:
 	Vector2 Position;
 	Vector2 Rotation;
+
+	double GetRotAngle();
 };
 
 #endif
