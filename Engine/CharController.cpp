@@ -11,9 +11,9 @@ void CharController::InitHooks()
 
 void CharController::AddMoveRight()
 {
-	GameObject->AddMove(Vector2(0.1f * Time::deltaTime(), 0));
+	GameObject->body.AddForce(Vector2(0.1f * Time::deltaTime(), 0));
 }
 void CharController::AddMoveLeft()
 {
-	GameObject->AddMove(Vector2(-0.1f * Time::deltaTime(), 0));
+	GameObject->body.AddForce(Vector2(-0.1f * Time::deltaTime(), 0));
 }
