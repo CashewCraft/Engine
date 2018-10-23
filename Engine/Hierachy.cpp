@@ -1,5 +1,7 @@
 #include "Hierachy.h"
 
+#include "Script.h"
+
 std::map<std::string, Object*> Object::PrototypeDict;
 
 SDL_Renderer* Object::Main = nullptr;
@@ -28,6 +30,10 @@ Object::Object(SDL_Texture *sprite)
 Object::~Object()
 {
 	for (Object* i : Children)
+	{
+		delete i;
+	}
+	for (Script* i : AttachedScripts)
 	{
 		delete i;
 	}
@@ -80,7 +86,6 @@ Rect Object::GetRect()
 {
 	int w, h;
 	SDL_QueryTexture(Sprite, NULL, NULL, &w, &h);
-	printf("%s: (%i,%i)\n", Name.c_str(), w, h);
 	return Rect(Transform.Position, w, h);//Sprite->w, Sprite->h);
 }
 
@@ -115,6 +120,8 @@ void Object::Shift(Vector2 c, int m)
 void Object::Draw()
 {
 	SDL_Rect PosRect = GetRect().SDLf;
+	//std::cout << "Angle between " << Transform.Position << " and " << Transform.Rotation << " is " << Transform.GetRotAngle() << "\n";
+	SDL_RenderDrawLine(Object::Main, Transform.Position.x, -Transform.Position.y, Transform.Rotation.x, -Transform.Rotation.y);
 	SDL_RenderCopyEx(Object::Main, Sprite, NULL, &PosRect, Transform.GetRotAngle(), NULL, SDL_RendererFlip::SDL_FLIP_NONE);
 	//SDL_BlitSurface(Sprite, NULL, To, &PosRect);
 }

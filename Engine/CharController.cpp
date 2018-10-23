@@ -20,17 +20,17 @@ void CharController::Update()
 
 void CharController::AddMoveRight()
 {
-	GameObject->body.AddForce(Vector2(0.1f * Time::deltaTime(), 0));
+	GameObject->body.AddForce(Vector2(1, 0));
 }
 void CharController::AddMoveLeft()
 {
-	GameObject->body.AddForce(Vector2(-0.1f * Time::deltaTime(), 0));
+	GameObject->body.AddForce(Vector2(-1, 0));
 }
 void CharController::AddMoveUp()
 {
-	GameObject->body.AddForce(Vector2(0, 0.1f * Time::deltaTime()));
+	GameObject->body.AddForce(Vector2(0, 1));
 }
 void CharController::AddMoveDown()
 {
-	GameObject->body.AddForce(Vector2(0, -0.1f * Time::deltaTime()));
+	GameObject->body.AddForce(Vector2(0, -1));
 }

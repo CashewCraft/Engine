@@ -80,7 +80,6 @@ int main(int argc, char* args[])
 
 	CharController a = CharController(Workspace.GetChildren()[0]->GetChildren()[0]->GetChildren()[0]);
 	Workspace.GetChildren()[0]->GetChildren()[0]->GetChildren()[0]->Name = "Player";
-
 	//WHAT YOU WERE LAST DOING:
 
 	//Need to fix issue where moves aren't being properly reversed when going back in time
@@ -88,11 +87,16 @@ int main(int argc, char* args[])
 
 	SDL_SetRenderDrawColor(Renderer, 255, 255, 255, 255);
 
+	printf("Result is %f", (std::atan2(1, 1)) / transform::Pi);
+
 	while (running)
 	{
+		SDL_SetRenderDrawColor(Renderer, 255, 255, 255, 255);
 		//SDL_FillRect(MainSurface, NULL, SDL_MapRGB(MainSurface->format, 0xFF, 0xFF, 0xFF));
 
 		SDL_RenderClear(Renderer);
+
+		SDL_SetRenderDrawColor(Renderer, 255, 0, 0, 255);
 
 		Mouse::SetPos(); //Update the mouse position
 		while (SDL_PollEvent(&e) != 0)

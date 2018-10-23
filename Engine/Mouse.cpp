@@ -4,5 +4,7 @@ Vector2 Mouse::Pos = Vector2();
 
 void Mouse::SetPos() 
 {
-	SDL_GetMouseState((int*)(&Pos.x), (int*)(&Pos.y));
+	int x, y;
+	SDL_GetMouseState(&x, &y);
+	Pos = Vector2(x, -y);
 }
