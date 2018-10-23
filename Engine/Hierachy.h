@@ -5,14 +5,11 @@
 #include <SDL.h>
 #include <map>
 #include <string>
+#include <iostream>
 #include "Transform.h"
 #include "Rect.h"
-//#include "Script.h"
 
-class Script; 
-{
-	void Update();
-}
+class Script; //Forward declaration for Script because otherwise we get a circular dependancy
 
 class Object
 {
@@ -22,9 +19,9 @@ class Object
 
 	SDL_Texture *Sprite;
 
-	std::vector<Script*> AttachedScripts;
-
 	public:
+
+	std::vector<Script*> AttachedScripts;
 
 	//factory methods
 	static void AddPrototype(std::string key, Object *ToClone);
