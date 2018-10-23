@@ -1,8 +1,8 @@
 #include "Hook.h"
 
-Hook::Hook(bool KeyDown, int key, bool repeat)
+Hook::Hook(bool KeyDown, callback_function cb, bool repeat)
 {
 	UD = KeyDown;
-	K = key;
 	R = repeat;
+	F = cb;
 }

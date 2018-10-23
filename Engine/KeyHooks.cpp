@@ -1,29 +1,33 @@
 #include "KeyHooks.h"
 
-typedef std::function<void(void)> callback_fuction;
+std::map<int, std::vector<Hook>> KeyHooks::Callbacks;
 
-std::unordered_map<Hook, std::vector<callback_fuction>> KeyHooks::Callbacks;
-
-void KeyHooks::Register(Hook e, callback_fuction c)
+void KeyHooks::Register(Hook e, int key)
 {
-	Callbacks[e].emplace_back(c);
+	Callbacks[key].emplace_back(e);
 }
 
 void KeyHooks::Execute(SDL_Event e)
 {
-	Hook wrapped = Hook((e.type == SDL_KEYDOWN), e.key.keysym.sym, e.key.repeat > 0);
-
-	short index = 0;
-	for (callback_fuction i : Callbacks[wrapped])
+	if (!(e.type == SDL_KEYDOWN || e.type == SDL_KEYUP))
 	{
-		if (i) //Make sure the target is callable
+		return;
+	}
+
+	std::vector<Hook> triggered = Callbacks[e.key.keysym.sym];
+
+	for (int i = 0; i < triggered.size(); i++)
+	{
+		if (triggered[i].F)
 		{
-			i();
+			if ((e.key.repeat == 0 || triggered[i].R) && ((e.type == SDL_KEYDOWN) == triggered[i].UD))
+			{
+				triggered[i].F();
+			}
 		}
 		else
 		{
-			Callbacks[wrapped].erase(Callbacks[wrapped].begin() + index); //remove dead functions from the list
+			triggered.erase(triggered.begin()+i);
 		}
-		index++;
 	}
 }

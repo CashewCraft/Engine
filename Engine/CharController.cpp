@@ -13,8 +13,8 @@ void CharController::InitHooks()
 
 	//TODO: fix keyhooks not registering if repeats
 	//ALSO TODO: maybe change the hooks so they can work as a binary tree?
-	KeyHooks::Register(Hook(false, SDLK_UP, true), std::bind(&CharController::AddMoveUp, this));
-	KeyHooks::Register(Hook(true, SDLK_DOWN, true), std::bind(&CharController::AddMoveDown, this));
+	KeyHooks::Register(Hook(true, std::bind(&CharController::AddMoveUp, this), true), SDLK_UP);
+	KeyHooks::Register(Hook(true, std::bind(&CharController::AddMoveDown, this), true), SDLK_DOWN);
 
 	std::cout << "Hooking complete!\n";
 }
