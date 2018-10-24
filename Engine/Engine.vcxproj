@@ -131,7 +131,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CharController.cpp" />
+    <ClCompile Include="Debug.cpp" />
     <ClCompile Include="Hierachy.cpp" />
     <ClCompile Include="Hook.cpp" />
     <ClCompile Include="KeyHooks.cpp" />
@@ -148,7 +150,9 @@
     <ClCompile Include="Vehicle.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="CharController.h" />
+    <ClInclude Include="Debug.h" />
     <ClInclude Include="Hierachy.h" />
     <ClInclude Include="Hook.h" />
     <ClInclude Include="KeyHooks.h" />

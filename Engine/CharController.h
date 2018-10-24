@@ -8,6 +8,7 @@
 #include "PhysObject.h"
 #include "Time.h"
 #include "Mouse.h"
+#include "Camera.h"
 #include <iostream>
 #include <functional>
 
@@ -18,7 +19,7 @@ class CharController : public Script
 
 	public:
 
-	CharController(Object* a) : Script(a) { GameObject = (PhysObject *)Linked; InitHooks(); };
+	CharController(Object* a) : Script(a) { GameObject = (PhysObject*)Linked; InitHooks(); };
 
 	void Update();
 

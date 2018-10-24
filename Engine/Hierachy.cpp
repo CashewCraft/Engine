@@ -120,11 +120,10 @@ void Object::Shift(Vector2 c, int m)
 void Object::Draw()
 {
 	SDL_Rect PosRect = GetRect().SDLf;
-	//std::cout << "Angle between " << Transform.Position << " and " << Transform.Rotation << " is " << Transform.GetRotAngle() << "\n";
-	SDL_RenderDrawLine(Object::Main, Transform.Position.x, Transform.Position.y, Transform.Position.x+Transform.Rotation.x, Transform.Position.y+Transform.Rotation.y);
+
+	Debug::DrawLine(Transform.Position, Transform.Position + Transform.Rotation);
+
 	SDL_RenderCopyEx(Object::Main, Sprite, NULL, &PosRect, Transform.GetRotAngle(), NULL, SDL_RendererFlip::SDL_FLIP_NONE);
-	if (Name == "Player") { printf("%f\n", Transform.GetRotAngle()); }
-	//SDL_BlitSurface(Sprite, NULL, To, &PosRect);
 }
 
 void Object::ForgetChild(Object *p)

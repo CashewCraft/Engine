@@ -3,6 +3,7 @@
 
 #include <SDL.h>
 #include "Vector2.h"
+#include "Camera.h"
 
 class Rect
 {

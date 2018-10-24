@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Camera.h"
 #include "Vector2.h"
 #include <SDL.h>
 

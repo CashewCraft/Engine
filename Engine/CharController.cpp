@@ -11,8 +11,9 @@ void CharController::InitHooks()
 	//KeyHooks::Register(Hook(true, SDLK_DOWN), std::bind(&CharController::AddMoveDown, this));
 	//KeyHooks::Register(Hook(false, SDLK_DOWN), std::bind(&CharController::AddMoveUp, this));
 
-	//TODO: fix keyhooks not registering if repeats
-	//ALSO TODO: maybe change the hooks so they can work as a binary tree?
+	KeyHooks::Register(Hook(true, std::bind(&CharController::AddMoveLeft, this)), SDLK_LEFT);
+	KeyHooks::Register(Hook(true, std::bind(&CharController::AddMoveRight, this)), SDLK_RIGHT);
+
 	KeyHooks::Register(Hook(true, std::bind(&CharController::AddMoveUp, this), true), SDLK_UP);
 	KeyHooks::Register(Hook(true, std::bind(&CharController::AddMoveDown, this), true), SDLK_DOWN);
 
@@ -21,16 +22,17 @@ void CharController::InitHooks()
 
 void CharController::Update() 
 {
+	//printf("%f\n", (Mouse::Pos - GameObject->Transform.Position).Magnitude());
 	GameObject->Transform.Rotation = Mouse::Pos - GameObject->Transform.Position;
 }
 
 void CharController::AddMoveRight()
 {
-	//GameObject->body.AddForce(Vector2(1, 0));
+	Camera::Position += Vector2(1 * Time::deltaTime(), 0);
 }
 void CharController::AddMoveLeft()
 {
-	//GameObject->body.AddForce(Vector2(-1, 0));
+	Camera::Position -= Vector2(1 * Time::deltaTime(), 0);
 }
 void CharController::AddMoveUp()
 {
@@ -38,5 +40,5 @@ void CharController::AddMoveUp()
 }
 void CharController::AddMoveDown()
 {
-	GameObject->body.AddForce(-GameObject->body.Velocity);
+	GameObject->body.AddForce(-GameObject->body.Velocity*40);
 }

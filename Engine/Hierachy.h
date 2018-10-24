@@ -8,6 +8,7 @@
 #include <iostream>
 #include "Transform.h"
 #include "Rect.h"
+#include "Debug.h"
 
 class Script; //Forward declaration for Script because otherwise we get a circular dependancy
 
