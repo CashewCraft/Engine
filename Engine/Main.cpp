@@ -11,6 +11,7 @@
 #include "CharController.h"
 #include "Time.h"
 #include "Mouse.h"
+#include "AI.h"
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 640;
@@ -42,6 +43,8 @@ int main(int argc, char* args[])
 		}
 		else
 		{
+			Camera::Size = Vector2(SCREEN_WIDTH, SCREEN_HEIGHT);
+
 			//Get window surface
 			MainSurface = SDL_GetWindowSurface(Window);
 
@@ -79,11 +82,8 @@ int main(int argc, char* args[])
 	SDL_Event e;
 
 	CharController a = CharController(Workspace.GetChildren()[0]->GetChildren()[0]->GetChildren()[0]);
+	AI b = AI(Workspace.GetChildren()[0]->GetChildren()[1]);
 	Workspace.GetChildren()[0]->GetChildren()[0]->GetChildren()[0]->Name = "Player";
-	//WHAT YOU WERE LAST DOING:
-
-	//Need to fix issue where moves aren't being properly reversed when going back in time
-	//they seem to have some wierd issues related to switching between them?
 
 	SDL_SetRenderDrawColor(Renderer, 255, 255, 255, 255);
 
@@ -105,6 +105,13 @@ int main(int argc, char* args[])
 			{
 				running = false;
 				break;
+			}
+			else if (e.type == SDL_WINDOWEVENT)
+			{
+				if (e.window.event == SDL_WINDOWEVENT_SIZE_CHANGED)
+				{
+					Camera::Size = Vector2(e.window.data1, e.window.data2);
+				}
 			}
 			KeyHooks::Execute(e); //Run any callback functions attached to this key
 		}
