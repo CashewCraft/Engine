@@ -7,8 +7,6 @@ class Camera
 	public:
 
 	static Vector2 Position;
-	//transform Transform;
-
-	Camera();
+	static Vector2 Size;
 };
 
