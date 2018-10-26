@@ -34,6 +34,17 @@ float Vector2::Magnitude()
 	return std::sqrt((x*x) + (y*y));
 }
 
+Vector2 Vector2::Cross()
+{
+	return Vector2(y, -x);
+}
+
+Vector2 Vector2::Slerp(Vector2 b, double t)
+{
+	//TODO: make acutal sperical lerping
+	return (*this * (1 - t)) + (b * t);
+}
+
 bool Vector2::operator==(const Vector2 &rhs)
 {
 	return (x == rhs.x && y == rhs.y);

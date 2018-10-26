@@ -24,6 +24,8 @@ void CharController::Update()
 {
 	//printf("%f\n", (Mouse::Pos - GameObject->Transform.Position).Magnitude());
 	GameObject->Transform.Rotation = Mouse::Pos - GameObject->Transform.Position;
+
+	Camera::Position = (GameObject->Transform.Position.Truncate(std::min(Camera::Size.x, Camera::Size.y) / 2)) - (Camera::Size / 2);
 }
 
 void CharController::AddMoveRight()

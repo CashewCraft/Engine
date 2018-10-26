@@ -20,6 +20,10 @@ class Vector2
 
 	float Magnitude();
 
+	Vector2 Cross();
+
+	Vector2 Slerp(Vector2 b, double t);
+
 	operator std::string() const
 	{
 		return std::to_string(x)+","+std::to_string(y);

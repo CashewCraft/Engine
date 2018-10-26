@@ -10,6 +10,7 @@
 #include "Mouse.h"
 #include "Camera.h"
 #include <iostream>
+#include <algorithm>
 #include <functional>
 
 class CharController : public Script
