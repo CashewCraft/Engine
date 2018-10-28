@@ -17,7 +17,13 @@ double AI::GetAngle(Vector2 To, Vector2 From)
 
 void AI::Update()
 {
+	Debug::DrawLine(GameObject->Transform.Position, Target);
+
+	GameObject->body.AddForce(((Target - GameObject->Transform.Position) * Speed) - GameObject->body.Velocity);
 	GameObject->Transform.Rotation = GameObject->body.Velocity;
 
-
+	if ((GameObject->Transform.Position - Target).Magnitude() < 30)
+	{
+		Target = InsideCircle(std::min(Camera::Size.x, Camera::Size.y));
+	}
 }
