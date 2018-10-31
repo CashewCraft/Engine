@@ -22,6 +22,8 @@ void CharController::InitHooks()
 
 void CharController::Update() 
 {
+	GameObject->body.MaxSpeed = 0.05;
+
 	//printf("%f\n", (Mouse::Pos - GameObject->Transform.Position).Magnitude());
 	GameObject->Transform.Rotation = Mouse::Pos - GameObject->Transform.Position;
 
@@ -38,7 +40,7 @@ void CharController::AddMoveLeft()
 }
 void CharController::AddMoveUp()
 {
-	GameObject->body.AddForce(GameObject->Transform.Rotation.Normalize()*2);
+	GameObject->body.AddForce(GameObject->Transform.Rotation.Normalize()*4);
 }
 void CharController::AddMoveDown()
 {

@@ -81,9 +81,10 @@ int main(int argc, char* args[])
 	bool running = true;
 	SDL_Event e;
 
-	//CharController a = CharController(Workspace.GetChildren()[0]->GetChildren()[0]->GetChildren()[0]);
+	CharController a = CharController(Workspace.GetChildren()[0]->GetChildren()[0]->GetChildren()[0]);
 	AI b = AI(Workspace.GetChildren()[0]->GetChildren()[1]);
 	Workspace.GetChildren()[0]->GetChildren()[0]->GetChildren()[0]->Name = "Player";
+	b.Player = (PhysObject*)(Workspace.GetChildren()[0]->GetChildren()[0]->GetChildren()[0]);
 
 	SDL_SetRenderDrawColor(Renderer, 255, 255, 255, 255);
 
@@ -94,7 +95,7 @@ int main(int argc, char* args[])
 		SDL_SetRenderDrawColor(Renderer, 255, 255, 255, 255);
 		//SDL_FillRect(MainSurface, NULL, SDL_MapRGB(MainSurface->format, 0xFF, 0xFF, 0xFF));
 
-		Camera::Position = (Workspace.GetChildren()[0]->GetChildren()[1])->Transform.Position - (Camera::Size/2);
+		//Camera::Position = (Workspace.GetChildren()[0]->GetChildren()[1])->Transform.Position - (Camera::Size/2);
 
 		SDL_RenderClear(Renderer);
 

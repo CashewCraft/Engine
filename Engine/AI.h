@@ -21,10 +21,16 @@ class AI : public Script
 
 	public:
 
+	PhysObject *Player;
+
 	Vector2 InsideCircle(double radius);
 
 	AI(Object* a) : Script(a) { GameObject = (PhysObject*)Linked; Target = InsideCircle(10); GameObject->body.MaxForce = 0.005; };
 
 	void Update();
+
+	Vector2 Wander();
+
+	Vector2 Chase();
 };
 

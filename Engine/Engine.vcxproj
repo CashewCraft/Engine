@@ -145,6 +145,7 @@
     <ClCompile Include="PhysObject.cpp" />
     <ClCompile Include="Rect.cpp" />
     <ClCompile Include="Script.cpp" />
+    <ClCompile Include="SpacialHash.cpp" />
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Vector2.cpp" />
@@ -164,6 +165,7 @@
     <ClInclude Include="PhysObject.h" />
     <ClInclude Include="Rect.h" />
     <ClInclude Include="Script.h" />
+    <ClInclude Include="SpacialHash.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Vector2.h" />

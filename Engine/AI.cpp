@@ -17,13 +17,25 @@ double AI::GetAngle(Vector2 To, Vector2 From)
 
 void AI::Update()
 {
-	Debug::DrawLine(GameObject->Transform.Position, Target);
-
-	GameObject->body.AddForce(((Target - GameObject->Transform.Position) * Speed) - GameObject->body.Velocity);
+	GameObject->body.AddForce(Chase());
 	GameObject->Transform.Rotation = GameObject->body.Velocity;
+}
+
+Vector2 AI::Wander() 
+{
+	Debug::DrawLine(GameObject->Transform.Position, Target);
 
 	if ((GameObject->Transform.Position - Target).Magnitude() < 30)
 	{
 		Target = InsideCircle(std::min(Camera::Size.x, Camera::Size.y));
 	}
+
+	return (((Target - GameObject->Transform.Position) * Speed) - GameObject->body.Velocity);
+}
+
+Vector2 AI::Chase()
+{
+	Target = Player->Transform.Position + (Player->body.Velocity*2000);
+	Debug::DrawLine(GameObject->Transform.Position, Target);
+	return (((Target - GameObject->Transform.Position) * Speed) - GameObject->body.Velocity);
 }
