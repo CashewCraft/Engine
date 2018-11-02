@@ -36,6 +36,6 @@ Vector2 AI::Wander()
 Vector2 AI::Chase()
 {
 	Target = Player->Transform.Position + (Player->body.Velocity*2000);
-	Debug::DrawLine(GameObject->Transform.Position, Target);
+	//Debug::DrawLine(GameObject->Transform.Position, Target);
 	return (((Target - GameObject->Transform.Position) * Speed) - GameObject->body.Velocity);
 }

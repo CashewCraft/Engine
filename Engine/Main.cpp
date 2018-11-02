@@ -84,6 +84,7 @@ int main(int argc, char* args[])
 	CharController a = CharController(Workspace.GetChildren()[0]->GetChildren()[0]->GetChildren()[0]);
 	AI b = AI(Workspace.GetChildren()[0]->GetChildren()[1]);
 	Workspace.GetChildren()[0]->GetChildren()[0]->GetChildren()[0]->Name = "Player";
+	Workspace.GetChildren()[0]->GetChildren()[1]->Name = "Enemy";
 	b.Player = (PhysObject*)(Workspace.GetChildren()[0]->GetChildren()[0]->GetChildren()[0]);
 
 	SDL_SetRenderDrawColor(Renderer, 255, 255, 255, 255);

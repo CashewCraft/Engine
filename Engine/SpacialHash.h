@@ -10,13 +10,13 @@ class Object; //Forward declaration to resolve circular dependancy
 class SpacialHash
 {
 	static int Size;
-	static std::map<Vector2, std::vector<Object*>> HashTable;
+	static std::map<std::pair<int, int>, std::vector<Object*>> HashTable;
 
 	public:
 	
 	static void SetSize(int CellSize);
 
-	static Vector2 GetHash(Vector2 Pos);
+	static std::pair<int, int> GetHash(Vector2 Pos);
 
 	static void Update();
 

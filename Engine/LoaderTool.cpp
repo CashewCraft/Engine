@@ -11,6 +11,9 @@ void LoaderTool::init()
 
 int LoaderTool::LoadScene(Object *ToParent, const char *filename, SDL_Renderer *r)
 {
+	std::vector<std::string> Names;
+	std::vector<int> NameCounts;
+
 	std::ifstream From;
 	From.open(filename);
 	if (!From.is_open())
@@ -92,6 +95,21 @@ int LoaderTool::LoadScene(Object *ToParent, const char *filename, SDL_Renderer *
 
 					CreatedScope = Object::GetNew(Type, SDL_CreateTextureFromSurface(r, SDL_LoadBMP(Name.c_str())), temp);
 					Parent.top()->AddChild(CreatedScope);
+
+					ptrdiff_t pos = std::find(Names.begin(), Names.end(), Name) - Names.begin();
+					if (std::find(Names.begin(), Names.end(), Name) != Names.end())
+					{
+						CreatedScope->Name = Name + " (" + std::to_string(NameCounts[pos]) + ")";
+						NameCounts[pos]++;
+					}
+					else
+					{
+						Names.push_back(Name);
+						NameCounts.push_back(0);
+						CreatedScope->Name = Name + " (" + std::to_string(NameCounts[pos]) + ")";
+						NameCounts[pos]++;
+					}
+
 					Type = "";
 					Name = "";
 					FromNumber = "";

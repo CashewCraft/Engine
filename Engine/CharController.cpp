@@ -49,5 +49,10 @@ void CharController::AddMoveDown()
 
 void CharController::OnCollision(Object *hit)
 {
+	if (SpacialHash::GetHash(GameObject->Transform.Position) != SpacialHash::GetHash(hit->Transform.Position))
+	{
+		Debug::Log("What?");
+	}
 	Debug::Log("Hit " + (hit->Name));
+	Debug::DrawLine(GameObject->Transform.Position, hit->Transform.Position);
 }
