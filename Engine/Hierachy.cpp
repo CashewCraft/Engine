@@ -89,20 +89,40 @@ Rect Object::GetRect()
 	return Rect(Transform.Position, w, h);//Sprite->w, Sprite->h);
 }
 
-void Object::OnTick()
+void Object::OnPhysTick()
 {
-
 	for (Script *i : AttachedScripts)
 	{
-		i->Update();
+		i->FixedUpdate();
+	}
+
+	for (Object *i : Children)
+	{
+		i->OnPhysTick();
 	}
 
 	Update();
+}
+
+void Object::OnRendTick()
+{
+	for (Script *i : AttachedScripts)
+	{
+		for (Object *c : *SpacialHash::GetCollisions(this))
+		{
+			if (c != this)
+			{
+				i->OnCollision(c);
+			}
+		}
+		i->Update();
+	}
+
 	Draw();
 
 	for (Object *i : Children)
 	{
-		i->OnTick();
+		i->OnRendTick();
 	}
 }
 

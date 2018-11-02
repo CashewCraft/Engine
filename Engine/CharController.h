@@ -28,5 +28,7 @@ class CharController : public Script
 	void AddMoveRight();
 	void AddMoveUp();
 	void AddMoveDown();
+
+	void OnCollision(Object *hit);
 };
 

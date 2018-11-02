@@ -26,13 +26,13 @@ class Vector2
 
 	operator std::string() const
 	{
-		return std::to_string(x)+","+std::to_string(y);
+		return "("+std::to_string(x)+","+std::to_string(y)+")";
 	}
 
-	bool operator==(const Vector2 &rhs);
-	bool operator!=(const Vector2 &rhs);
-	bool operator<(const Vector2 &rhs);
-	bool operator>(const Vector2 &rhs);
+	bool operator==(const Vector2 &rhs) const;
+	bool operator!=(const Vector2 &rhs) const;
+	bool operator<(const Vector2 &rhs) const;
+	bool operator>(const Vector2 &rhs) const;
 
 	Vector2& operator+=(const Vector2 &rhs);
 	Vector2& operator-=(const Vector2 &rhs);

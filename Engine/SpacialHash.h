@@ -5,23 +5,23 @@
 #include <map>
 #include <vector>
 
+class Object; //Forward declaration to resolve circular dependancy
+
 class SpacialHash
 {
-	int Size;
+	static int Size;
 	static std::map<Vector2, std::vector<Object*>> HashTable;
 
 	public:
-
-	static SpacialHash *ins;
 	
-	SpacialHash(int CellSize);
+	static void SetSize(int CellSize);
 
-	Vector2 GetHash(Vector2 Pos);
+	static Vector2 GetHash(Vector2 Pos);
 
-	void Update();
+	static void Update();
 
-	void AddHash(Object *Obj);
+	static void AddHash(Object *Obj);
 
-	Object *GetCollisions(Object *Obj);
+	static std::vector<Object*> *GetCollisions(Object *Obj);
 };
 

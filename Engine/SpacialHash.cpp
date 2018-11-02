@@ -1,17 +1,12 @@
 #include "SpacialHash.h"
 
-SpacialHash *SpacialHash::ins = nullptr;
 std::map<Vector2, std::vector<Object*>> SpacialHash::HashTable = std::map<Vector2, std::vector<Object*>>();
 
-SpacialHash::SpacialHash(int CellSize)
+int SpacialHash::Size;
+
+void SpacialHash::SetSize(int CellSize)
 {
 	Size = CellSize;
-
-	if (SpacialHash::ins) 
-	{
-		delete SpacialHash::ins;
-	}
-	SpacialHash::ins = this;
 }
 
 Vector2 SpacialHash::GetHash(Vector2 Pos)
@@ -26,10 +21,11 @@ void SpacialHash::Update()
 
 void SpacialHash::AddHash(Object *Obj)
 {
+	//Debug::Log("Adding " + Obj->Name + " as hash: " + (std::string)GetHash(Obj->Transform.Position));
 	SpacialHash::HashTable[GetHash(Obj->Transform.Position)].push_back(Obj);
 }
 
-Object *SpacialHash::GetCollisions(Object *Obj) 
+std::vector<Object*> *SpacialHash::GetCollisions(Object *Obj) 
 {
-	//TODO: FIX DIS
+	return &SpacialHash::HashTable[SpacialHash::GetHash(Obj->Transform.Position)];
 }

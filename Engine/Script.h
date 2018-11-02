@@ -14,7 +14,9 @@ class Script
 
 	public:
 
-	virtual void Update() = 0;
+	virtual void Update() {};
+	virtual void FixedUpdate() {};
+	virtual void OnCollision(Object *hit) {};
 };
 
 #endif

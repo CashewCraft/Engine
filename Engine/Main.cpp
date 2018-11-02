@@ -36,7 +36,7 @@ int main(int argc, char* args[])
 	else
 	{
 		//Create window
-		Window = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+		Window = SDL_CreateWindow("Joshua Manders-Jones - Games Programming - <ID number> - <Game Name>", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 		if (Window == NULL)
 		{
 			printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
@@ -90,6 +90,8 @@ int main(int argc, char* args[])
 
 	printf("Result is %f", (std::atan2(1, 1)) / transform::Pi);
 
+	SpacialHash::SetSize(5);
+
 	while (running)
 	{
 		SDL_SetRenderDrawColor(Renderer, 255, 255, 255, 255);
@@ -98,6 +100,8 @@ int main(int argc, char* args[])
 		//Camera::Position = (Workspace.GetChildren()[0]->GetChildren()[1])->Transform.Position - (Camera::Size/2);
 
 		SDL_RenderClear(Renderer);
+
+		SpacialHash::Update();
 
 		SDL_SetRenderDrawColor(Renderer, 255, 0, 0, 255);
 
@@ -119,7 +123,11 @@ int main(int argc, char* args[])
 			KeyHooks::Execute(e); //Run any callback functions attached to this key
 		}
 
-		Workspace.OnTick();
+		//Update all of the physics for this tick, along with any fixedupdate functions
+		Workspace.OnPhysTick();
+
+		//Render all the sprites after running any Regular update functions
+		Workspace.OnRendTick();
 
 		SDL_RenderPresent(Renderer);
 		//SDL_UpdateWindowSurface(Window);

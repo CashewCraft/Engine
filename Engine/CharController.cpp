@@ -46,3 +46,8 @@ void CharController::AddMoveDown()
 {
 	GameObject->body.AddForce(-GameObject->body.Velocity*40);
 }
+
+void CharController::OnCollision(Object *hit)
+{
+	Debug::Log("Hit " + (hit->Name));
+}

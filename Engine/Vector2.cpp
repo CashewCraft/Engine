@@ -45,19 +45,19 @@ Vector2 Vector2::Slerp(Vector2 b, double t)
 	return (*this * (1 - t)) + (b * t);
 }
 
-bool Vector2::operator==(const Vector2 &rhs)
+bool Vector2::operator==(const Vector2 &rhs) const
 {
 	return (x == rhs.x && y == rhs.y);
 }
-bool Vector2::operator!=(const Vector2 &rhs)
+bool Vector2::operator!=(const Vector2 &rhs) const
 {
 	return !(x == rhs.x && y == rhs.y);
 }
-bool Vector2::operator<(const Vector2 &rhs)
+bool Vector2::operator<(const Vector2 &rhs) const
 {
 	return (x < rhs.x && y < rhs.y);
 }
-bool Vector2::operator>(const Vector2 &rhs)
+bool Vector2::operator>(const Vector2 &rhs) const
 {
 	return (x > rhs.x && y > rhs.y);
 }

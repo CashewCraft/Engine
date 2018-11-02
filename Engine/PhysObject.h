@@ -8,6 +8,7 @@
 #include "Move.h"
 #include "Vehicle.h"
 #include "Vector2.h"
+#include "SpacialHash.h"
 
 class PhysObject : public Object
 { 

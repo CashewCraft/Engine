@@ -9,6 +9,7 @@
 #include "Transform.h"
 #include "Rect.h"
 #include "Debug.h"
+#include "SpacialHash.h"
 
 class Script; //Forward declaration for Script because otherwise we get a circular dependancy
 
@@ -50,7 +51,8 @@ class Object
 
 	Rect GetRect();
 
-	void OnTick();
+	void OnPhysTick();
+	void OnRendTick();
 
 	virtual void Update();
 

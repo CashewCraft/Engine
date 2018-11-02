@@ -8,6 +8,7 @@ PhysObject::PhysObject(SDL_Texture *sprite) : Object(sprite)
 void PhysObject::Update()
 {
 	body.Simulate();
+	SpacialHash::AddHash(this);
 }
 
 Object* PhysObject::Clone(SDL_Texture *sprite, transform pos)
