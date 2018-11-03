@@ -7,12 +7,14 @@
 class Script
 {
 	protected:
-	virtual void InitHooks() = 0;
+	virtual void InitHooks() {};
 	Object *Linked;
 
 	Script(Object* attach);
 
 	public:
+
+	~Script();
 
 	virtual void Update() {};
 	virtual void FixedUpdate() {};
