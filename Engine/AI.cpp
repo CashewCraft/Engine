@@ -17,7 +17,7 @@ double AI::GetAngle(Vector2 To, Vector2 From)
 
 void AI::Update()
 {
-	GameObject->body.AddForce(Chase());
+	GameObject->body.AddForce(Wander());//Chase());
 	GameObject->Transform.Rotation = GameObject->body.Velocity;
 }
 
