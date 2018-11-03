@@ -79,6 +79,11 @@ void Object::DelChild(Object *p)
 	}
 }
 
+void Object::PrepareDelete()
+{
+	DeleteFlag = true;
+}
+
 void Object::DelSelf()
 {
 	Parent->DelChild(this);
@@ -125,6 +130,11 @@ void Object::OnRendTick()
 	for (Object *i : Children)
 	{
 		i->OnRendTick();
+	}
+
+	if (DeleteFlag)
+	{
+		DelSelf();
 	}
 }
 

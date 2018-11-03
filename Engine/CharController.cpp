@@ -17,6 +17,8 @@ void CharController::InitHooks()
 	KeyHooks::Register(Hook(true, std::bind(&CharController::AddMoveUp, this), true), SDLK_UP);
 	KeyHooks::Register(Hook(true, std::bind(&CharController::AddMoveDown, this), true), SDLK_DOWN);
 
+	KeyHooks::Register(Hook(true, std::bind(&CharController::Shoot, this), false), SDLK_SPACE);
+
 	std::cout << "Hooking complete!\n";
 }
 
@@ -32,11 +34,11 @@ void CharController::Update()
 
 void CharController::AddMoveRight()
 {
-	Camera::Position += Vector2(1 * Time::deltaTime(), 0);
+	//Camera::Position += Vector2(1 * Time::deltaTime(), 0);
 }
 void CharController::AddMoveLeft()
 {
-	Camera::Position -= Vector2(1 * Time::deltaTime(), 0);
+	//Camera::Position -= Vector2(1 * Time::deltaTime(), 0);
 }
 void CharController::AddMoveUp()
 {
@@ -47,12 +49,18 @@ void CharController::AddMoveDown()
 	GameObject->body.AddForce(-GameObject->body.Velocity*40);
 }
 
+void CharController::Shoot()
+{
+	PhysObject *Bullet = new PhysObject(LoaderTool::ResourceDict["Bullet.bmp"]);
+	Object::Workspace->AddChild(Bullet);
+	Bullet->Transform.Position = GameObject->Transform.Position;
+	Bullet->body.Velocity = GameObject->Transform.Rotation.Normalize()*0.1;
+
+	new Projectile(Bullet, Linked);
+}
+
 void CharController::OnCollision(Object *hit)
 {
-	if (SpacialHash::GetHash(GameObject->Transform.Position) != SpacialHash::GetHash(hit->Transform.Position))
-	{
-		Debug::Log("What?");
-	}
-	Debug::Log("Hit " + (hit->Name));
+	//Debug::Log("Hit " + (hit->Name));
 	Debug::DrawLine(GameObject->Transform.Position, hit->Transform.Position);
 }

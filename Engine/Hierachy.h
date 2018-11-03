@@ -21,6 +21,8 @@ class Object
 
 	SDL_Texture *Sprite;
 
+	bool DeleteFlag = false;
+
 	public:
 
 	static Object* Workspace;
@@ -49,7 +51,7 @@ class Object
 
 	void DelChild(Object *p);
 
-	void DelSelf();
+	void PrepareDelete();
 
 	Rect GetRect();
 
@@ -62,7 +64,9 @@ class Object
 
 	virtual void Draw();
 
-	protected: 
+	protected:
+
+	void DelSelf();
 
 	Object *Parent;
 

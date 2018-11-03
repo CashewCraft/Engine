@@ -9,6 +9,9 @@
 #include "Time.h"
 #include "Mouse.h"
 #include "Camera.h"
+#include "LoaderTool.h"
+#include "Projectile.h"
+
 //#include "SpacialHash"
 #include <iostream>
 #include <algorithm>
@@ -29,6 +32,8 @@ class CharController : public Script
 	void AddMoveRight();
 	void AddMoveUp();
 	void AddMoveDown();
+
+	void Shoot();
 
 	void OnCollision(Object *hit);
 };
