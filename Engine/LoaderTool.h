@@ -13,6 +13,9 @@
 class LoaderTool
 {
 	public:
+
+	static std::map<std::string, SDL_Texture*> ResourceDict;
+
 	static void init();
 	static int LoadScene(Object *ToParent, const char *filename, SDL_Renderer *r);
 };

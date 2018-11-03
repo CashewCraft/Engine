@@ -9,6 +9,8 @@ void LoaderTool::init()
 	Object::AddPrototype("PhysObject", new PhysObject(NULL));
 }
 
+std::map<std::string, SDL_Texture*> LoaderTool::ResourceDict = std::map<std::string, SDL_Texture*>();
+
 int LoaderTool::LoadScene(Object *ToParent, const char *filename, SDL_Renderer *r)
 {
 	std::vector<std::string> Names;
@@ -41,7 +43,7 @@ int LoaderTool::LoadScene(Object *ToParent, const char *filename, SDL_Renderer *
 		//   }
 		// }
 
-		std::map<std::string, SDL_Surface*> SurfaceDict;
+		//std::map<std::string, SDL_Surface*> SurfaceDict;
 
 		std::string Type;
 		std::string Name;
@@ -93,22 +95,27 @@ int LoaderTool::LoadScene(Object *ToParent, const char *filename, SDL_Renderer *
 					transform temp;
 					temp.Position = Vector2(pos[0], pos[1]);
 
-					CreatedScope = Object::GetNew(Type, SDL_CreateTextureFromSurface(r, SDL_LoadBMP(Name.c_str())), temp);
-					Parent.top()->AddChild(CreatedScope);
-
 					ptrdiff_t pos = std::find(Names.begin(), Names.end(), Name) - Names.begin();
 					if (std::find(Names.begin(), Names.end(), Name) != Names.end())
 					{
+						CreatedScope = Object::GetNew(Type, ResourceDict[Name], temp);
+						
 						CreatedScope->Name = Name + " (" + std::to_string(NameCounts[pos]) + ")";
 						NameCounts[pos]++;
 					}
 					else
 					{
+						ResourceDict[Name] = SDL_CreateTextureFromSurface(r, SDL_LoadBMP(Name.c_str()));
+						Debug::Log("Added file " + Name + " to resource directory");
+						CreatedScope = Object::GetNew(Type, ResourceDict[Name], temp);
+
 						Names.push_back(Name);
 						NameCounts.push_back(0);
 						CreatedScope->Name = Name + " (" + std::to_string(NameCounts[pos]) + ")";
 						NameCounts[pos]++;
 					}
+
+					Parent.top()->AddChild(CreatedScope);
 
 					Type = "";
 					Name = "";
@@ -154,5 +161,24 @@ int LoaderTool::LoadScene(Object *ToParent, const char *filename, SDL_Renderer *
 			}
 		}
 	}
+
+	From.close();
+
+	From.open("LoadAdditional.txt");
+	if (!From.is_open())
+	{
+		//#pragma warning(suppress : 4996)
+		//printf("Failed to open file: %s\n", strerror(errno));
+		return -1;
+	}
+
+	while (std::getline(From, Line))
+	{
+		ResourceDict[Line] = SDL_CreateTextureFromSurface(r, SDL_LoadBMP(Line.c_str()));
+		Debug::Log("Added additional file " + Line + " to resource directory");
+	}
+
+	From.close();
+
 	return 0;
 }
