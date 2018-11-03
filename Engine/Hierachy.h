@@ -23,6 +23,8 @@ class Object
 
 	public:
 
+	static Object* Workspace;
+
 	std::vector<Script*> AttachedScripts;
 
 	//factory methods

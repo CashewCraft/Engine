@@ -71,8 +71,8 @@ int main(int argc, char* args[])
 
 	printf("Successfully initalised, begining load process.\n");
 
-	Object Workspace = Object(NULL);
-	if (LoaderTool::LoadScene(&Workspace, "test.txt", Renderer) < 0)
+	Object::Workspace = new Object(NULL);
+	if (LoaderTool::LoadScene(Object::Workspace, "test.txt", Renderer) < 0)
 	{
 		std::cin.get();
 		return -1;
@@ -81,17 +81,16 @@ int main(int argc, char* args[])
 	bool running = true;
 	SDL_Event e;
 
-	CharController a = CharController(Workspace.GetChildren()[0]->GetChildren()[0]->GetChildren()[0]);
-	AI b = AI(Workspace.GetChildren()[0]->GetChildren()[1]);
-	Workspace.GetChildren()[0]->GetChildren()[0]->GetChildren()[0]->Name = "Player";
-	Workspace.GetChildren()[0]->GetChildren()[1]->Name = "Enemy";
-	b.Player = (PhysObject*)(Workspace.GetChildren()[0]->GetChildren()[0]->GetChildren()[0]);
+	new CharController(Object::Workspace->GetChildren()[0]->GetChildren()[0]->GetChildren()[0]);
+	new AI(Object::Workspace->GetChildren()[0]->GetChildren()[1], (PhysObject*)(Object::Workspace->GetChildren()[0]->GetChildren()[0]->GetChildren()[0]));
+	Object::Workspace->GetChildren()[0]->GetChildren()[0]->GetChildren()[0]->Name = "Player";
+	Object::Workspace->GetChildren()[0]->GetChildren()[1]->Name = "Enemy";
 
 	SDL_SetRenderDrawColor(Renderer, 255, 255, 255, 255);
 
 	printf("Result is %f", (std::atan2(1, 1)) / transform::Pi);
 
-	SpacialHash::SetSize(5);
+	SpacialHash::SetSize(15);
 
 	while (running)
 	{
@@ -125,10 +124,10 @@ int main(int argc, char* args[])
 		}
 
 		//Update all of the physics for this tick, along with any fixedupdate functions
-		Workspace.OnPhysTick();
+		Object::Workspace->OnPhysTick();
 
 		//Render all the sprites after running any Regular update functions
-		Workspace.OnRendTick();
+		Object::Workspace->OnRendTick();
 
 		SDL_RenderPresent(Renderer);
 		//SDL_UpdateWindowSurface(Window);

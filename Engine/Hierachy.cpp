@@ -6,6 +6,8 @@ std::map<std::string, Object*> Object::PrototypeDict;
 
 SDL_Renderer* Object::Main = nullptr;
 
+Object* Object::Workspace = nullptr;
+
 void Object::AddPrototype(std::string key, Object *ToClone)
 {
 	PrototypeDict[key] = ToClone;

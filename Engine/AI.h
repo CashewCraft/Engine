@@ -25,7 +25,7 @@ class AI : public Script
 
 	Vector2 InsideCircle(double radius);
 
-	AI(Object* a) : Script(a) { GameObject = (PhysObject*)Linked; Target = InsideCircle(10); GameObject->body.MaxForce = 0.005; };
+	AI(Object* a, PhysObject *p) : Script(a) { GameObject = (PhysObject*)Linked; Player = p; Target = InsideCircle(10); GameObject->body.MaxForce = 0.005; };
 
 	void Update();
 
