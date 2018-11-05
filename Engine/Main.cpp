@@ -19,6 +19,7 @@ const int SCREEN_HEIGHT = 480;
 
 int main(int argc, char* args[])
 {
+	Debug::Init();
 
 	//The window we'll be rendering to
 	SDL_Window* Window = NULL;
@@ -31,7 +32,7 @@ int main(int argc, char* args[])
 	//Initialize SDL
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
-		printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
+		Debug::Log("SDL could not initialize! SDL_Error: "+ SDL_GetError());
 	}
 	else
 	{
@@ -39,7 +40,7 @@ int main(int argc, char* args[])
 		Window = SDL_CreateWindow("Joshua Manders-Jones - Games Programming - <ID number> - <Game Name>", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 		if (Window == NULL)
 		{
-			printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
+			Debug::Log("Window could not be created! SDL_Error: " + SDL_GetError());
 		}
 		else
 		{
@@ -69,7 +70,7 @@ int main(int argc, char* args[])
 
 	LoaderTool::init(); //Setup dictionaries for object creation
 
-	printf("Successfully initalised, begining load process.\n");
+	Debug::Log("Successfully initalised, begining load process.");
 
 	Object::Workspace = new Object(NULL);
 	if (LoaderTool::LoadScene(Object::Workspace, "test.txt", Renderer) < 0)
@@ -87,8 +88,6 @@ int main(int argc, char* args[])
 	Object::Workspace->GetChildren()[0]->GetChildren()[1]->Name = "Enemy";
 
 	SDL_SetRenderDrawColor(Renderer, 255, 255, 255, 255);
-
-	printf("Result is %f", (std::atan2(1, 1)) / transform::Pi);
 
 	SpacialHash::SetSize(15);
 
