@@ -37,7 +37,7 @@ int main(int argc, char* args[])
 	else
 	{
 		//Create window
-		Window = SDL_CreateWindow("Joshua Manders-Jones - Games Programming - <ID number> - <Game Name>", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+		Window = SDL_CreateWindow("Joshua Manders-Jones - Games Programming - <ID number> - <Game Name>", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
 		if (Window == NULL)
 		{
 			Debug::Log("Window could not be created! SDL_Error: " + (std::string)SDL_GetError());
@@ -104,6 +104,11 @@ int main(int argc, char* args[])
 
 		SDL_SetRenderDrawColor(Renderer, 255, 0, 0, 255);
 
+		SDL_Rect r = SDL_Rect();
+		r.w = Camera::Size.x;
+		r.h = Camera::Size.y;
+		SDL_RenderDrawRect(Renderer, &r);
+
 		Mouse::SetPos(); //Update the mouse position
 		while (SDL_PollEvent(&e) != 0)
 		{
@@ -116,6 +121,7 @@ int main(int argc, char* args[])
 			{
 				if (e.window.event == SDL_WINDOWEVENT_SIZE_CHANGED)
 				{
+					Debug::Log("Yeet");
 					Camera::Size = Vector2(e.window.data1, e.window.data2);
 				}
 			}
@@ -136,6 +142,8 @@ int main(int argc, char* args[])
 
 	SDL_DestroyWindow(Window);
 	SDL_Quit();
+	
+	Debug::Close();
 
 	return 0;
 }

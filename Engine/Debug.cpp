@@ -1,8 +1,10 @@
 #include "Debug.h"
 
+std::ofstream Debug::File;
+
 void Debug::Init() 
 {
-	File.open("Output", 'w');
+	File.open("Output.txt", 'w');
 }
 
 void Debug::Close() 
@@ -18,8 +20,8 @@ void Debug::DrawLine(Vector2 a, Vector2 b)
 	}
 }
 
-void Debug::Log(std::string out, char end)
+void Debug::Log(std::string out, bool NoEL)
 {
-	File << out << end;
-	std::cout << out << end;
+	File << out << ((NoEL) ? "" : "\r\n");
+	std::cout << out << ((NoEL) ? "\0" : "\r\n");
 }
