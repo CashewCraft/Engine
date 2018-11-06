@@ -17,6 +17,6 @@ class Debug
 	static void Close();
 
 	static void DrawLine(Vector2 a, Vector2 b);
-	static void Log(std::string out, char end = "\n");
+	static void Log(std::string out, char end = '\n');
 };
 

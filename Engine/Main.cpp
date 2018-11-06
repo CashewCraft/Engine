@@ -32,7 +32,7 @@ int main(int argc, char* args[])
 	//Initialize SDL
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
-		Debug::Log("SDL could not initialize! SDL_Error: "+ SDL_GetError());
+		Debug::Log("SDL could not initialize! SDL_Error: " + (std::string)SDL_GetError());
 	}
 	else
 	{
@@ -40,7 +40,7 @@ int main(int argc, char* args[])
 		Window = SDL_CreateWindow("Joshua Manders-Jones - Games Programming - <ID number> - <Game Name>", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 		if (Window == NULL)
 		{
-			Debug::Log("Window could not be created! SDL_Error: " + SDL_GetError());
+			Debug::Log("Window could not be created! SDL_Error: " + (std::string)SDL_GetError());
 		}
 		else
 		{
