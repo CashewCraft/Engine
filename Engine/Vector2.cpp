@@ -12,6 +12,12 @@ Vector2::Vector2(double X, double Y)
 	y = Y;
 }
 
+Vector2::Vector2(double XY)
+{
+	x = XY;
+	y = XY;
+}
+
 Vector2 Vector2::Truncate(float To)
 {
 	if (Magnitude() > To)

@@ -17,7 +17,7 @@ void CharController::InitHooks()
 	KeyHooks::Register(Hook(true, std::bind(&CharController::AddMoveUp, this), true), SDLK_UP);
 	KeyHooks::Register(Hook(true, std::bind(&CharController::AddMoveDown, this), true), SDLK_DOWN);
 
-	KeyHooks::Register(Hook(true, std::bind(&CharController::Shoot, this), false), SDLK_SPACE);
+	KeyHooks::Register(Hook(true, std::bind(&CharController::Shoot, this), true), SDLK_SPACE);
 
 	std::cout << "Hooking complete!\n";
 }

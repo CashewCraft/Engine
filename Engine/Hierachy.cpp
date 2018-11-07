@@ -153,7 +153,7 @@ void Object::Draw()
 {
 	SDL_Rect PosRect = GetRect().SDLf;
 
-	Debug::DrawLine(Transform.Position, Transform.Position + Transform.Rotation);
+	//Debug::DrawLine(Transform.Position, Transform.Position + Transform.Rotation);
 
 	SDL_RenderCopyEx(Object::Main, Sprite, NULL, &PosRect, Transform.GetRotAngle(), NULL, SDL_RendererFlip::SDL_FLIP_NONE);
 }

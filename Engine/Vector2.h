@@ -13,6 +13,7 @@ class Vector2
 
 	Vector2();
 	Vector2(double X, double Y);
+	Vector2(double XY);
 
 	Vector2 Truncate(float To = 1);
 

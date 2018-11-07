@@ -1,4 +1,6 @@
 #pragma once
+
+#include <algorithm>
 #include "Script.h"
 class Projectile : public Script
 {
@@ -7,6 +9,8 @@ class Projectile : public Script
 	public:
 	
 	Projectile(Object* a, Object* b) : Script(a) { im = b; };
+
+	void Update();
 
 	void OnCollision(Object *hit);
 };
