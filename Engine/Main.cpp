@@ -8,14 +8,15 @@
 
 #include "Hierachy.h"
 #include "LoaderTool.h"
+#include "SettingLoader.h"
 #include "CharController.h"
 #include "Time.h"
 #include "Mouse.h"
 #include "AI.h"
 
 //Screen dimension constants
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+int SCREEN_WIDTH = 640;
+int SCREEN_HEIGHT = 480;
 
 int main(int argc, char* args[])
 {
@@ -37,14 +38,28 @@ int main(int argc, char* args[])
 	else
 	{
 		//Create window
-		Window = SDL_CreateWindow("Joshua Manders-Jones - Games Programming - <ID number> - <Game Name>", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+
+		std::string Res = SettingLoader::GetValueOf<std::string>("Resolution");
+		Vector2 ScreenSize = Vector2(std::stoi(Res.substr(0, Res.find('x'))), std::stoi(Res.substr(Res.find('x')+1, Res.length()-1)));
+
+		Window = SDL_CreateWindow("Joshua Manders-Jones - Games Programming - <ID number> - <Game Name>", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, ScreenSize.x, ScreenSize.y, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
 		if (Window == NULL)
 		{
 			Debug::Log("Window could not be created! SDL_Error: " + (std::string)SDL_GetError());
 		}
 		else
 		{
-			Camera::Size = Vector2(SCREEN_WIDTH, SCREEN_HEIGHT);
+			std::string WindowMode = SettingLoader::GetValueOf<std::string>("WindowMode");
+			if (WindowMode == "Fullscreen")
+			{
+				SDL_SetWindowFullscreen(Window, SDL_WINDOW_FULLSCREEN);
+			}
+			else if (WindowMode == "Borderless")
+			{
+				SDL_SetWindowFullscreen(Window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+			}
+
+			Camera::Size = ScreenSize;
 
 			//Get window surface
 			MainSurface = SDL_GetWindowSurface(Window);

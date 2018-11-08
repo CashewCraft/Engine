@@ -1,0 +1,2 @@
+Resolution=640x480
+WindowMode=Windowed
