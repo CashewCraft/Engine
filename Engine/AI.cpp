@@ -1,6 +1,10 @@
 #include "AI.h"
 
-void AI::InitHooks() { GameObject->Transform.Rotation = Vector2(); }
+void AI::Init() 
+{ 
+	GameObject->body.MaxSpeed = 500;
+	GameObject->body.MaxForce = 0.4;
+}
 
 Vector2 AI::InsideCircle(double Radius)
 {

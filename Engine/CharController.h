@@ -19,7 +19,7 @@
 
 class CharController : public Script
 {
-	virtual void InitHooks();
+	virtual void Init();
 	PhysObject *GameObject;
 
 	bool Firing = false;
@@ -31,7 +31,7 @@ class CharController : public Script
 
 	public:
 
-	CharController(Object* a) : Script(a) { GameObject = (PhysObject*)Linked; InitHooks(); };
+	CharController(Object* a) : Script(a) { GameObject = (PhysObject*)Linked; Init(); };
 
 	void Update();
 

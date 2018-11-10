@@ -73,7 +73,10 @@ class Object
 
 	virtual void Draw();
 
+	double Scale = 1;
+
 	protected:
+
 
 	void DelSelf();
 

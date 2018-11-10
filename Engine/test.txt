@@ -2,7 +2,7 @@
 {
 (PhysObject)"ManMarker.bmp"[50,50]
 {
-(PhysObject)"GoodSpaceShip_Idle.bmp"[50,50]
+(PhysObject)"GoodSpaceShip_Idle.bmp"<0.3>[50,50]
 }
 (PhysObject)"SpaceShip.bmp"[100,100]
 }

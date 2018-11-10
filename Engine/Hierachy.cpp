@@ -118,7 +118,7 @@ Rect Object::GetRect()
 {
 	int w, h;
 	SDL_QueryTexture(Anim.GetCurrSprite(), NULL, NULL, &w, &h);
-	return Rect(Transform.Position, w, h);//Sprite->w, Sprite->h);
+	return Rect(Transform.Position, w*Scale, h*Scale);//Sprite->w, Sprite->h);
 }
 
 void Object::OnPhysTick()

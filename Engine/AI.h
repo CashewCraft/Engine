@@ -15,7 +15,7 @@ class AI : public Script
 
 	double Speed = 2;
 
-	virtual void InitHooks();
+	virtual void Init();
 
 	double GetAngle(Vector2 p1, Vector2 p2);
 
@@ -25,7 +25,7 @@ class AI : public Script
 
 	Vector2 InsideCircle(double radius);
 
-	AI(Object* a, PhysObject *p) : Script(a) { GameObject = (PhysObject*)Linked; Player = p; Target = InsideCircle(10); GameObject->body.MaxForce = 0.005; };
+	AI(Object* a, PhysObject *p) : Script(a) { GameObject = (PhysObject*)Linked; Player = p; Target = InsideCircle(10); Init(); };
 
 	void Update();
 

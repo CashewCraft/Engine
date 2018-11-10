@@ -1,6 +1,6 @@
 #include "CharController.h"
 
-void CharController::InitHooks()
+void CharController::Init()
 {
 	KeyHooks::Register(new Hook_Pass(&Thrust), SDLK_UP);
 	KeyHooks::Register(new Hook_Pass(&Slow), SDLK_DOWN);
@@ -9,6 +9,9 @@ void CharController::InitHooks()
 
 	GameObject->Anim.AddFrame("Moving", LoaderTool::ResourceDict["GoodSpaceShip_Thrust.bmp"]);
 	GameObject->Anim.AddFrame("Slowing", LoaderTool::ResourceDict["GoodSpaceShip_Slow.bmp"]);
+
+	GameObject->body.MaxSpeed = 500;
+	GameObject->body.MaxForce = 0.4;
 
 	std::cout << "Hooking complete!\n";
 }
@@ -39,7 +42,7 @@ void CharController::Update()
 	else if (Slow)
 	{
 		GameObject->Anim.SetState((GameObject->body.Velocity.Magnitude() > 0)?"Slowing":"");
-		GameObject->body.AddForce((GameObject->body.Velocity.Magnitude() > 2)?-GameObject->body.Velocity * 0.005: -GameObject->body.Velocity);
+		GameObject->body.AddForce((GameObject->body.Velocity.Magnitude() > 0.5)?-GameObject->body.Velocity * 0.005: -GameObject->body.Velocity);
 	}
 	else
 	{

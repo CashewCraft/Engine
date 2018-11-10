@@ -50,11 +50,14 @@ int LoaderTool::LoadScene(Object *ToParent, const char *filename, SDL_Renderer *
 		std::string Name;
 		double pos [2];
 		std::string FromNumber;
+		std::string FromNumber2;
+		double Scale = 1;
 		bool ReadingY = false;
 
 		bool ReadingPos = false;
 		bool ReadingName = false;
 		bool ReadingType = false;
+		bool ReadingScale = false;
 		Object *CreatedScope;
 		for (char i : Line)
 		{
@@ -92,6 +95,17 @@ int LoaderTool::LoadScene(Object *ToParent, const char *filename, SDL_Renderer *
 				}
 				continue;
 			}
+			if (ReadingScale)
+			{
+				if (i == '>')
+				{
+					ReadingScale = false;
+				}
+				else
+				{
+					FromNumber2 += i;
+				}
+			}
 			if (ReadingPos)
 			{
 				if (i == ']')
@@ -122,11 +136,14 @@ int LoaderTool::LoadScene(Object *ToParent, const char *filename, SDL_Renderer *
 						NameCounts[pos]++;
 					}
 
+					CreatedScope->Scale = (FromNumber2 == "")?1:std::stod(FromNumber2);
+
 					Parent.top()->AddChild(CreatedScope);
 
 					Type = "";
 					Name = "";
 					FromNumber = "";
+					FromNumber2 = "";
 					ReadingPos = false;
 					ReadingY = false;
 				}
@@ -152,6 +169,9 @@ int LoaderTool::LoadScene(Object *ToParent, const char *filename, SDL_Renderer *
 					break;
 				case '[':
 					ReadingPos = true;
+					break;
+				case '<':
+					ReadingScale = true;
 					break;
 				case '{':
 					Parent.emplace(CreatedScope);

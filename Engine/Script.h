@@ -7,7 +7,7 @@
 class Script
 {
 	protected:
-	virtual void InitHooks() {};
+	virtual void Init() {};
 	Object *Linked;
 
 	Script(Object* attach);
