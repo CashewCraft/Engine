@@ -7,6 +7,9 @@ void CharController::InitHooks()
 
 	KeyHooks::Register(new Hook_Pass(&Firing), SDLK_SPACE);
 
+	GameObject->Anim.AddFrame("Moving", LoaderTool::ResourceDict["GoodSpaceShip_Thrust.bmp"]);
+	GameObject->Anim.AddFrame("Slowing", LoaderTool::ResourceDict["GoodSpaceShip_Slow.bmp"]);
+
 	std::cout << "Hooking complete!\n";
 }
 
@@ -29,12 +32,18 @@ void CharController::Update()
 
 	if (Thrust)
 	{
+		GameObject->Anim.SetState("Moving");
 		//Debug::Log(std::to_string(GameObject->body.Velocity.Magnitude()));
 		GameObject->body.AddForce(GameObject->Transform.Rotation.Normalize() * 20);
 	}
 	else if (Slow)
 	{
-		GameObject->body.AddForce(-GameObject->body.Velocity * 2);
+		GameObject->Anim.SetState((GameObject->body.Velocity.Magnitude() > 0)?"Slowing":"");
+		GameObject->body.AddForce((GameObject->body.Velocity.Magnitude() > 2)?-GameObject->body.Velocity * 0.005: -GameObject->body.Velocity);
+	}
+	else
+	{
+		GameObject->Anim.SetState("");
 	}
 }
 
