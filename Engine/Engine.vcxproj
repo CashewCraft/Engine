@@ -148,6 +148,7 @@
     <ClCompile Include="Script.cpp" />
     <ClCompile Include="SettingLoader.cpp" />
     <ClCompile Include="SpacialHash.cpp" />
+    <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Vector2.cpp" />
@@ -170,6 +171,7 @@
     <ClInclude Include="Script.h" />
     <ClInclude Include="SettingLoader.h" />
     <ClInclude Include="SpacialHash.h" />
+    <ClInclude Include="Sprite.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Vector2.h" />

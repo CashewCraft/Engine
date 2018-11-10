@@ -51,7 +51,7 @@ Object* Object::GetNew(std::string type, SDL_Texture *sprite, transform pos)
 
 Object::Object(SDL_Texture *sprite)
 {
-	Sprite = sprite;
+	Anim = Sprite(sprite);
 }
 
 Object::~Object()
@@ -117,7 +117,7 @@ void Object::DelSelf()
 Rect Object::GetRect()
 {
 	int w, h;
-	SDL_QueryTexture(Sprite, NULL, NULL, &w, &h);
+	SDL_QueryTexture(Anim.GetCurrSprite(), NULL, NULL, &w, &h);
 	return Rect(Transform.Position, w, h);//Sprite->w, Sprite->h);
 }
 
@@ -181,7 +181,7 @@ void Object::Draw()
 
 	//Debug::DrawLine(Transform.Position, Transform.Position + Transform.Rotation);
 
-	SDL_RenderCopyEx(Object::Main, Sprite, NULL, &PosRect, Transform.GetRotAngle(), NULL, SDL_RendererFlip::SDL_FLIP_NONE);
+	SDL_RenderCopyEx(Object::Main, Anim.GetCurrSprite(), NULL, &PosRect, Transform.GetRotAngle(), NULL, SDL_RendererFlip::SDL_FLIP_NONE);
 }
 
 void Object::ForgetChild(Object *p)

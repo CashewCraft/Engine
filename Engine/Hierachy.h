@@ -11,6 +11,7 @@
 #include "Rect.h"
 #include "Debug.h"
 #include "SpacialHash.h"
+#include "Sprite.h"
 
 class Script; //Forward declaration for Script because otherwise we get a circular dependancy
 
@@ -20,14 +21,14 @@ class Object
 
 	std::vector<Object*> Children;
 
-	SDL_Texture *Sprite;
-
 	bool DeleteFlag = false;
 
 	static std::stack<Object*>ToAdd;
 	static std::stack<Object*>ToParents;
 
 	public:
+
+	Sprite Anim;
 
 	static void Instanciate(Object *ToAdd, Object *Parent);
 

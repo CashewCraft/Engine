@@ -1,1 +1,3 @@
 Bullet.bmp
+GoodSpaceShip_Slow.bmp
+GoodSpaceShip_Thrust.bmp
