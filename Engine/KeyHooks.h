@@ -14,12 +14,12 @@
 
 class KeyHooks
 {
-	static std::map<int, std::vector<Hook>> Callbacks;
+	static std::map<int, std::vector<Hook*>> Callbacks;
 
 	public:
 	static std::vector<SDL_Keycode> Down; //TODO: Make own system to monitor key up/down or find a solution to SDL not measuring multiple keys
 	
-	static void Register(Hook e, int key);
+	static void Register(Hook *e, int key);
 	static void Execute(SDL_Event e);
 };
 

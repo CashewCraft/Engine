@@ -1,8 +1,14 @@
 #include "Hook.h"
 
-Hook::Hook(bool KeyDown, callback_function cb, bool repeat)
+void Hook_Once::Execute(bool KeyDown)
 {
-	UD = KeyDown;
-	R = repeat;
-	F = cb;
+	if (KeyDown == UD)
+	{
+		F();
+	}
+}
+
+void Hook_Pass::Execute(bool KeyDown)
+{
+	*ToFlip = KeyDown;
 }

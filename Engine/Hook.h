@@ -10,11 +10,39 @@ typedef std::function<void(void)> callback_function;
 
 class Hook
 {
+	protected:
+
+	SDL_Keycode K;
+
+	Hook() {};
+
 	public:
 
+	virtual void Execute(bool KeyDown) {};
+	virtual bool Valid() { return false; };
+};
+
+class Hook_Once : public Hook
+{
 	bool UD;
-	bool R;
 	callback_function F;
 
-	Hook(bool Keydown, callback_function cb, bool Repeat = false);
+	public:
+
+	Hook_Once(bool Keydown, callback_function cb) { UD = Keydown; F = cb; };
+
+	void Execute(bool KeyDown);
+	bool Valid() { return F != NULL; };
+};
+
+class Hook_Pass : public Hook
+{
+	bool *ToFlip;
+
+	public:
+
+	Hook_Pass(bool *To) { ToFlip = To; };
+
+	void Execute(bool KeyDown);
+	bool Valid() { return ToFlip != NULL; };
 };

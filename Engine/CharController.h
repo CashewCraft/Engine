@@ -22,16 +22,18 @@ class CharController : public Script
 	virtual void InitHooks();
 	PhysObject *GameObject;
 
+	bool Firing = false;
+	bool Thrust = false;
+	bool Slow = false;
+
+	double FireRate = 1;
+	double Limiter = 0;
+
 	public:
 
 	CharController(Object* a) : Script(a) { GameObject = (PhysObject*)Linked; InitHooks(); };
 
 	void Update();
-
-	void AddMoveLeft();
-	void AddMoveRight();
-	void AddMoveUp();
-	void AddMoveDown();
 
 	void Shoot();
 
