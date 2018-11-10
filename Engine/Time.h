@@ -1,6 +1,8 @@
 #ifndef TIME_H
 #define TIME_H
 
+#include "Debug.h"
+
 #include <iostream>
 #include <SDL.h>
 #include <chrono>

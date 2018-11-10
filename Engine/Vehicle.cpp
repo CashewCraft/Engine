@@ -7,7 +7,7 @@ Vehicle::Vehicle(Vector2 *p, Vector2 *r, float m, float ms, float mf)
 	Position = p;
 	Rotation = r;
 	Mass = m;
-	MaxSpeed = ms/100;
+	MaxSpeed = ms;
 	MaxForce = mf;
 }
 
