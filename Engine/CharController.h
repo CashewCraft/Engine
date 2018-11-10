@@ -26,7 +26,7 @@ class CharController : public Script
 	bool Thrust = false;
 	bool Slow = false;
 
-	double FireRate = 1;
+	double FireRate = 0.1;
 	double Limiter = 0;
 
 	public:

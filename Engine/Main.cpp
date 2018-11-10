@@ -149,6 +149,9 @@ int main(int argc, char* args[])
 		//Render all the sprites after running any Regular update functions
 		Object::Workspace->OnRendTick();
 
+		//Full incorporate any objects that were added in the last run
+		Object::ClearAddStack();
+
 		SDL_RenderPresent(Renderer);
 		//SDL_UpdateWindowSurface(Window);
 

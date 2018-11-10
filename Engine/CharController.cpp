@@ -29,7 +29,7 @@ void CharController::Update()
 
 	if (Thrust)
 	{
-		Debug::Log(std::to_string(GameObject->body.Velocity.Magnitude()));
+		//Debug::Log(std::to_string(GameObject->body.Velocity.Magnitude()));
 		GameObject->body.AddForce(GameObject->Transform.Rotation.Normalize() * 20);
 	}
 	else if (Slow)
@@ -42,9 +42,11 @@ void CharController::Shoot()
 {
 	PhysObject *Bullet = new PhysObject(LoaderTool::ResourceDict["Bullet.bmp"]);
 	Bullet->Name = "Bill";
-	Object::Workspace->AddChild(Bullet);
+	//Object::Workspace->AddChild(Bullet);
 	Bullet->Transform.Position = GameObject->Transform.Position;
-	Bullet->body.Velocity = GameObject->Transform.Rotation.Normalize()*0.1;
+	Bullet->body.Velocity = GameObject->Transform.Rotation.Normalize()*320;
+
+	Object::Instanciate(Bullet, Object::Workspace);
 
 	new Projectile(Bullet, Linked);
 }

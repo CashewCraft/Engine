@@ -5,7 +5,6 @@ void Projectile::Update()
 	float MaxDist = Vector2(std::max(Camera::Size.x, Camera::Size.y)).Magnitude();
 	if (Linked->Transform.Position.Magnitude() > MaxDist)
 	{
-		Debug::Log("Yikes");
 		Linked->PrepareDelete();
 	}
 }

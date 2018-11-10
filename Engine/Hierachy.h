@@ -6,6 +6,7 @@
 #include <map>
 #include <string>
 #include <iostream>
+#include <stack>
 #include "Transform.h"
 #include "Rect.h"
 #include "Debug.h"
@@ -23,7 +24,14 @@ class Object
 
 	bool DeleteFlag = false;
 
+	static std::stack<Object*>ToAdd;
+	static std::stack<Object*>ToParents;
+
 	public:
+
+	static void Instanciate(Object *ToAdd, Object *Parent);
+
+	static void ClearAddStack();
 
 	static Object* Workspace;
 

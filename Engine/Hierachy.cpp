@@ -2,6 +2,31 @@
 
 #include "Script.h"
 
+std::stack<Object*> Object::ToAdd = std::stack<Object*>();
+std::stack<Object*> Object::ToParents = std::stack<Object*>();
+
+void Object::Instanciate(Object *TA, Object *Parent)
+{
+	ToAdd.push(TA);
+	ToParents.push(Parent);
+}
+void Object::ClearAddStack()
+{
+	while (!ToAdd.empty())
+	{
+		if (ToParents.top() != NULL)
+		{
+			ToParents.top()->AddChild(ToAdd.top());
+			//ToAdd.top()->Parent = ToParents.top();
+		}
+		else
+		{
+			delete ToAdd.top();
+		}
+		ToAdd.pop(); ToParents.pop();
+	}
+}
+
 std::map<std::string, Object*> Object::PrototypeDict;
 
 SDL_Renderer* Object::Main = nullptr;
@@ -127,6 +152,7 @@ void Object::OnRendTick()
 
 	Draw();
 
+	int index = 0;
 	for (Object *i : Children)
 	{
 		i->OnRendTick();
