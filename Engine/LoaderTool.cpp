@@ -136,7 +136,7 @@ int LoaderTool::LoadScene(Object *ToParent, const char *filename, SDL_Renderer *
 						NameCounts[pos]++;
 					}
 
-					CreatedScope->Scale = (FromNumber2 == "")?1:std::stod(FromNumber2);
+					CreatedScope->Size *= (FromNumber2 == "")?1:std::stod(FromNumber2);
 
 					Parent.top()->AddChild(CreatedScope);
 

@@ -52,6 +52,9 @@ Object* Object::GetNew(std::string type, SDL_Texture *sprite, transform pos)
 Object::Object(SDL_Texture *sprite)
 {
 	Anim = Sprite(sprite);
+	int w, h;
+	SDL_QueryTexture(Anim.GetCurrSprite(), NULL, NULL, &w, &h);
+	Size = Vector2(w, h);
 }
 
 Object::~Object()
@@ -116,9 +119,8 @@ void Object::DelSelf()
 
 Rect Object::GetRect()
 {
-	int w, h;
-	SDL_QueryTexture(Anim.GetCurrSprite(), NULL, NULL, &w, &h);
-	return Rect(Transform.Position, w*Scale, h*Scale);//Sprite->w, Sprite->h);
+	
+	return Rect(Transform.Position, Size.x, Size.y);
 }
 
 void Object::OnPhysTick()
@@ -133,20 +135,15 @@ void Object::OnPhysTick()
 		i->OnPhysTick();
 	}
 
-	Update();
+	FixedUpdate();
 }
 
 void Object::OnRendTick()
 {
+	Update();
+
 	for (Script *i : AttachedScripts)
 	{
-		for (Object *c : *SpacialHash::GetCollisions(this))
-		{
-			if (c != this)
-			{
-				i->OnCollision(c);
-			}
-		}
 		i->Update();
 	}
 
@@ -164,6 +161,7 @@ void Object::OnRendTick()
 	}
 }
 
+void Object::FixedUpdate() {}
 void Object::Update() {}
 
 void Object::Shift(Vector2 c, int m)

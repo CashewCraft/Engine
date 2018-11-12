@@ -67,13 +67,14 @@ class Object
 	void OnPhysTick();
 	void OnRendTick();
 
+	virtual void FixedUpdate();
 	virtual void Update();
 
 	void Shift(Vector2 Change, int Mult = 1);
 
 	virtual void Draw();
 
-	double Scale = 1;
+	Vector2 Size;
 
 	protected:
 

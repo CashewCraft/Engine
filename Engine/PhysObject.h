@@ -10,14 +10,19 @@
 #include "Vector2.h"
 #include "SpacialHash.h"
 
+class Script;
+
 class PhysObject : public Object
 { 
 	public:
 
 	Vehicle body;
 
+	double CollDist;
+
 	PhysObject(SDL_Texture *sprite);
 
+	virtual void FixedUpdate();
 	virtual void Update();
 
 	protected:

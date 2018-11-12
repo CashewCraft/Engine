@@ -4,6 +4,7 @@
 #include "Hierachy.h"
 #include <map>
 #include <vector>
+#include <algorithm>
 
 class Object; //Forward declaration to resolve circular dependancy
 

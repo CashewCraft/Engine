@@ -6,10 +6,13 @@
 
 #include <iostream>
 #include <fstream>
+#include <ctime>
 
 class Debug
 {
 	static std::ofstream File;
+
+	static void Output(std::string MSG);
 
 	public:
 
@@ -17,6 +20,10 @@ class Debug
 	static void Close();
 
 	static void DrawLine(Vector2 a, Vector2 b);
-	static void Log(std::string out, bool NoEL = false);
+	static void DrawSquare(Vector2 a, Vector2 b);
+
+	static void Log(std::string out);
+	static void Error(std::string out);
+	static void Flag(std::string out);
 };
 

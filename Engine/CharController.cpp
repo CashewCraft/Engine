@@ -12,8 +12,6 @@ void CharController::Init()
 
 	GameObject->body.MaxSpeed = 500;
 	GameObject->body.MaxForce = 0.4;
-
-	std::cout << "Hooking complete!\n";
 }
 
 void CharController::Update() 
@@ -47,6 +45,19 @@ void CharController::Update()
 	else
 	{
 		GameObject->Anim.SetState("");
+	}
+
+	if (GameObject->Transform.Position.x < Camera::Position.x || GameObject->Transform.Position.x > (Camera::Position + Camera::Size).x)
+	{
+		GameObject->body.Velocity.x *= -1;
+
+		GameObject->Transform.Position.x = (GameObject->Transform.Position.x < Camera::Position.x) ? Camera::Position.x : (Camera::Position + Camera::Size).x;
+	}
+	if (GameObject->Transform.Position.y < Camera::Position.y || GameObject->Transform.Position.y > (Camera::Position + Camera::Size).y)
+	{
+		GameObject->body.Velocity.y *= -1;
+
+		GameObject->Transform.Position.y = (GameObject->Transform.Position.y < Camera::Position.y) ? Camera::Position.y : (Camera::Position + Camera::Size).y;
 	}
 }
 

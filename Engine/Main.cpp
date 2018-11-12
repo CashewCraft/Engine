@@ -33,7 +33,7 @@ int main(int argc, char* args[])
 	//Initialize SDL
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
-		Debug::Log("SDL could not initialize! SDL_Error: " + (std::string)SDL_GetError());
+		Debug::Error("SDL could not initialize! SDL_Error: " + (std::string)SDL_GetError());
 	}
 	else
 	{
@@ -45,7 +45,7 @@ int main(int argc, char* args[])
 		Window = SDL_CreateWindow("Joshua Manders-Jones - Games Programming - <ID number> - <Game Name>", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, ScreenSize.x, ScreenSize.y, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
 		if (Window == NULL)
 		{
-			Debug::Log("Window could not be created! SDL_Error: " + (std::string)SDL_GetError());
+			Debug::Error("Window could not be created! SDL_Error: " + (std::string)SDL_GetError());
 		}
 		else
 		{
@@ -136,7 +136,7 @@ int main(int argc, char* args[])
 			{
 				if (e.window.event == SDL_WINDOWEVENT_SIZE_CHANGED)
 				{
-					Debug::Log("Yeet");
+					Debug::Log("Window resized");
 					Camera::Size = Vector2(e.window.data1, e.window.data2);
 				}
 			}
