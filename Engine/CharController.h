@@ -11,6 +11,7 @@
 #include "Camera.h"
 #include "LoaderTool.h"
 #include "Projectile.h"
+#include "SettingLoader.h"
 
 //#include "SpacialHash"
 #include <iostream>

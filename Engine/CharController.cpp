@@ -2,10 +2,10 @@
 
 void CharController::Init()
 {
-	KeyHooks::Register(new Hook_Pass(&Thrust), SDLK_UP);
-	KeyHooks::Register(new Hook_Pass(&Slow), SDLK_DOWN);
+	KeyHooks::Register(new Hook_Pass(&Thrust), SettingLoader::GetControlFor("Thrust", SDLK_UP));
+	KeyHooks::Register(new Hook_Pass(&Slow), SettingLoader::GetControlFor("Brake", SDLK_DOWN));
 
-	KeyHooks::Register(new Hook_Pass(&Firing), SDLK_SPACE);
+	KeyHooks::Register(new Hook_Pass(&Firing), SettingLoader::GetControlFor("Shoot", SDLK_SPACE));
 
 	GameObject->Anim.AddFrame("Moving", LoaderTool::ResourceDict["GoodSpaceShip_Thrust.bmp"]);
 	GameObject->Anim.AddFrame("Slowing", LoaderTool::ResourceDict["GoodSpaceShip_Slow.bmp"]);

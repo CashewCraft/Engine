@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Vector2.h"
+#include "Debug.h"
 
 #include <fstream>
 #include <string>
@@ -16,32 +17,12 @@ class SettingLoader
 	static Vector2 Resolution;
 	static SDL_WindowFlags FullscreenMode;
 
-	template <typename Expected> static Expected GetValueOf(std::string Name)
-	{
-		std::ifstream From;
-		From.open("Settings.txt");
-		if (!From.is_open())
-		{
-			//#pragma warning(suppress : 4996)
-			//printf("Failed to open file: %s\n", strerror(errno));
-			return NULL;
-		}
+	static std::string GetValueOf(std::string Name, std::string Default);
 
-		int counter = 0;
+	static std::string SearchFor(std::string Name, std::string FileName);
 
-		std::string Line;
-		while (std::getline(From, Line))
-		{
-			std::vector<std::string> Value = Split(Line, '=');
-			if (Value[0] == Name)
-			{
-				From.close();
-				return (Expected)Value[1];
-			}
-		}
+	static int GetControlFor(std::string Name, int Default);
 
-		From.close();
-		return NULL;
-	}
+	static void AppendTo(std::string FileName, std::string SettingName, std::string Value);
 };
 

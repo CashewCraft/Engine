@@ -39,7 +39,7 @@ int main(int argc, char* args[])
 	{
 		//Create window
 
-		std::string Res = SettingLoader::GetValueOf<std::string>("Resolution");
+		std::string Res = SettingLoader::GetValueOf("Resolution", "640x480");
 		Vector2 ScreenSize = Vector2(std::stoi(Res.substr(0, Res.find('x'))), std::stoi(Res.substr(Res.find('x')+1, Res.length()-1)));
 
 		Window = SDL_CreateWindow("Joshua Manders-Jones - Games Programming - <ID number> - <Game Name>", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, ScreenSize.x, ScreenSize.y, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
@@ -49,7 +49,7 @@ int main(int argc, char* args[])
 		}
 		else
 		{
-			std::string WindowMode = SettingLoader::GetValueOf<std::string>("WindowMode");
+			std::string WindowMode = SettingLoader::GetValueOf("WindowMode", "Windowed");
 			if (WindowMode == "Fullscreen")
 			{
 				SDL_SetWindowFullscreen(Window, SDL_WINDOW_FULLSCREEN);
