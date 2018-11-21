@@ -8,7 +8,8 @@ void Debug::Output(std::string m)
 	time_t CurrentTime = std::time(0);
 	struct tm info;
 	localtime_s(&info, &CurrentTime);
-	size_t written = strftime(Buffer, 32, "%d/%m/%y %T", &info);
+	size_t written = strftime(Buffer, 32, "%d/%m/%y %T", &info);
+
 	File << "[" << Buffer << "] " << m << "\r\n";
 	std::cout << "[" << Buffer << "] " << m << "\r\n";
 	File.flush();
@@ -61,4 +62,8 @@ void Debug::Error(std::string out)
 void Debug::Flag(std::string out)
 {
 	Output("DEBUG: " + out);
+}
+void Debug::Custom(std::string Flag, std::string out)
+{
+	Output(Flag + ": " + out);
 }

@@ -25,5 +25,6 @@ class Debug
 	static void Log(std::string out);
 	static void Error(std::string out);
 	static void Flag(std::string out);
+	static void Custom(std::string Flag, std::string out);
 };
 
