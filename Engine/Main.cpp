@@ -31,7 +31,7 @@ int main(int argc, char* args[])
 	SDL_Renderer* Renderer = NULL;
 
 	//Initialize SDL
-	if (SDL_Init(SDL_INIT_VIDEO) < 0)
+	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
 	{
 		Debug::Error("SDL could not initialize! SDL_Error: " + (std::string)SDL_GetError());
 	}
@@ -42,7 +42,7 @@ int main(int argc, char* args[])
 		std::string Res = SettingLoader::GetValueOf("Resolution", "640x480");
 		Vector2 ScreenSize = Vector2(std::stoi(Res.substr(0, Res.find('x'))), std::stoi(Res.substr(Res.find('x')+1, Res.length()-1)));
 
-		Window = SDL_CreateWindow("Joshua Manders-Jones - Games Programming - <ID number> - <Game Name>", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, ScreenSize.x, ScreenSize.y, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+		Window = SDL_CreateWindow("Joshua Manders-Jones - Games Programming - 17642735 - <Game Name>", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, ScreenSize.x, ScreenSize.y, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
 		if (Window == NULL)
 		{
 			Debug::Error("Window could not be created! SDL_Error: " + (std::string)SDL_GetError());
@@ -81,7 +81,32 @@ int main(int argc, char* args[])
 		}
 	}
 
-	Mouse::SetPos();
+	Mouse::Controller = SettingLoader::GetValueOf("Controller", "False") == "True";
+	int ControlDeadzone = std::stoi(SettingLoader::GetValueOf("Deadzone", "8000"));
+	Debug::Flag("There are currently " + std::to_string(SDL_NumJoysticks()) + " joystick(s) connected");
+	if (Mouse::Controller && SDL_NumJoysticks() > 0)
+	{
+		Debug::Log("Initialising Gamepad controls");
+		Mouse::Controller = true;
+		Mouse::CInstance = SDL_JoystickOpen(0);
+		if (Mouse::CInstance == nullptr)
+		{
+			Debug::Error("Failed to open joystick! SDL_Error: " + (std::string)SDL_GetError());
+			Debug::Error("Settings are set to use controller, but no valid joysticks are connected! Defaulting to keyboard control.");
+			Mouse::Controller = false;
+			Mouse::SetPos();
+		}
+	}
+	else if (Mouse::Controller)
+	{
+		Debug::Error("Settings are set to use controller, but no valid joysticks are connected! Defaulting to keyboard control.");
+		Mouse::Controller = false;
+		Mouse::SetPos();
+	}
+	else
+	{
+		Mouse::SetPos();
+	}
 
 	LoaderTool::init(); //Setup dictionaries for object creation
 
@@ -97,9 +122,9 @@ int main(int argc, char* args[])
 	bool running = true;
 	SDL_Event e;
 
-	new CharController(Object::Workspace->GetChildren()[0]->GetChildren()[0]->GetChildren()[0]);
-	new AI(Object::Workspace->GetChildren()[0]->GetChildren()[1], (PhysObject*)(Object::Workspace->GetChildren()[0]->GetChildren()[0]->GetChildren()[0]));
-	Object::Workspace->GetChildren()[0]->GetChildren()[0]->GetChildren()[0]->Name = "Player";
+	new CharController(Object::Workspace->GetChildren()[0]->GetChildren()[0]);
+	new AI(Object::Workspace->GetChildren()[0]->GetChildren()[1], (PhysObject*)(Object::Workspace->GetChildren()[0]->GetChildren()[0]));
+	Object::Workspace->GetChildren()[0]->GetChildren()[0]->Name = "Player";
 	Object::Workspace->GetChildren()[0]->GetChildren()[1]->Name = "Enemy";
 
 	SDL_SetRenderDrawColor(Renderer, 255, 255, 255, 255);
@@ -124,23 +149,38 @@ int main(int argc, char* args[])
 		r.h = Camera::Size.y;
 		SDL_RenderDrawRect(Renderer, &r);
 
-		Mouse::SetPos(); //Update the mouse position
+		if (!Mouse::Controller)
+		{
+			Mouse::SetPos(); //Update the mouse position
+		}
+
 		while (SDL_PollEvent(&e) != 0)
 		{
-			if (e.type == SDL_QUIT)
+			switch (e.type)
 			{
-				running = false;
-				break;
+				case (SDL_QUIT):
+					running = false;
+					break;
+				case (SDL_WINDOWEVENT):
+					if (e.window.event == SDL_WINDOWEVENT_SIZE_CHANGED)
+					{
+						Debug::Log("Window resized");
+						Camera::Size = Vector2(e.window.data1, e.window.data2);
+					}
+					break;
+				case (SDL_JOYAXISMOTION):
+					if (Mouse::Controller)
+					{
+						if (e.jaxis.axis < 2 && std::abs(e.jaxis.value) > ControlDeadzone)
+						{
+							((e.jaxis.axis == 0) ? (Mouse::Pos.x) : (Mouse::Pos.y)) = e.jaxis.value;
+						}
+					}
+					break;
+				default:
+					KeyHooks::Execute(e); //Run any callback functions attached to this key
+					break;
 			}
-			else if (e.type == SDL_WINDOWEVENT)
-			{
-				if (e.window.event == SDL_WINDOWEVENT_SIZE_CHANGED)
-				{
-					Debug::Log("Window resized");
-					Camera::Size = Vector2(e.window.data1, e.window.data2);
-				}
-			}
-			KeyHooks::Execute(e); //Run any callback functions attached to this key
 		}
 
 		//Update all of the physics for this tick, along with any fixedupdate functions

@@ -1,6 +1,8 @@
 #include "Mouse.h"
 
 Vector2 Mouse::Pos = Vector2();
+bool Mouse::Controller = false;
+SDL_Joystick *Mouse::CInstance = nullptr;
 
 void Mouse::SetPos() 
 {

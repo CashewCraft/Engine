@@ -1,15 +1,22 @@
 "NULL"
+
 {
-(PhysObject)"ManMarker.bmp"[50,50]
-{
-(PhysObject)"GoodSpaceShip_Idle.bmp"<0.3>[50,50]
+	(PhysObject)"GoodSpaceShip_Idle.bmp"<0.3>[50,50]
+
+	(PhysObject)"SpaceShip.bmp"[100,100]
+
 }
-(PhysObject)"SpaceShip.bmp"[100,100]
-}
+
 "NULL"
+
 {
-"NULL"
-{
-(PhysObject)"Man.bmp"[60,0]
-}
+
+	"NULL"
+
+	{
+
+	(PhysObject)"Man.bmp"[60,0]
+
+	}
+
 }
