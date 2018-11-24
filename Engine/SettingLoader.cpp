@@ -31,7 +31,7 @@ std::string SettingLoader::GetValueOf(std::string Name, std::string Default)
 		return Result;
 	}
 	Debug::Error("Could not find setting " + Name + " in file, appending");
-	AppendTo("Settings.txt", "Name", Default);
+	AppendTo("Settings.txt", Name, Default);
 	return Default;
 }
 
