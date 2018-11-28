@@ -44,6 +44,10 @@ Vector2 Vector2::Cross()
 {
 	return Vector2(y, -x);
 }
+double Vector2::Dot(Vector2 Other)
+{
+	return (x*Other.x) + (y*Other.y);
+}
 
 Vector2 Vector2::Slerp(Vector2 b, double t)
 {

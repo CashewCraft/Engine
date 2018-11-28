@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <SDL.h>
+#include <float.h>
 #include <iostream>
 #include "Hierachy.h"
 #include "Move.h"
@@ -24,6 +25,8 @@ class PhysObject : public Object
 
 	virtual void FixedUpdate();
 	virtual void Update();
+
+	bool CheckCollision(Rect Other);
 
 	protected:
 

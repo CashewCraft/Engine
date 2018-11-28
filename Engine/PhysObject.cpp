@@ -1,6 +1,6 @@
 #include "PhysObject.h"
 
-#include "Script.h";
+#include "Script.h"
 
 PhysObject::PhysObject(SDL_Texture *sprite) : Object(sprite) 
 {
@@ -16,11 +16,12 @@ void PhysObject::FixedUpdate()
 }
 void PhysObject::Update()
 {
+	Rect MyRect = GetRect();
 	for (Script *i : AttachedScripts)
 	{
 		for (Object *c : *SpacialHash::GetCollisions(this))
 		{
-			if (c != this)
+			if (c != this && MyRect.GetCollision(c->GetRect()))
 			{
 				i->OnCollision(c);
 			}

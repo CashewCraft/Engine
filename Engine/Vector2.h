@@ -22,6 +22,7 @@ class Vector2
 	float Magnitude();
 
 	Vector2 Cross();
+	double Dot(Vector2 Other);
 
 	Vector2 Slerp(Vector2 b, double t);
 

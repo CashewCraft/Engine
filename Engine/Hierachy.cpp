@@ -119,8 +119,7 @@ void Object::DelSelf()
 
 Rect Object::GetRect()
 {
-	
-	return Rect(Transform.Position, Size.x, Size.y);
+	return Rect(Transform.Position, Transform.Rotation, Size.x, Size.y);
 }
 
 void Object::OnPhysTick()
