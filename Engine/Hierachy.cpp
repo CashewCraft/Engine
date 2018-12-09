@@ -148,7 +148,6 @@ void Object::OnRendTick()
 
 	Draw();
 
-	int index = 0;
 	for (Object *i : Children)
 	{
 		i->OnRendTick();
@@ -162,15 +161,6 @@ void Object::OnRendTick()
 
 void Object::FixedUpdate() {}
 void Object::Update() {}
-
-void Object::Shift(Vector2 c, int m)
-{
-	Transform.Position += (c * m);
-	for (Object *i : Children)
-	{
-		i->Shift(c,m);
-	}
-}
 
 void Object::Draw()
 {

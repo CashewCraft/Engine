@@ -70,8 +70,6 @@ class Object
 	virtual void FixedUpdate();
 	virtual void Update();
 
-	void Shift(Vector2 Change, int Mult = 1);
-
 	virtual void Draw();
 
 	Vector2 Size;
