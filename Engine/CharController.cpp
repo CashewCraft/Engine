@@ -7,8 +7,8 @@ void CharController::Init()
 
 	KeyHooks::Register(new Hook_Pass(&Firing), SettingLoader::GetControlFor("Shoot", SDLK_SPACE));
 
-	GameObject->Anim.AddFrame("Moving", LoaderTool::ResourceDict["GoodSpaceShip_Thrust.bmp"]);
-	GameObject->Anim.AddFrame("Slowing", LoaderTool::ResourceDict["GoodSpaceShip_Slow.bmp"]);
+	GameObject->Anim.AddFrame("Moving", LoaderTool::ResourceDict["GoodSpaceShip_Thrust"]);
+	GameObject->Anim.AddFrame("Slowing", LoaderTool::ResourceDict["GoodSpaceShip_Slow"]);
 
 	GameObject->body.MaxSpeed = 500;
 	GameObject->body.MaxForce = 0.4;
@@ -63,7 +63,7 @@ void CharController::Update()
 
 void CharController::Shoot()
 {
-	PhysObject *Bullet = new PhysObject(LoaderTool::ResourceDict["Bullet.bmp"]);
+	PhysObject *Bullet = new PhysObject(LoaderTool::ResourceDict["Bullet"]);
 	Bullet->Name = "Bill";
 	//Object::Workspace->AddChild(Bullet);
 	Bullet->Transform.Position = GameObject->Transform.Position;

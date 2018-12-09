@@ -82,7 +82,7 @@ int LoaderTool::LoadScene(Object *ToParent, const char *filename, SDL_Renderer *
 						CreatedScope = new Object(NULL);
 
 						CreatedScope->Name = "NULL (" + std::to_string(NullCount) + ")";
-						Debug::Log("Creating object NULL (" + std::to_string(NullCount) + ")");
+						Debug::Custom("LOADING","Creating object NULL (" + std::to_string(NullCount) + ")");
 						NullCount++;
 						Parent.top()->AddChild(CreatedScope);
 						Name = "";
@@ -119,19 +119,19 @@ int LoaderTool::LoadScene(Object *ToParent, const char *filename, SDL_Renderer *
 					{
 						CreatedScope = Object::GetNew(Type, ResourceDict[Name], temp);
 
-						Debug::Log("Creating object " + Name + " (" + std::to_string(NameCounts[pos]) + ")");
+						Debug::Custom("LOADING","Creating object " + Name + " (" + std::to_string(NameCounts[pos]) + ")");
 						CreatedScope->Name = Name + " (" + std::to_string(NameCounts[pos]) + ")";
 						NameCounts[pos]++;
 					}
 					else
 					{
-						ResourceDict[Name] = SDL_CreateTextureFromSurface(r, SDL_LoadBMP(Name.c_str()));
-						Debug::Log("Added file " + Name + " to resource directory");
+						ResourceDict[Name] = SDL_CreateTextureFromSurface(r, SDL_LoadBMP(("Sprites/"+Name+".bmp").c_str()));
+						Debug::Custom("LOADING","Added file " + Name + " to resource directory");
 						CreatedScope = Object::GetNew(Type, ResourceDict[Name], temp);
 
 						Names.push_back(Name);
 						NameCounts.push_back(0);
-						Debug::Log("Creating object " + Name + " (" + std::to_string(NameCounts[pos]) + ")");
+						Debug::Custom("LOADING","Creating object " + Name + " (" + std::to_string(NameCounts[pos]) + ")");
 						CreatedScope->Name = Name + " (" + std::to_string(NameCounts[pos]) + ")";
 						NameCounts[pos]++;
 					}
@@ -201,8 +201,8 @@ int LoaderTool::LoadScene(Object *ToParent, const char *filename, SDL_Renderer *
 
 	while (std::getline(From, Line))
 	{
-		ResourceDict[Line] = SDL_CreateTextureFromSurface(r, SDL_LoadBMP(Line.c_str()));
-		Debug::Log("Added additional file " + Line + " to resource directory");
+		ResourceDict[Line] = SDL_CreateTextureFromSurface(r, SDL_LoadBMP(("Sprites/"+Line+".bmp").c_str()));
+		Debug::Custom("LOADING","Added additional file " + Line + " to resource directory");
 	}
 
 	From.close();
