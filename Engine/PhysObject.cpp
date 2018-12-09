@@ -4,7 +4,7 @@
 
 PhysObject::PhysObject(SDL_Texture *sprite) : Object(sprite) 
 {
-	body = Vehicle(&Transform.Position, &Transform.Rotation);
+	body = Vehicle(&Transform.Position);
 	CollDist = Size.Magnitude();
 }
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SDL.h>
+#include <SDL_mixer.h>
 
 #include "Script.h"
 #include "KeyHooks.h"
@@ -12,6 +13,7 @@
 #include "LoaderTool.h"
 #include "Projectile.h"
 #include "SettingLoader.h"
+#include "Sound.h"
 
 //#include "SpacialHash"
 #include <iostream>
@@ -23,6 +25,8 @@ class CharController : public Script
 	virtual void Init();
 	PhysObject *GameObject;
 
+	Sound *ThrustNoise;
+
 	bool Firing = false;
 	bool Thrust = false;
 	bool Slow = false;
@@ -33,6 +37,8 @@ class CharController : public Script
 	public:
 
 	CharController(Object* a) : Script(a) { GameObject = (PhysObject*)Linked; Init(); };
+
+	void Release();
 
 	void Update();
 

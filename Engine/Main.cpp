@@ -12,6 +12,9 @@
 #include "Time.h"
 #include "Mouse.h"
 #include "AI.h"
+#include "TextGenerator.h"
+
+#include "UIpane.h"
 
 //Screen dimension constants
 int SCREEN_WIDTH = 640;
@@ -36,6 +39,17 @@ int main(int argc, char* args[])
 	}
 	else
 	{
+		if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+		{
+			Debug::Error("Could not intialise audio! SDL_Error: " + (std::string)SDL_GetError());
+			return -1;
+		}
+		if (TTF_Init() < 0)
+		{
+			Debug::Error("Could not intialise Text! SDL_Error: " + (std::string)SDL_GetError());
+			return -1;
+		}
+
 		//Create window
 
 		std::string Res = SettingLoader::GetValueOf("Resolution", "640x480");
@@ -118,6 +132,20 @@ int main(int argc, char* args[])
 		return -1;
 	}
 
+	Object UI = Object(NULL);
+	TextGenerator::PrepareFont("BADABOOM", 128);
+	UIpane *RoundHeader = new UIpane(TextGenerator::GenText("BADABOOM", 128, SDL_Colour{ 107, 3, 57 }, "Round"), false, Vector2(0, 0), Vector2(1, 1), Vector2(0,-0.5));
+	RoundHeader->Offset.y = RoundHeader->Size.y / 2;
+	//RoundHeaderB->AddChild(RoundHeader);5
+
+	UIpane *ScoreB = new UIpane(TextGenerator::GenText("BADABOOM", 128, SDL_Colour{ 214, 3, 57 }, "0"), false, Vector2(0, 0), Vector2(1, 1), Vector2(0.53,0.2));
+	UIpane *Score = new UIpane(TextGenerator::GenText("BADABOOM", 128, SDL_Colour{ 127, 3, 57 }, "0"), true, Vector2(0, 0), Vector2(0.9, 0.9));
+
+	ScoreB->AddChild(Score);
+	RoundHeader->AddChild(ScoreB);
+
+	UI.AddChild(RoundHeader);
+
 	bool running = true;
 	SDL_Event e;
 
@@ -182,11 +210,16 @@ int main(int argc, char* args[])
 			}
 		}
 
+		//Set the Position and size of the UI base
+		UI.Size = Camera::Size;
+		UI.Transform.Position = Camera::Position + (Camera::Size/2);
+
 		//Update all of the physics for this tick, along with any fixedupdate functions
 		Object::Workspace->OnPhysTick();
 
 		//Render all the sprites after running any Regular update functions
 		Object::Workspace->OnRendTick();
+		UI.OnRendTick();
 
 		//Full incorporate any objects that were added in the last run
 		Object::ClearAddStack();

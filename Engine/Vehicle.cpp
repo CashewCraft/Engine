@@ -2,10 +2,9 @@
 
 Vehicle::Vehicle() {}
 
-Vehicle::Vehicle(Vector2 *p, Vector2 *r, float m, float ms, float mf)
+Vehicle::Vehicle(Vector2 *Pos, float m, float ms, float mf)
 {
-	Position = p;
-	Rotation = r;
+	Position = Pos;
 	Mass = m;
 	MaxSpeed = ms;
 	MaxForce = mf;

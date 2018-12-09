@@ -10,6 +10,7 @@ void LoaderTool::init()
 }
 
 std::map<std::string, SDL_Texture*> LoaderTool::ResourceDict = std::map<std::string, SDL_Texture*>();
+std::map<std::string, Mix_Chunk*> LoaderTool::SoundDict = std::map<std::string, Mix_Chunk*>();
 
 int LoaderTool::LoadScene(Object *ToParent, const char *filename, SDL_Renderer *r)
 {
@@ -203,6 +204,22 @@ int LoaderTool::LoadScene(Object *ToParent, const char *filename, SDL_Renderer *
 	{
 		ResourceDict[Line] = SDL_CreateTextureFromSurface(r, SDL_LoadBMP(("Sprites/"+Line+".bmp").c_str()));
 		Debug::Custom("LOADING","Added additional file " + Line + " to resource directory");
+	}
+
+	From.close();
+
+	From.open("LoadSound.txt");
+	if (!From.is_open())
+	{
+		//#pragma warning(suppress : 4996)
+		//printf("Failed to open file: %s\n", strerror(errno));
+		return -1;
+	}
+
+	while (std::getline(From, Line))
+	{
+		SoundDict[Line] = Mix_LoadWAV(("Sounds/" + Line + ".wav").c_str());
+		Debug::Log("Added sound file " + Line + " to resource directory");
 	}
 
 	From.close();

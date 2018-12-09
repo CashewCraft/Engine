@@ -8,10 +8,10 @@ class Vehicle
 	public:
 
 	float Mass, MaxSpeed, MaxForce;
-	Vector2 *Position, Velocity, *Rotation;
+	Vector2 Velocity, *Position;
 
 	Vehicle();
-	Vehicle(Vector2 *position, Vector2 *rotation, float mass = 1, float maxSpeed = 100, float maxForce = 1);
+	Vehicle(Vector2 *Pos, float mass = 1, float maxSpeed = 100, float maxForce = 1);
 
 	void AddForce(Vector2 Force);
 
