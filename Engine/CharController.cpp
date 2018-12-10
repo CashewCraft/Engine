@@ -2,6 +2,9 @@
 
 void CharController::Init()
 {
+	Debug::Log("Initalising Charcontroller");
+	GameObject = (PhysObject*)Linked;
+
 	KeyHooks::Register(new Hook_Pass(&Thrust), SettingLoader::GetControlFor("Thrust", SDLK_UP));
 	KeyHooks::Register(new Hook_Pass(&Slow), SettingLoader::GetControlFor("Brake", SDLK_DOWN));
 
@@ -18,7 +21,6 @@ void CharController::Init()
 
 void CharController::Update() 
 {
-	
 	GameObject->Transform.Rotation = Mouse::Pos - GameObject->Transform.Position;
 
 	Camera::Position = (GameObject->Transform.Position.Truncate(std::min(Camera::Size.x, Camera::Size.y) / 2)) - (Camera::Size / 2);

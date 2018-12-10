@@ -22,7 +22,6 @@
 
 class CharController : public Script
 {
-	virtual void Init();
 	PhysObject *GameObject;
 
 	Sound *ThrustNoise;
@@ -34,9 +33,13 @@ class CharController : public Script
 	double FireRate = 0.1;
 	double Limiter = 0;
 
+	protected:
+
+	void Init();
+
 	public:
 
-	CharController(Object* a) : Script(a) { GameObject = (PhysObject*)Linked; Init(); };
+	CharController(Object* a) : Script(a) { Init(); };
 
 	void Release();
 

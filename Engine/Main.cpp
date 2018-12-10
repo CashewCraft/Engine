@@ -13,6 +13,7 @@
 #include "Mouse.h"
 #include "AI.h"
 #include "TextGenerator.h"
+#include "Scoreboard.h"
 
 #include "UIpane.h"
 
@@ -133,18 +134,7 @@ int main(int argc, char* args[])
 	}
 
 	Object UI = Object(NULL);
-	TextGenerator::PrepareFont("BADABOOM", 128);
-	UIpane *RoundHeader = new UIpane(TextGenerator::GenText("BADABOOM", 128, SDL_Colour{ 107, 3, 57 }, "Round"), false, Vector2(0, 0), Vector2(1, 1), Vector2(0,-0.5));
-	RoundHeader->Offset.y = RoundHeader->Size.y / 2;
-	//RoundHeaderB->AddChild(RoundHeader);5
-
-	UIpane *ScoreB = new UIpane(TextGenerator::GenText("BADABOOM", 128, SDL_Colour{ 214, 3, 57 }, "0"), false, Vector2(0, 0), Vector2(1, 1), Vector2(0.53,0.2));
-	UIpane *Score = new UIpane(TextGenerator::GenText("BADABOOM", 128, SDL_Colour{ 127, 3, 57 }, "0"), true, Vector2(0, 0), Vector2(0.9, 0.9));
-
-	ScoreB->AddChild(Score);
-	RoundHeader->AddChild(ScoreB);
-
-	UI.AddChild(RoundHeader);
+	Scoreboard score = Scoreboard(&UI);
 
 	bool running = true;
 	SDL_Event e;

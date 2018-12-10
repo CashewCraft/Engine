@@ -8,13 +8,14 @@
 class Script
 {
 	protected:
-	virtual void Init() {};
 	Object *Linked;
 
 	Script(Object* attach);
 
 	public:
 	~Script();
+
+	virtual void Init() {};
 
 	virtual void Update() {};
 	virtual void FixedUpdate() {};

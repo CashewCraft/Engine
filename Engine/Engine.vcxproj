@@ -145,6 +145,7 @@
     <ClCompile Include="PhysObject.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Rect.cpp" />
+    <ClCompile Include="Scoreboard.cpp" />
     <ClCompile Include="Script.cpp" />
     <ClCompile Include="SettingLoader.cpp" />
     <ClCompile Include="Sound.cpp" />
@@ -171,6 +172,7 @@
     <ClInclude Include="PhysObject.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Rect.h" />
+    <ClInclude Include="Scoreboard.h" />
     <ClInclude Include="Script.h" />
     <ClInclude Include="SettingLoader.h" />
     <ClInclude Include="Sound.h" />

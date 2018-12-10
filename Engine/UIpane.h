@@ -1,19 +1,13 @@
 #pragma once
 #include "Hierachy.h"
 class UIpane : public Object
-{
-	bool Anchored = false;
-
-	public:
-
-	bool ModSize = false;
+{	public:
 
 	Vector2 Offset = Vector2();
-	Vector2 Relative = Vector2();
+	Vector2 RelativeSize = Vector2();
 	Vector2 Anchor = Vector2();
 
-	UIpane(SDL_Texture *Card, bool Modsize, Vector2 Pos, Vector2 Size);
-	UIpane(SDL_Texture *Card, bool Modsize, Vector2 Pos, Vector2 Size, Vector2 Anchor);
+	UIpane(SDL_Texture *Card, Vector2 Anchor, Vector2 Size, Vector2 Offset);
 
 	void Update();
 };
