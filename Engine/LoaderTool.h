@@ -9,17 +9,22 @@
 #include <iostream>
 #include "Hierachy.h"
 #include "PhysObject.h"
+#include "UIpane.h"
 #include "Transform.h"
+
+#include "ResourceManager.h"
+#include "ObjectData.h"
+
+#include "AI.h"
+#include "CharController.h"
 
 class LoaderTool
 {
 	public:
 
-	static std::map<std::string, SDL_Texture*> ResourceDict;
-	static std::map<std::string, Mix_Chunk*> SoundDict;
-
 	static void init();
-	static int LoadScene(Object *ToParent, const char *filename, SDL_Renderer *r);
+
+	static int LoadScene(Object *ObjParent, Object *UIParent, const char *filename);
 };
 
 #endif

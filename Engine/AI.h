@@ -25,12 +25,15 @@ class AI : public Script
 
 	Vector2 InsideCircle(double radius);
 
-	AI(Object* a, PhysObject *p) : Script(a) { GameObject = (PhysObject*)Linked; Player = p; Target = InsideCircle(10); Init(); };
+	AI(Object* a) : Script(a) { GameObject = (PhysObject*)Linked; Target = InsideCircle(10); Init(); };
+	AI() : Script() {};
 
 	void Update();
 
 	Vector2 Wander();
 
 	Vector2 Chase();
+
+	virtual Script* Clone(Object* Target);
 };
 

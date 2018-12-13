@@ -27,17 +27,15 @@ void Object::ClearAddStack()
 	}
 }
 
-std::map<std::string, Object*> Object::PrototypeDict;
-
-SDL_Renderer* Object::Main = nullptr;
+std::map<int, Object*> Object::PrototypeDict;
 
 Object* Object::Workspace = nullptr;
 
-void Object::AddPrototype(std::string key, Object *ToClone)
+void Object::AddPrototype(int key, Object *ToClone)
 {
 	PrototypeDict[key] = ToClone;
 }
-Object* Object::GetNew(std::string type, SDL_Texture *sprite, transform pos)
+Object* Object::GetNew(int type, ObjectData *From)
 {
 	if (PrototypeDict.find(type) == PrototypeDict.end())
 	{
@@ -45,7 +43,7 @@ Object* Object::GetNew(std::string type, SDL_Texture *sprite, transform pos)
 	}
 	else
 	{
-		return PrototypeDict[type]->Clone(sprite, pos);
+		return PrototypeDict[type]->Clone(From);
 	}
 }
 
@@ -168,7 +166,7 @@ void Object::Draw()
 
 	//Debug::DrawLine(Transform.Position, Transform.Position + Transform.Rotation);
 
-	SDL_RenderCopyEx(Object::Main, Anim.GetCurrSprite(), NULL, &PosRect, Transform.GetRotAngle(), NULL, SDL_RendererFlip::SDL_FLIP_NONE);
+	SDL_RenderCopyEx(ResourceManager::r, Anim.GetCurrSprite(), NULL, &PosRect, Transform.GetRotAngle(), NULL, SDL_RendererFlip::SDL_FLIP_NONE);
 }
 
 void Object::ForgetChild(Object *p)
@@ -187,4 +185,4 @@ void Object::ForgetChild(Object *p)
 }
 
 //Factory method, children should ALL overwrite this if they want to be created properly at stage load
-Object* Object::Clone(SDL_Texture *sprite, transform pos) { return new Object(NULL); }
+Object* Object::Clone(ObjectData *From) { return new Object(NULL); }

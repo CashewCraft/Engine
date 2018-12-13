@@ -29,9 +29,12 @@ void PhysObject::Update()
 	}
 }
 
-Object* PhysObject::Clone(SDL_Texture *sprite, transform pos)
+Object* PhysObject::Clone(ObjectData *From)
 {
-	PhysObject *temp = new PhysObject(sprite);
-	temp->Transform = pos;
+	PhysObject *temp = new PhysObject(From->Sprite);
+	temp->Name = From->id;
+	temp->Transform.Position = From->Pos;
+	temp->Transform.Rotation = From->Rotation;
+	temp->Size = From->Size;
 	return temp;
 }

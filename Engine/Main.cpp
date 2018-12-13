@@ -14,6 +14,7 @@
 #include "AI.h"
 #include "TextGenerator.h"
 #include "Scoreboard.h"
+#include "MainMenu.h"
 
 #include "UIpane.h"
 
@@ -82,7 +83,7 @@ int main(int argc, char* args[])
 			Renderer = SDL_CreateRenderer(Window, -1, SDL_RENDERER_ACCELERATED);
 
 			//Tell all the objects where to paste to
-			Object::Main = Renderer;
+			ResourceManager::r = Renderer;
 
 			//Fill the surface white
 			SDL_FillRect(MainSurface, NULL, SDL_MapRGB(MainSurface->format, 0xFF, 0xFF, 0xFF));
@@ -127,22 +128,32 @@ int main(int argc, char* args[])
 	Debug::Log("Successfully initalised, begining load process.");
 
 	Object::Workspace = new Object(NULL);
-	if (LoaderTool::LoadScene(Object::Workspace, "test.txt", Renderer) < 0)
+	Object *UI = new Object(NULL);
+	Object *w = Object::Workspace;
+	if (LoaderTool::LoadScene(Object::Workspace, UI, "test.txt") < 0)
 	{
 		std::cin.get();
 		return -1;
 	}
+	/*for (Object *i : Object::Workspace->GetChildren())
+	{
+		Object::Workspace->DelChild(i);
+	}
 
-	Object UI = Object(NULL);
-	Scoreboard score = Scoreboard(&UI);
+	//Scoreboard score = Scoreboard(&UI);
+
+	Menu::Button = new Sprite(ResourceManager::ResourceDict["Button_unselect"]);
+	Menu::Button->AddFrame("Selected", ResourceManager::ResourceDict["Button_select"]);
+
+	new Menu(UI, std::vector<std::string>{ "Yeet", "Yote", "Will Yeet" });*/
 
 	bool running = true;
 	SDL_Event e;
 
-	new CharController(Object::Workspace->GetChildren()[0]->GetChildren()[0]);
+	/*new CharController(Object::Workspace->GetChildren()[0]->GetChildren()[0]);
 	new AI(Object::Workspace->GetChildren()[0]->GetChildren()[1], (PhysObject*)(Object::Workspace->GetChildren()[0]->GetChildren()[0]));
 	Object::Workspace->GetChildren()[0]->GetChildren()[0]->Name = "Player";
-	Object::Workspace->GetChildren()[0]->GetChildren()[1]->Name = "Enemy";
+	Object::Workspace->GetChildren()[0]->GetChildren()[1]->Name = "Enemy";*/
 
 	SDL_SetRenderDrawColor(Renderer, 255, 255, 255, 255);
 
@@ -201,15 +212,15 @@ int main(int argc, char* args[])
 		}
 
 		//Set the Position and size of the UI base
-		UI.Size = Camera::Size;
-		UI.Transform.Position = Camera::Position + (Camera::Size/2);
+		UI->Size = Camera::Size;
+		UI->Transform.Position = Camera::Position + (Camera::Size/2);
 
 		//Update all of the physics for this tick, along with any fixedupdate functions
 		Object::Workspace->OnPhysTick();
 
 		//Render all the sprites after running any Regular update functions
 		Object::Workspace->OnRendTick();
-		UI.OnRendTick();
+		UI->OnRendTick();
 
 		//Full incorporate any objects that were added in the last run
 		Object::ClearAddStack();

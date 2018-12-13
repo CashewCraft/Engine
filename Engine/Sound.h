@@ -3,7 +3,7 @@
 #include <SDL_mixer.h>
 #include <string>
 
-#include "LoaderTool.h"
+#include "ResourceManager.h"
 
 class Sound
 {

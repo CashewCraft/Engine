@@ -15,10 +15,12 @@
 #include "SettingLoader.h"
 #include "Sound.h"
 
-//#include "SpacialHash"
 #include <iostream>
 #include <algorithm>
 #include <functional>
+
+#include "PhysObject.h"
+#include "Sound.h"
 
 class CharController : public Script
 {
@@ -40,6 +42,7 @@ class CharController : public Script
 	public:
 
 	CharController(Object* a) : Script(a) { Init(); };
+	CharController() : Script() {};
 
 	void Release();
 
@@ -48,5 +51,7 @@ class CharController : public Script
 	void Shoot();
 
 	void OnCollision(Object *hit);
+
+	virtual Script* Clone(Object* Target);
 };
 

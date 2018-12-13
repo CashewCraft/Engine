@@ -6,12 +6,9 @@
 #include <float.h>
 #include <iostream>
 #include "Hierachy.h"
-#include "Move.h"
 #include "Vehicle.h"
 #include "Vector2.h"
 #include "SpacialHash.h"
-
-class Script;
 
 class PhysObject : public Object
 { 
@@ -26,11 +23,9 @@ class PhysObject : public Object
 	virtual void FixedUpdate();
 	virtual void Update();
 
-	bool CheckCollision(Rect Other);
-
 	protected:
 
-	virtual Object* Clone(SDL_Texture *sprite, transform pos);
+	virtual Object* Clone(ObjectData *From);
 };
 
 #endif

@@ -1,0 +1,35 @@
+[12/12/18 18:17:11] INFO: Output file opened for logs
+[12/12/18 18:17:16] DEBUG: There are currently 0 joystick(s) connected
+[12/12/18 18:17:16] LOADING: Added sound file Thrust to resource directory
+[12/12/18 18:17:16] LOADING: Added sprite Bullet to resource directory
+[12/12/18 18:17:16] LOADING: Added sprite GoodSpaceShip_Slow to resource directory
+[12/12/18 18:17:16] LOADING: Added sprite GoodSpaceShip_Thrust to resource directory
+[12/12/18 18:17:16] LOADING: Added sprite Button_unselect to resource directory
+[12/12/18 18:17:16] LOADING: Added sprite Button_select to resource directory
+[12/12/18 18:17:16] INFO: Successfully initalised, begining load process.
+[12/12/18 18:17:16] LOADING: Added sprite GoodSpaceShip_Idle to resource directory
+[12/12/18 18:17:16] LOADING: Added sprite SpaceShip to resource directory
+[12/12/18 18:17:16] LOADING: Added sprite Man to resource directory
+[12/12/18 18:17:16] INFO: Creating new object with stats:
+Size: (30.000000,30.000000)
+Pos: (60.000000,30.000000)
+0 children
+[12/12/18 18:17:16] INFO: Creating new object with stats:
+Size: (30.000000,30.000000)
+Pos: (100.000000,100.000000)
+0 children
+[12/12/18 18:17:16] INFO: Creating new object with stats:
+Size: (76.000000,76.000000)
+Pos: (50.000000,80.000000)
+1 child
+[12/12/18 18:17:16] INFO: Initalising Charcontroller
+[12/12/18 18:17:17] INFO: Playing sound on channel 0
+[12/12/18 18:17:18] INFO: Expiring channel 0
+[12/12/18 18:17:26] INFO: Playing sound on channel 0
+[12/12/18 18:17:26] INFO: Expiring channel 0
+[12/12/18 18:17:26] INFO: Playing sound on channel 0
+[12/12/18 18:17:27] INFO: Expiring channel 0
+[12/12/18 18:17:30] INFO: Playing sound on channel 0
+[12/12/18 18:17:31] INFO: Expiring channel 0
+[12/12/18 18:17:31] INFO: Playing sound on channel 0
+[12/12/18 18:17:32] INFO: Expiring channel 0

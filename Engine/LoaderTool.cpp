@@ -2,18 +2,44 @@
 
 void LoaderTool::init()
 {
-	//Failsafe
-	Object::AddPrototype("", new Object(NULL));
-
 	//Add new Object types here
-	Object::AddPrototype("PhysObject", new PhysObject(NULL));
+	Object::AddPrototype(0, new PhysObject(NULL));
+	Object::AddPrototype(1, new UIpane(NULL));
+
+	Script::AddPrototype(0, new CharController());
+	Script::AddPrototype(1, new AI());
+
+	std::ifstream From;
+	From.open("LoadSound.txt");
+
+	std::string Line;
+	if (From.is_open())
+	{
+		while (std::getline(From, Line))
+		{
+			ResourceManager::SoundDict[Line] = Mix_LoadWAV(("Sounds/" + Line + ".wav").c_str());
+			Debug::Loading("Added sound file " + Line + " to resource directory");
+		}
+	}
+
+	From.close();
+	From.open("LoadAdditional.txt");
+
+	if (From.is_open())
+	{
+		while (std::getline(From, Line))
+		{
+			ResourceManager::ResourceDict[Line] = SDL_CreateTextureFromSurface(ResourceManager::r, SDL_LoadBMP(("Sprites/" + Line + ".bmp").c_str()));
+			Debug::Loading("Added sprite " + Line + " to resource directory");
+		}
+	}
+
 }
 
-std::map<std::string, SDL_Texture*> LoaderTool::ResourceDict = std::map<std::string, SDL_Texture*>();
-std::map<std::string, Mix_Chunk*> LoaderTool::SoundDict = std::map<std::string, Mix_Chunk*>();
-
-int LoaderTool::LoadScene(Object *ToParent, const char *filename, SDL_Renderer *r)
+int LoaderTool::LoadScene(Object *ObjParent, Object *UIParent, const char *filename)
 {
+	Debug::Loading("Loading scene " + (std::string)filename);
+
 	std::vector<std::string> Names;
 	std::vector<int> NameCounts;
 	int NullCount = 0;
@@ -27,201 +53,121 @@ int LoaderTool::LoadScene(Object *ToParent, const char *filename, SDL_Renderer *
 		return -1;
 	}
 
-	std::stack<Object*> Parent;
-
-	Parent.push(ToParent);
-
 	std::string Line;
+	std::getline(From, Line);
 
-	while (std::getline(From, Line))
+	std::vector<std::string> NormalObjects = ObjectData::Split(Line, ":");
+
+	std::vector<ObjectData*> ConstructionList;
+	std::map<int, Object*> Data;
+
+	if (NormalObjects[0] != "")
 	{
-		//Lines are formatted like this: 
-		// (ParentType)"ParentImgName"[X,Y]
-		// {
-		//   (ChildType)"Child1ImgName"[X,Y]
-		//   "NULL"
-		//   {
-		//     "Child2ImgName"[X,Y]
-		//   }
-		// }
 
-		//std::map<std::string, SDL_Surface*> SurfaceDict;
-
-		std::string Type;
-		std::string Name;
-		double pos [2];
-		std::string FromNumber;
-		std::string FromNumber2;
-		double Scale = 1;
-		bool ReadingY = false;
-
-		bool ReadingPos = false;
-		bool ReadingName = false;
-		bool ReadingType = false;
-		bool ReadingScale = false;
-		Object *CreatedScope;
-		for (char i : Line)
+		for (int i = 0; i < NormalObjects.size(); i++)
 		{
-			if (ReadingType)
-			{
-				if (i == ')')
-				{
-					ReadingType = false;
-				}
-				else
-				{
-					Type += i;
-				}
-				continue;
-			}
-			if (ReadingName)
-			{
-				if (i == '"')
-				{
-					if (Name == "NULL")
-					{
-						CreatedScope = new Object(NULL);
+			ObjectData *Curr = new ObjectData(NormalObjects[i]);
 
-						CreatedScope->Name = "NULL (" + std::to_string(NullCount) + ")";
-						Debug::Custom("LOADING","Creating object NULL (" + std::to_string(NullCount) + ")");
-						NullCount++;
-						Parent.top()->AddChild(CreatedScope);
-						Name = "";
-					}
-					ReadingName = false;
-				}
-				else
-				{
-					Name += i;
-				}
-				continue;
-			}
-			if (ReadingScale)
+			//Do something to construct a dependancy tree from children
+			//ConstructonList acts so closest = less dependencies
+
+			std::vector<int> RemainingChildren = Curr->Children;
+			for (int j = 0; j < ConstructionList.size() + 1; i++)
 			{
-				if (i == '>')
+				//if we are at the end of the list (i.e. dependancies not initialised yet)
+				if (j == ConstructionList.size() || RemainingChildren.size() == 0)
 				{
-					ReadingScale = false;
+					ConstructionList.emplace(ConstructionList.begin() + j, Curr);
+					break;
 				}
-				else
+
+				//Get the position of the current ID in the list
+				int Pos = std::find(RemainingChildren.begin(), RemainingChildren.end(), ConstructionList[j]->id) - RemainingChildren.begin();
+				if (Pos != RemainingChildren.end() - RemainingChildren.begin())
 				{
-					FromNumber2 += i;
+					//if the ID exists in the list, remove it
+					RemainingChildren.erase(RemainingChildren.begin() + Pos);
 				}
 			}
-			if (ReadingPos)
+		}
+
+		for (int i = 0; i < ConstructionList.size(); i++)
+		{
+			Data[ConstructionList[i]->id] = Object::GetNew(ConstructionList[i]->Type, ConstructionList[i]);
+
+			for (int j : ConstructionList[i]->Children)
 			{
-				if (i == ']')
-				{
-					pos[1] = std::stod(FromNumber);
-					transform temp;
-					temp.Position = Vector2(pos[0], pos[1]);
-
-					ptrdiff_t pos = std::find(Names.begin(), Names.end(), Name) - Names.begin();
-					if (std::find(Names.begin(), Names.end(), Name) != Names.end())
-					{
-						CreatedScope = Object::GetNew(Type, ResourceDict[Name], temp);
-
-						Debug::Custom("LOADING","Creating object " + Name + " (" + std::to_string(NameCounts[pos]) + ")");
-						CreatedScope->Name = Name + " (" + std::to_string(NameCounts[pos]) + ")";
-						NameCounts[pos]++;
-					}
-					else
-					{
-						ResourceDict[Name] = SDL_CreateTextureFromSurface(r, SDL_LoadBMP(("Sprites/"+Name+".bmp").c_str()));
-						Debug::Custom("LOADING","Added file " + Name + " to resource directory");
-						CreatedScope = Object::GetNew(Type, ResourceDict[Name], temp);
-
-						Names.push_back(Name);
-						NameCounts.push_back(0);
-						Debug::Custom("LOADING","Creating object " + Name + " (" + std::to_string(NameCounts[pos]) + ")");
-						CreatedScope->Name = Name + " (" + std::to_string(NameCounts[pos]) + ")";
-						NameCounts[pos]++;
-					}
-
-					CreatedScope->Size *= (FromNumber2 == "")?1:std::stod(FromNumber2);
-
-					Parent.top()->AddChild(CreatedScope);
-
-					Type = "";
-					Name = "";
-					FromNumber = "";
-					FromNumber2 = "";
-					ReadingPos = false;
-					ReadingY = false;
-				}
-				else if (i == ',')
-				{
-					pos[0] = std::stod(FromNumber);
-					FromNumber = "";
-					ReadingY = true;
-				}
-				else
-				{
-					FromNumber += i;
-				}
-				continue;
+				Data[ConstructionList[i]->id]->AddChild(Data[j]);
 			}
-			switch (i)
+			for (int j : ConstructionList[i]->Scripts)
 			{
-				case '(':
-					ReadingType = true;
-					break;
-				case '"':
-					ReadingName = true;
-					break;
-				case '[':
-					ReadingPos = true;
-					break;
-				case '<':
-					ReadingScale = true;
-					break;
-				case '{':
-					Parent.emplace(CreatedScope);
-					break;
-				case '}':
-					Parent.pop();
-					break;
-				default:
-					break;
+				Script::GetNew(j, Data[ConstructionList[i]->id]);
 			}
-			if (Parent.size() < (unsigned)1)
+		}
+		for (int i = 0; i < ConstructionList.size(); i++)
+		{
+			if (Data[ConstructionList[i]->id]->GetParent() == nullptr)
 			{
-				break; //Stop reading the file because we've emptied the last object from the stack so we're just going to run into problems
+				ObjParent->AddChild(Data[ConstructionList[i]->id]);
 			}
 		}
 	}
 
-	From.close();
+	std::getline(From, Line);
 
-	From.open("LoadAdditional.txt");
-	if (!From.is_open())
+	NormalObjects = ObjectData::Split(Line, ":");
+
+	if (NormalObjects[0] != "")
 	{
-		//#pragma warning(suppress : 4996)
-		//printf("Failed to open file: %s\n", strerror(errno));
-		return -1;
+		ConstructionList = std::vector<ObjectData*>();
+
+		for (int i = 0; i < NormalObjects.size(); i++)
+		{
+			ObjectData *Curr = new ObjectData(NormalObjects[i]);
+
+			//Do something to construct a dependancy tree from children
+			//ConstructonList acts so closest = less dependencies
+
+			std::vector<int> RemainingChildren = Curr->Children;
+			for (int j = 0; j < ConstructionList.size() + 1; i++)
+			{
+				//if we are at the end of the list (i.e. dependancies not initialised yet)
+				if (j == ConstructionList.size() || RemainingChildren.size() == 0)
+				{
+					ConstructionList.emplace(ConstructionList.begin() + j, Curr);
+					break;
+				}
+
+				//Get the position of the current ID in the list
+				int Pos = std::find(RemainingChildren.begin(), RemainingChildren.end(), ConstructionList[j]->id) - RemainingChildren.begin();
+				if (Pos != RemainingChildren.end() - RemainingChildren.begin())
+				{
+					//if the ID exists in the list, remove it
+					RemainingChildren.erase(RemainingChildren.begin() + Pos);
+				}
+			}
+		}
+
+		Data = std::map<int, Object*>();
+		for (int i = 0; i < ConstructionList.size(); i++)
+		{
+			Data[ConstructionList[i]->id] = Object::GetNew(ConstructionList[i]->Type, ConstructionList[i]);
+
+			for (int j : ConstructionList[i]->Children)
+			{
+				Data[ConstructionList[i]->id]->AddChild(Data[j]);
+			}
+			//for (int j : ConstructionList[i]->Scripts)
+			//{
+			//	Script::GetNew(j, Data[ConstructionList[i]->id]);
+			//}
+
+			if (Data[ConstructionList[i]->id]->GetParent() == nullptr)
+			{
+				ObjParent->AddChild(Data[ConstructionList[i]->id]);
+			}
+		}
 	}
-
-	while (std::getline(From, Line))
-	{
-		ResourceDict[Line] = SDL_CreateTextureFromSurface(r, SDL_LoadBMP(("Sprites/"+Line+".bmp").c_str()));
-		Debug::Custom("LOADING","Added additional file " + Line + " to resource directory");
-	}
-
-	From.close();
-
-	From.open("LoadSound.txt");
-	if (!From.is_open())
-	{
-		//#pragma warning(suppress : 4996)
-		//printf("Failed to open file: %s\n", strerror(errno));
-		return -1;
-	}
-
-	while (std::getline(From, Line))
-	{
-		SoundDict[Line] = Mix_LoadWAV(("Sounds/" + Line + ".wav").c_str());
-		Debug::Log("Added sound file " + Line + " to resource directory");
-	}
-
 	From.close();
 
 	return 0;

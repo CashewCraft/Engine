@@ -10,8 +10,8 @@ void CharController::Init()
 
 	KeyHooks::Register(new Hook_Pass(&Firing), SettingLoader::GetControlFor("Shoot", SDLK_SPACE));
 
-	GameObject->Anim.AddFrame("Moving", LoaderTool::ResourceDict["GoodSpaceShip_Thrust"]);
-	GameObject->Anim.AddFrame("Slowing", LoaderTool::ResourceDict["GoodSpaceShip_Slow"]);
+	GameObject->Anim.AddFrame("Moving", ResourceManager::ResourceDict["GoodSpaceShip_Thrust"]);
+	GameObject->Anim.AddFrame("Slowing", ResourceManager::ResourceDict["GoodSpaceShip_Slow"]);
 
 	ThrustNoise = new Sound("Thrust");
 
@@ -76,7 +76,7 @@ void CharController::Release()
 
 void CharController::Shoot()
 {
-	PhysObject *Bullet = new PhysObject(LoaderTool::ResourceDict["Bullet"]);
+	PhysObject *Bullet = new PhysObject(ResourceManager::ResourceDict["Bullet"]);
 	Bullet->Name = "Bill";
 	//Object::Workspace->AddChild(Bullet);
 	Bullet->Transform.Position = GameObject->Transform.Position;
@@ -92,3 +92,5 @@ void CharController::OnCollision(Object *hit)
 	//Debug::Log("Hit " + (hit->Name));
 	Debug::DrawLine(GameObject->Transform.Position, hit->Transform.Position);
 }
+
+Script* CharController::Clone(Object *From) { return new CharController(From); }

@@ -7,14 +7,18 @@
 #include "UIPane.h"
 #include "TextGenerator.h"
 #include "KeyHooks.h"
+#include "Time.h"
 
 class Scoreboard : public Script
 {
 	UIpane *Title;
+	UIpane *Tim;
 
-	int Round = 0;
+	unsigned int Round = 0;
 
-	SDL_Texture *Numbers[10];
+	static SDL_Texture *Numbers[10];
+
+	double Timer = 60;
 
 	protected:
 
@@ -24,7 +28,9 @@ class Scoreboard : public Script
 
 	Scoreboard(Object* a) : Script(a) { Init(); };
 
-
 	void IncrRound();
+	static void SetNumbers(Object* parent, unsigned int Number, Vector2 Anchor, Vector2 Size, Vector2 Offset);
+
+	void Update();
 };
 

@@ -1,0 +1,18 @@
+[12/12/18 21:25:47] INFOOutput file Info.txt opened for logs
+[12/12/18 21:25:47] INFOOutput file Debug.txt opened for logs
+[12/12/18 21:25:47] INFOOutput file Error.txt opened for logs
+[12/12/18 21:25:47] INFOOutput file Load.txt opened for logs
+[12/12/18 21:25:52] INFOSuccessfully initalised, begining load process.
+[12/12/18 21:25:52] INFOCreating new object with stats:
+Size: (30.000000,30.000000)
+Pos: (60.000000,30.000000)
+0 children
+[12/12/18 21:25:52] INFOCreating new object with stats:
+Size: (30.000000,30.000000)
+Pos: (100.000000,100.000000)
+0 children
+[12/12/18 21:25:52] INFOCreating new object with stats:
+Size: (76.000000,76.000000)
+Pos: (50.000000,80.000000)
+1 child
+[12/12/18 21:25:52] INFOInitalising Charcontroller

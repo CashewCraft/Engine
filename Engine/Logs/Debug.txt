@@ -1,0 +1,13 @@
+[12/12/18 21:25:51] DEBUG: There are currently 0 joystick(s) connected
+[12/12/18 21:25:55] DEBUG: Playing sound on channel 0
+[12/12/18 21:25:55] DEBUG: Expiring channel 0
+[12/12/18 21:25:57] DEBUG: Playing sound on channel 0
+[12/12/18 21:25:58] DEBUG: Expiring channel 0
+[12/12/18 21:26:01] DEBUG: Playing sound on channel 0
+[12/12/18 21:26:01] DEBUG: Expiring channel 0
+[12/12/18 21:26:02] DEBUG: Playing sound on channel 0
+[12/12/18 21:26:04] DEBUG: Expiring channel 0
+[12/12/18 21:26:07] DEBUG: Playing sound on channel 0
+[12/12/18 21:26:07] DEBUG: Expiring channel 0
+[12/12/18 21:26:12] DEBUG: Playing sound on channel 0
+[12/12/18 21:26:14] DEBUG: Expiring channel 0

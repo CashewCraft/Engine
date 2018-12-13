@@ -12,12 +12,13 @@
 #include "Debug.h"
 #include "SpacialHash.h"
 #include "Sprite.h"
+#include "ObjectData.h"
 
 class Script; //Forward declaration for Script because otherwise we get a circular dependancy
 
 class Object
 {
-	static std::map<std::string, Object*> PrototypeDict;
+	static std::map<int, Object*> PrototypeDict;
 
 	std::vector<Object*> Children;
 
@@ -39,12 +40,11 @@ class Object
 	std::vector<Script*> AttachedScripts;
 
 	//factory methods
-	static void AddPrototype(std::string key, Object *ToClone);
-	static Object* GetNew(std::string key, SDL_Texture *sprite, transform pos);
+	static void AddPrototype(int key, Object *ToClone);
+	static Object* GetNew(int key, ObjectData *From);
 
 	std::string Name;
 
-	static SDL_Renderer *Main;
 	transform Transform;
 
 	Object(SDL_Texture *sprite);
@@ -84,7 +84,7 @@ class Object
 	void ForgetChild(Object *p);
 
 	//Factory Method
-	virtual Object* Clone(SDL_Texture *sprite, transform pos);
+	virtual Object* Clone(ObjectData* From);
 };
 
 #endif

@@ -12,3 +12,12 @@ void UIpane::Update()
 	Size = Parent->Size * RelativeSize;
 	Transform.Position = Parent->Transform.Position + (Parent->Size*Anchor) + (Offset * Size);
 }
+
+Object* UIpane::Clone(ObjectData *From)
+{
+	UIpane *temp = new UIpane(From->Sprite);
+	Anchor = From->Pos;
+	Offset = From->Rotation;
+	RelativeSize = From->Size;
+	return temp;
+}

@@ -2,7 +2,7 @@
 
 #include "Vector2.h"
 #include "Camera.h"
-#include "Hierachy.h"
+#include "ResourceManager.h"
 
 #include <iostream>
 #include <fstream>
@@ -10,9 +10,10 @@
 
 class Debug
 {
-	static std::ofstream File;
+	static std::map<std::string, std::ofstream*> File;
 
-	static void Output(std::string MSG);
+	static void Output(std::string MSG, std::string FileName);
+	static void InitFile(std::string name);
 
 	public:
 
@@ -25,6 +26,6 @@ class Debug
 	static void Log(std::string out);
 	static void Error(std::string out);
 	static void Flag(std::string out);
-	static void Custom(std::string Flag, std::string out);
+	static void Loading(std::string out);
 };
 
