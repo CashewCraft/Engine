@@ -6,11 +6,13 @@
 #include <vector>
 #include <iostream>
 #include <functional>
+#include <string>
+#include <algorithm>
 
 #include <stdint.h>
 
-#include "Script.h"
 #include "Hook.h"
+#include "Debug.h"
 
 class KeyHooks
 {

@@ -6,17 +6,22 @@
 #include "Hierachy.h"
 #include "ResourceManager.h"
 #include "ObjectData.h"
+#include "KeyHooks.h"
 
 class Script
 {
 	static std::map<int, Script*> PrototypeDict;
+	std::vector<Hook*> AttachedHooks;
 
 	protected:
-	Object *Linked;
+
+	void Generate_Hook(callback_function f, int eventtype, int key);
 
 	Script(Object* attach);
 
 	public:
+	Object *Linked;
+
 	~Script();
 
 	Script() {};

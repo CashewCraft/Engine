@@ -4,7 +4,7 @@ SDL_Texture *Scoreboard::Numbers[10] {};
 
 void Scoreboard::Init()
 {
-	KeyHooks::Register(new Hook(std::bind(&Scoreboard::IncrRound, this)), SDL_KEYDOWN, SDLK_p);
+	Generate_Hook(std::bind(&Scoreboard::IncrRound, this), SDL_KEYDOWN, SDLK_p);
 
 	Title = new UIpane(TextGenerator::GenText("BADABOOM", 1024, SDL_Colour{ 107, 3, 57 }, "Round"), Vector2(0, 0.5), Vector2(0.3, 0.2), Vector2(0.1, -0.5));
 	Linked->AddChild(Title);

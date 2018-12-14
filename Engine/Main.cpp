@@ -20,6 +20,7 @@ int SCREEN_HEIGHT = 480;
 
 int main(int argc, char* args[])
 {
+
 	Debug::Init();
 
 	//Use this in case we need to resize the window
@@ -264,6 +265,7 @@ int main(int argc, char* args[])
 
 		if (Button::Reload)
 		{
+			MenuManager::ClearAll();
 			for (Object *i : Object::Workspace->GetChildren())
 			{
 				Object::Workspace->DelChild(i);

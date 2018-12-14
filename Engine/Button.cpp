@@ -17,12 +17,14 @@ void Button::Init()
 	Linked->Anim = *b;
 	Linked->AddChild(new UIpane(c, Vector2(), Vector2(0.7, 0.9), Vector2()));
 
-	KeyHooks::Register(new Hook(std::bind(&Button::SetLoad, this)), SDL_MOUSEBUTTONDOWN, SDL_BUTTON_LEFT);
+	MenuManager::RegisterButton(index, Linked, std::bind(&Button::SetLoad, this));
+
+	//KeyHooks::Register(new Hook(std::bind(&Button::SetLoad, this)), SDL_MOUSEBUTTONDOWN, SDL_BUTTON_LEFT);
 }
 
 void Button::Update()
 {
-	Vector2 P = Mouse::Pos;
+	/*Vector2 P = Mouse::Pos;
 	Vector2 BR = Linked->Transform.Position + (Linked->Size / 2);
 	Vector2 TL = Linked->Transform.Position - (Linked->Size / 2);
 
@@ -35,16 +37,13 @@ void Button::Update()
 	else
 	{
 		Linked->Anim.SetState("");
-	}
+	}*/
 }
 
 void Button::SetLoad()
 {
-	if (Selected)
-	{
-		Reload = true;
-		ToLoad = NextMenu;
-	}
+	Reload = true;
+	ToLoad = NextMenu;
 }
 
 Script* Button::Clone(Object* Target, ScriptData In)

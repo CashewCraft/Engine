@@ -28,23 +28,23 @@ void KeyHooks::Execute(SDL_Event e)
 			Key = e.jbutton.button;
 			break;
 
-		default:
+		case SDL_KEYDOWN:
+		case SDL_KEYUP:
 			Key = e.key.keysym.sym;
 			break;
 	}
 
-	std::vector<Hook*> triggered = Callbacks[e.type][Key];
-
-	for (int i = 0; i < triggered.size(); i++)
+	for (Hook *i : Callbacks[e.type][Key])
 	{
-		if (triggered[i]->Valid())
+		if (i->Valid())
 		{
-			triggered[i]->Execute();
+			i->Execute();
 		}
 		else
 		{
-			delete triggered[i];
-			triggered.erase(triggered.begin()+i);
+			Debug::Flag("Removing hook for event type [" + std::to_string(e.type) + "] with key [" + std::to_string(Key) + "]");
+			delete i;
+			Callbacks[e.type][Key].erase(std::remove(Callbacks[e.type][Key].begin(), Callbacks[e.type][Key].end(), i), Callbacks[e.type][Key].end());
 		}
 	}
 }

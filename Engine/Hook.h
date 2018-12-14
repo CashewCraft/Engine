@@ -4,8 +4,6 @@
 #include <iostream>
 #include <functional>
 
-#include "Script.h"
-
 typedef std::function<void(void)> callback_function;
 
 class Hook
@@ -14,8 +12,10 @@ class Hook
 
 	public:
 
+	bool Zombie = false; //flag to let the hooking system know if this hook isn't being used anymore
+
 	Hook(callback_function cb) { F = cb; };
 
 	void Execute() { F(); };
-	bool Valid() { return F != NULL; };
+	bool Valid() { return !Zombie; };
 };

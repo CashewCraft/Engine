@@ -5,11 +5,14 @@
 #include "UIpane.h"
 #include "Mouse.h"
 #include "KeyHooks.h"
+#include "MenuManager.h"
 
 class Button : public Script
 {
 	std::string NextMenu;
 	std::string Text;
+
+	int index;
 
 	static Sprite *b; //sprite for the button highlighting
 	bool Selected;
@@ -22,8 +25,8 @@ class Button : public Script
 	static bool Reload;
 	static std::string ToLoad;
 
-	Button(Object* a, std::string nextmenu, std::string text) : Script(a) { NextMenu = nextmenu, Text = text;  Init(); };
-	Button(Object* a, ScriptData In) : Button(a, In.AdditionalData[0], In.AdditionalData[1]) {};
+	Button(Object* a, std::string nextmenu, std::string text, int ID) : Script(a) { NextMenu = nextmenu, Text = text; index = ID; Init(); };
+	Button(Object* a, ScriptData In) : Button(a, In.AdditionalData[0], In.AdditionalData[1], std::stoi(In.AdditionalData[2])) {};
 	Button() : Script() {};
 
 	void Init();

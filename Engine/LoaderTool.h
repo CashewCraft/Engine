@@ -19,6 +19,7 @@
 #include "CharController.h"
 #include "Button.h"
 #include "Scoreboard.h"
+#include "MenuManager.h"
 
 class LoaderTool
 {

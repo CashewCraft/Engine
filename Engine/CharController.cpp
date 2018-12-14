@@ -5,14 +5,14 @@ void CharController::Init()
 	Debug::Log("Initalising Charcontroller");
 	GameObject = (PhysObject*)Linked;
 
-	KeyHooks::Register(new Hook(std::bind(&CharController::Set_Key, this, 1, true)), SDL_KEYDOWN, SettingLoader::GetControlFor("Thrust", SDLK_UP));
-	KeyHooks::Register(new Hook(std::bind(&CharController::Set_Key, this, 1, false)), SDL_KEYUP, SettingLoader::GetControlFor("Thrust", SDLK_UP));
+	Generate_Hook(std::bind(&CharController::Set_Key, this, 1, true), SDL_KEYDOWN, SettingLoader::GetControlFor("Thrust", SDLK_UP));
+	Generate_Hook(std::bind(&CharController::Set_Key, this, 1, false), SDL_KEYUP, SettingLoader::GetControlFor("Thrust", SDLK_UP));
 
-	KeyHooks::Register(new Hook(std::bind(&CharController::Set_Key, this, 0, true)), SDL_KEYDOWN, SettingLoader::GetControlFor("Shoot", SDLK_SPACE));
-	KeyHooks::Register(new Hook(std::bind(&CharController::Set_Key, this, 0, false)), SDL_KEYUP, SettingLoader::GetControlFor("Shoot", SDLK_SPACE));
+	Generate_Hook(std::bind(&CharController::Set_Key, this, 0, true), SDL_KEYDOWN, SettingLoader::GetControlFor("Shoot", SDLK_SPACE));
+	Generate_Hook(std::bind(&CharController::Set_Key, this, 0, false), SDL_KEYUP, SettingLoader::GetControlFor("Shoot", SDLK_SPACE));
 
-	KeyHooks::Register(new Hook(std::bind(&CharController::Set_Key, this, 2, true)), SDL_KEYDOWN, SettingLoader::GetControlFor("Brake", SDLK_DOWN));
-	KeyHooks::Register(new Hook(std::bind(&CharController::Set_Key, this, 2, false)), SDL_KEYUP, SettingLoader::GetControlFor("Brake", SDLK_DOWN));
+	Generate_Hook(std::bind(&CharController::Set_Key, this, 2, true), SDL_KEYDOWN, SettingLoader::GetControlFor("Brake", SDLK_DOWN));
+	Generate_Hook(std::bind(&CharController::Set_Key, this, 2, false), SDL_KEYUP, SettingLoader::GetControlFor("Brake", SDLK_DOWN));
 
 	GameObject->Anim.AddFrame("Moving", ResourceManager::GetSprite("GoodSpaceShip_Thrust"));
 	GameObject->Anim.AddFrame("Slowing", ResourceManager::GetSprite("GoodSpaceShip_Slow"));
