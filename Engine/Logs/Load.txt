@@ -1,9 +1,11 @@
-[12/12/18 21:25:51] LOAD: Added sound file Thrust to resource directory
-[12/12/18 21:25:52] LOAD: Added sprite Bullet to resource directory
-[12/12/18 21:25:52] LOAD: Added sprite GoodSpaceShip_Slow to resource directory
-[12/12/18 21:25:52] LOAD: Added sprite GoodSpaceShip_Thrust to resource directory
-[12/12/18 21:25:52] LOAD: Added sprite Button_unselect to resource directory
-[12/12/18 21:25:52] LOAD: Added sprite Button_select to resource directory
-[12/12/18 21:25:52] LOAD: Added sprite GoodSpaceShip_Idle to resource directory
-[12/12/18 21:25:52] LOAD: Added sprite SpaceShip to resource directory
-[12/12/18 21:25:52] LOAD: Added sprite Man to resource directory
+[13/12/18 18:34:38] LOAD: Added sound file Thrust to resource directory
+[13/12/18 18:34:38] LOAD: Added sprite Bullet to resource directory
+[13/12/18 18:34:38] LOAD: Added sprite GoodSpaceShip_Slow to resource directory
+[13/12/18 18:34:38] LOAD: Added sprite GoodSpaceShip_Thrust to resource directory
+[13/12/18 18:34:38] LOAD: Added sprite Button_unselect to resource directory
+[13/12/18 18:34:38] LOAD: Added sprite Button_select to resource directory
+[13/12/18 18:34:38] LOAD: Loading scene MM
+[13/12/18 18:35:24] LOAD: Loading scene test
+[13/12/18 18:35:24] LOAD: Added sprite GoodSpaceShip_Idle to resource directory
+[13/12/18 18:35:24] LOAD: Added sprite SpaceShip to resource directory
+[13/12/18 18:35:24] LOAD: Added sprite Man to resource directory

@@ -8,13 +8,9 @@
 #include "Hierachy.h"
 #include "LoaderTool.h"
 #include "SettingLoader.h"
-#include "CharController.h"
 #include "Time.h"
 #include "Mouse.h"
-#include "AI.h"
 #include "TextGenerator.h"
-#include "Scoreboard.h"
-#include "MainMenu.h"
 
 #include "UIpane.h"
 
@@ -25,6 +21,10 @@ int SCREEN_HEIGHT = 480;
 int main(int argc, char* args[])
 {
 	Debug::Init();
+
+	//Use this in case we need to resize the window
+	bool JustResized = false;
+	double ScreenAspect = 0;
 
 	//The window we'll be rendering to
 	SDL_Window* Window = NULL;
@@ -64,13 +64,22 @@ int main(int argc, char* args[])
 		}
 		else
 		{
+			SDL_DisplayMode dm;
+			SDL_GetDesktopDisplayMode(0, &dm);
+
+			ScreenAspect = ScreenSize.x / ScreenSize.y;
+
 			std::string WindowMode = SettingLoader::GetValueOf("WindowMode", "Windowed");
 			if (WindowMode == "Fullscreen")
 			{
+				Camera::WindowMode = 2;
 				SDL_SetWindowFullscreen(Window, SDL_WINDOW_FULLSCREEN);
+				SDL_SetWindowSize(Window, dm.w, dm.h);
 			}
 			else if (WindowMode == "Borderless")
 			{
+				Camera::WindowMode = 1;
+				SDL_SetWindowSize(Window, dm.w, dm.h);
 				SDL_SetWindowFullscreen(Window, SDL_WINDOW_FULLSCREEN_DESKTOP);
 			}
 
@@ -128,32 +137,15 @@ int main(int argc, char* args[])
 	Debug::Log("Successfully initalised, begining load process.");
 
 	Object::Workspace = new Object(NULL);
-	Object *UI = new Object(NULL);
-	Object *w = Object::Workspace;
-	if (LoaderTool::LoadScene(Object::Workspace, UI, "test.txt") < 0)
+	Object::UI = new Object(NULL);
+	if (LoaderTool::LoadScene(Object::Workspace, Object::UI, "MM") < 0)
 	{
 		std::cin.get();
 		return -1;
 	}
-	/*for (Object *i : Object::Workspace->GetChildren())
-	{
-		Object::Workspace->DelChild(i);
-	}
-
-	//Scoreboard score = Scoreboard(&UI);
-
-	Menu::Button = new Sprite(ResourceManager::ResourceDict["Button_unselect"]);
-	Menu::Button->AddFrame("Selected", ResourceManager::ResourceDict["Button_select"]);
-
-	new Menu(UI, std::vector<std::string>{ "Yeet", "Yote", "Will Yeet" });*/
 
 	bool running = true;
 	SDL_Event e;
-
-	/*new CharController(Object::Workspace->GetChildren()[0]->GetChildren()[0]);
-	new AI(Object::Workspace->GetChildren()[0]->GetChildren()[1], (PhysObject*)(Object::Workspace->GetChildren()[0]->GetChildren()[0]));
-	Object::Workspace->GetChildren()[0]->GetChildren()[0]->Name = "Player";
-	Object::Workspace->GetChildren()[0]->GetChildren()[1]->Name = "Enemy";*/
 
 	SDL_SetRenderDrawColor(Renderer, 255, 255, 255, 255);
 
@@ -162,9 +154,6 @@ int main(int argc, char* args[])
 	while (running)
 	{
 		SDL_SetRenderDrawColor(Renderer, 255, 255, 255, 255);
-		//SDL_FillRect(MainSurface, NULL, SDL_MapRGB(MainSurface->format, 0xFF, 0xFF, 0xFF));
-
-		//Camera::Position = (Workspace.GetChildren()[0]->GetChildren()[1])->Transform.Position - (Camera::Size/2);
 
 		SDL_RenderClear(Renderer);
 
@@ -192,8 +181,51 @@ int main(int argc, char* args[])
 				case (SDL_WINDOWEVENT):
 					if (e.window.event == SDL_WINDOWEVENT_SIZE_CHANGED)
 					{
-						Debug::Log("Window resized");
-						Camera::Size = Vector2(e.window.data1, e.window.data2);
+						if (JustResized)
+						{
+							JustResized = false;
+						}
+						else
+						{
+							double Aspect = (double)e.window.data1 / (double)e.window.data2;
+
+							if (Aspect != ScreenAspect && Camera::WindowMode == 0 && !(SDL_WINDOW_MAXIMIZED & SDL_GetWindowFlags(Window)))
+							{
+								Debug::Flag("Window does not match aspect, scaling");
+								if (e.window.data1 != Camera::Size.x && e.window.data2 == Camera::Size.y)
+								{
+									//scale Y
+									Camera::Size = Vector2(e.window.data1, (1.0 / ScreenAspect) * e.window.data1);
+								}
+								else if (e.window.data1 == Camera::Size.x && e.window.data2 != Camera::Size.y)
+								{
+									//scale X
+									Camera::Size = Vector2(ScreenAspect * e.window.data2, e.window.data2);
+								}
+								else
+								{
+									if (std::abs(e.window.data1-Camera::Size.x) > std::abs(e.window.data2-Camera::Size.y))
+									{
+										//if X was changed more
+										Camera::Size = Vector2(e.window.data1, (1.0 / ScreenAspect) * e.window.data1);
+									}
+									else
+									{
+										Camera::Size = Vector2(ScreenAspect * e.window.data2, e.window.data2);
+									}
+								}
+
+								SDL_SetWindowSize(Window, Camera::Size.x, Camera::Size.y);
+							}
+							else
+							{
+								Camera::Size = Vector2(e.window.data1, e.window.data2);
+								SDL_SetWindowSize(Window, Camera::Size.x, Camera::Size.y);
+							}
+
+							Debug::Flag("Resized window to " + (std::string)Camera::Size);
+							JustResized = true; //Resizing the window via command will trigger a second event
+						}
 					}
 					break;
 				case (SDL_JOYAXISMOTION):
@@ -212,15 +244,15 @@ int main(int argc, char* args[])
 		}
 
 		//Set the Position and size of the UI base
-		UI->Size = Camera::Size;
-		UI->Transform.Position = Camera::Position + (Camera::Size/2);
+		Object::UI->Size = Camera::Size;
+		Object::UI->Transform.Position = Camera::Position + (Camera::Size/2);
 
 		//Update all of the physics for this tick, along with any fixedupdate functions
 		Object::Workspace->OnPhysTick();
 
 		//Render all the sprites after running any Regular update functions
 		Object::Workspace->OnRendTick();
-		UI->OnRendTick();
+		Object::UI->OnRendTick();
 
 		//Full incorporate any objects that were added in the last run
 		Object::ClearAddStack();
@@ -229,8 +261,30 @@ int main(int argc, char* args[])
 		//SDL_UpdateWindowSurface(Window);
 
 		Time::Incr();
+
+		if (Button::Reload)
+		{
+			for (Object *i : Object::Workspace->GetChildren())
+			{
+				Object::Workspace->DelChild(i);
+			}
+			for (Object *i : Object::UI->GetChildren())
+			{
+				Object::UI->DelChild(i);
+			}
+
+			if (LoaderTool::LoadScene(Object::Workspace, Object::UI, Button::ToLoad.c_str()) < 0)
+			{
+				std::cin.get();
+				return -1;
+			}
+			Button::Reload = false;
+		}
 	}
 
+	ResourceManager::FreeAll();
+
+	SDL_DestroyRenderer(ResourceManager::r);
 	SDL_DestroyWindow(Window);
 	SDL_Quit();
 	

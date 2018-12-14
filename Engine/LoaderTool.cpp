@@ -8,6 +8,8 @@ void LoaderTool::init()
 
 	Script::AddPrototype(0, new CharController());
 	Script::AddPrototype(1, new AI());
+	Script::AddPrototype(2, new Scoreboard());
+	Script::AddPrototype(3, new Button());
 
 	std::ifstream From;
 	From.open("LoadSound.txt");
@@ -36,20 +38,21 @@ void LoaderTool::init()
 
 }
 
-int LoaderTool::LoadScene(Object *ObjParent, Object *UIParent, const char *filename)
+int LoaderTool::LoadScene(Object *ObjParent, Object *UIParent, std::string filename)
 {
-	Debug::Loading("Loading scene " + (std::string)filename);
+	Debug::Loading("Loading scene " + filename);
 
 	std::vector<std::string> Names;
 	std::vector<int> NameCounts;
 	int NullCount = 0;
 
 	std::ifstream From;
-	From.open(filename);
+	From.open(filename + ".txt");
 	if (!From.is_open())
 	{
 	    //#pragma warning(suppress : 4996)
 		//printf("Failed to open file: %s\n", strerror(errno));
+		Debug::Error("Could not open file " + (std::string)filename + "!\n");
 		return -1;
 	}
 
@@ -99,9 +102,9 @@ int LoaderTool::LoadScene(Object *ObjParent, Object *UIParent, const char *filen
 			{
 				Data[ConstructionList[i]->id]->AddChild(Data[j]);
 			}
-			for (int j : ConstructionList[i]->Scripts)
+			for (int j = 0; j < ConstructionList[i]->Scripts.size(); j++)
 			{
-				Script::GetNew(j, Data[ConstructionList[i]->id]);
+				Script::GetNew(ConstructionList[i]->Scripts[j], Data[ConstructionList[i]->id], ConstructionList[i]->ScriptAdditional[j]);
 			}
 		}
 		for (int i = 0; i < ConstructionList.size(); i++)
@@ -157,14 +160,14 @@ int LoaderTool::LoadScene(Object *ObjParent, Object *UIParent, const char *filen
 			{
 				Data[ConstructionList[i]->id]->AddChild(Data[j]);
 			}
-			//for (int j : ConstructionList[i]->Scripts)
-			//{
-			//	Script::GetNew(j, Data[ConstructionList[i]->id]);
-			//}
+			for (int j = 0; j < ConstructionList[i]->Scripts.size(); j++)
+			{
+				Script::GetNew(ConstructionList[i]->Scripts[j], Data[ConstructionList[i]->id], ConstructionList[i]->ScriptAdditional[j]);
+			}
 
 			if (Data[ConstructionList[i]->id]->GetParent() == nullptr)
 			{
-				ObjParent->AddChild(Data[ConstructionList[i]->id]);
+				UIParent->AddChild(Data[ConstructionList[i]->id]);
 			}
 		}
 	}

@@ -5,6 +5,7 @@
 #include <algorithm>
 #include "Hierachy.h"
 #include "ResourceManager.h"
+#include "ObjectData.h"
 
 class Script
 {
@@ -30,9 +31,9 @@ class Script
 
 	//factory methods
 	static void AddPrototype(int key, Script *ToClone);
-	static Script* GetNew(int key, Object *Target);
+	static Script* GetNew(int key, Object *Target, ScriptData In);
 
-	virtual Script* Clone(Object* Target);
+	virtual Script* Clone(Object* Target, ScriptData In);
 };
 
 #endif

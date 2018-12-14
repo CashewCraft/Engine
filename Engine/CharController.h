@@ -42,6 +42,7 @@ class CharController : public Script
 	public:
 
 	CharController(Object* a) : Script(a) { Init(); };
+	CharController(Object* a, ScriptData In) : CharController(a) {};
 	CharController() : Script() {};
 
 	void Release();
@@ -52,6 +53,22 @@ class CharController : public Script
 
 	void OnCollision(Object *hit);
 
-	virtual Script* Clone(Object* Target);
+	virtual Script* Clone(Object* Target, ScriptData In) { return new CharController(Target, In); };
+
+	void Set_Key(int k, bool To)
+	{
+		switch (k)
+		{
+			case 0:
+				Firing = To;
+				break;
+			case 1:
+				Thrust = To;
+				break;
+			case 2:
+				Slow = To;
+				break;
+		}
+	}
 };
 

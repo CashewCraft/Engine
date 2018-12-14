@@ -1,5 +1,4 @@
 Resolution=640x480
-
 WindowMode=Windowed
 Controller=False
 Deadzone=8000

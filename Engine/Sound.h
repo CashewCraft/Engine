@@ -15,7 +15,6 @@ class Sound
 
 	public:
 	Sound(std::string Name);
-	~Sound();
 
 	void PlayOnce();
 	void Play();

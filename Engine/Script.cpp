@@ -18,7 +18,7 @@ void Script::AddPrototype(int key,  Script *ToClone)
 {
 	PrototypeDict[key] = ToClone;
 }
-Script* Script::GetNew(int type, Object *From)
+Script* Script::GetNew(int type, Object *From, ScriptData In)
 {
 	if (PrototypeDict.find(type) == PrototypeDict.end())
 	{
@@ -26,8 +26,8 @@ Script* Script::GetNew(int type, Object *From)
 	}
 	else
 	{
-		return PrototypeDict[type]->Clone(From);
+		return PrototypeDict[type]->Clone(From, In);
 	}
 }
 
-Script* Script::Clone(Object *From) { return new Script(NULL); }
+Script* Script::Clone(Object *From, ScriptData In) { return new Script(NULL); }

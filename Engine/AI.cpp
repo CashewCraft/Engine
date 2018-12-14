@@ -43,5 +43,3 @@ Vector2 AI::Chase()
 	//Debug::DrawLine(GameObject->Transform.Position, Target);
 	return (((Target - GameObject->Transform.Position) * Speed) - GameObject->body.Velocity);
 }
-
-Script* AI::Clone(Object *From) { return new AI(From); }

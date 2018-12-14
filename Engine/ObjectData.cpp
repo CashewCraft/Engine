@@ -6,7 +6,7 @@ ObjectData::ObjectData(std::string in)
 
 	id = std::stoi(args[0]);
 	Type = std::stoi(args[1]);
-	Sprite = ResourceManager::GetSprite(args[2]);
+	Sprite = (args[2] == "")?NULL:ResourceManager::GetSprite(args[2]);
 	Size.x = std::stod(args[3]);
 	Size.y = std::stod(args[4]);
 	Pos.x = std::stod(args[5]);
@@ -24,6 +24,12 @@ ObjectData::ObjectData(std::string in)
 	for (std::string i : Scri)
 	{
 		if (i != "") { Scripts.push_back(std::stoi(i)); }
+	}
+
+	std::vector<std::string> ScriAdd = Split(args[11], ",");
+	for (std::string i : ScriAdd)
+	{
+		ScriptAdditional.push_back(ScriptData(Split(i,"|")));
 	}
 }
 

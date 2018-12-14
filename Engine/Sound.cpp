@@ -4,12 +4,7 @@ int Sound::Volume = 64;
 
 Sound::Sound(std::string name)
 {
-	Track = ResourceManager::SoundDict[name];
-}
-
-Sound::~Sound()
-{
-	Mix_FreeChunk(Track);
+	Track = ResourceManager::GetSound(name);
 }
 
 void Sound::PlayOnce()

@@ -16,5 +16,8 @@ class ResourceManager
 	static std::map<std::string, Mix_Chunk*> SoundDict;
 
 	static SDL_Texture* GetSprite(std::string Name);
+	static Mix_Chunk* GetSound(std::string Name);
+
+	static void FreeAll();
 };
 

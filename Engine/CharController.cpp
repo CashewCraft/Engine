@@ -5,13 +5,17 @@ void CharController::Init()
 	Debug::Log("Initalising Charcontroller");
 	GameObject = (PhysObject*)Linked;
 
-	KeyHooks::Register(new Hook_Pass(&Thrust), SettingLoader::GetControlFor("Thrust", SDLK_UP));
-	KeyHooks::Register(new Hook_Pass(&Slow), SettingLoader::GetControlFor("Brake", SDLK_DOWN));
+	KeyHooks::Register(new Hook(std::bind(&CharController::Set_Key, this, 1, true)), SDL_KEYDOWN, SettingLoader::GetControlFor("Thrust", SDLK_UP));
+	KeyHooks::Register(new Hook(std::bind(&CharController::Set_Key, this, 1, false)), SDL_KEYUP, SettingLoader::GetControlFor("Thrust", SDLK_UP));
 
-	KeyHooks::Register(new Hook_Pass(&Firing), SettingLoader::GetControlFor("Shoot", SDLK_SPACE));
+	KeyHooks::Register(new Hook(std::bind(&CharController::Set_Key, this, 0, true)), SDL_KEYDOWN, SettingLoader::GetControlFor("Shoot", SDLK_SPACE));
+	KeyHooks::Register(new Hook(std::bind(&CharController::Set_Key, this, 0, false)), SDL_KEYUP, SettingLoader::GetControlFor("Shoot", SDLK_SPACE));
 
-	GameObject->Anim.AddFrame("Moving", ResourceManager::ResourceDict["GoodSpaceShip_Thrust"]);
-	GameObject->Anim.AddFrame("Slowing", ResourceManager::ResourceDict["GoodSpaceShip_Slow"]);
+	KeyHooks::Register(new Hook(std::bind(&CharController::Set_Key, this, 2, true)), SDL_KEYDOWN, SettingLoader::GetControlFor("Brake", SDLK_DOWN));
+	KeyHooks::Register(new Hook(std::bind(&CharController::Set_Key, this, 2, false)), SDL_KEYUP, SettingLoader::GetControlFor("Brake", SDLK_DOWN));
+
+	GameObject->Anim.AddFrame("Moving", ResourceManager::GetSprite("GoodSpaceShip_Thrust"));
+	GameObject->Anim.AddFrame("Slowing", ResourceManager::GetSprite("GoodSpaceShip_Slow"));
 
 	ThrustNoise = new Sound("Thrust");
 
@@ -92,5 +96,3 @@ void CharController::OnCollision(Object *hit)
 	//Debug::Log("Hit " + (hit->Name));
 	Debug::DrawLine(GameObject->Transform.Position, hit->Transform.Position);
 }
-
-Script* CharController::Clone(Object *From) { return new CharController(From); }

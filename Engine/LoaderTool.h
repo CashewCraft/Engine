@@ -17,6 +17,8 @@
 
 #include "AI.h"
 #include "CharController.h"
+#include "Button.h"
+#include "Scoreboard.h"
 
 class LoaderTool
 {
@@ -24,7 +26,7 @@ class LoaderTool
 
 	static void init();
 
-	static int LoadScene(Object *ObjParent, Object *UIParent, const char *filename);
+	static int LoadScene(Object *ObjParent, Object *UIParent, std::string filename);
 };
 
 #endif

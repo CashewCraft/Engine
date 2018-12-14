@@ -30,6 +30,7 @@ void Object::ClearAddStack()
 std::map<int, Object*> Object::PrototypeDict;
 
 Object* Object::Workspace = nullptr;
+Object* Object::UI = nullptr;
 
 void Object::AddPrototype(int key, Object *ToClone)
 {

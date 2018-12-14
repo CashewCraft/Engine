@@ -36,6 +36,7 @@ class Object
 	static void ClearAddStack();
 
 	static Object* Workspace;
+	static Object* UI;
 
 	std::vector<Script*> AttachedScripts;
 

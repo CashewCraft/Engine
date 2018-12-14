@@ -1,1 +1,4 @@
-0;0;GoodSpaceShip_Idle;76;76;50;80;0;0;1;0:1;0;SpaceShip;30;30;100;100;0;0;;1:3;0;Man;30;30;60;30;0;0;;
+0;0;GoodSpaceShip_Idle;76;76;50;80;0;0;1;0;:1;0;SpaceShip;30;30;100;100;0;0;;1;:3;0;Man;30;30;60;30;0;0;;;
+0;1;;1;1;0;0;0;0;;2;;
+id;type;sprite;SizeX;SizeY;PosX;PosY;RotX,RotY;Child,..;Script,..;ScriptArg|..,..:
+id;type;sprite;SizeX;SizeY;AnchorX;AnchorY;OffsetX,OffsetY;Child,..;Script,..;ScriptArg|..,..:

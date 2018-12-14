@@ -5,7 +5,13 @@
 #include "Vector2.h"
 #include "ResourceManager.h"
 
-class LoaderTool;
+class ScriptData
+{
+	public:
+
+	ScriptData(std::vector<std::string> Data) { AdditionalData = Data; };
+	std::vector<std::string> AdditionalData;
+};
 
 class ObjectData
 {
@@ -25,4 +31,5 @@ class ObjectData
 
 	std::vector<int> Children;
 	std::vector<int> Scripts;
+	std::vector<ScriptData> ScriptAdditional;
 };

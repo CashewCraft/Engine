@@ -14,3 +14,25 @@ SDL_Texture *ResourceManager::GetSprite(std::string Name)
 	}
 	return ResourceDict[Name];
 }
+
+Mix_Chunk *ResourceManager::GetSound(std::string Name)
+{
+	if (SoundDict[Name] == nullptr)
+	{
+		SoundDict[Name] = Mix_LoadWAV(("Sounds/" + Name + ".wav").c_str());
+		Debug::Loading("Added sound " + Name + " to resource directory");
+	}
+	return SoundDict[Name];
+}
+
+void ResourceManager::FreeAll()
+{
+	for (std::pair<std::string, SDL_Texture*> i : ResourceDict)
+	{
+		SDL_DestroyTexture(i.second);
+	}
+	for (std::pair<std::string, Mix_Chunk*> i : SoundDict)
+	{
+		Mix_FreeChunk(i.second);
+	}
+}

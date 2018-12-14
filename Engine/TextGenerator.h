@@ -10,11 +10,10 @@
 class TextGenerator
 {
 	static std::map<std::string, TTF_Font*> Fonts;
+	static void PrepareFont(std::string Font, int Size);
 
 	public:
 
 	static SDL_Texture* GenText(std::string Font, int Size, SDL_Colour Colour, std::string Text);
-
-	static void PrepareFont(std::string Font, int Size);
 };
 

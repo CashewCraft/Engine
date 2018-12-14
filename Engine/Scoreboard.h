@@ -8,6 +8,7 @@
 #include "TextGenerator.h"
 #include "KeyHooks.h"
 #include "Time.h"
+#include "Button.h"
 
 class Scoreboard : public Script
 {
@@ -27,10 +28,14 @@ class Scoreboard : public Script
 	public:
 
 	Scoreboard(Object* a) : Script(a) { Init(); };
+	Scoreboard(Object* a, ScriptData In) : Scoreboard(a) {};
+	Scoreboard() : Script() {};
 
 	void IncrRound();
 	static void SetNumbers(Object* parent, unsigned int Number, Vector2 Anchor, Vector2 Size, Vector2 Offset);
 
 	void Update();
+
+	virtual Script* Clone(Object* Target, ScriptData In) { return new Scoreboard(Target, In); };
 };
 

@@ -4,9 +4,7 @@ SDL_Texture *Scoreboard::Numbers[10] {};
 
 void Scoreboard::Init()
 {
-	KeyHooks::Register(new Hook_Once(true,std::bind(&Scoreboard::IncrRound, this)), SDLK_p);
-
-	TextGenerator::PrepareFont("BADABOOM", 1024);
+	KeyHooks::Register(new Hook(std::bind(&Scoreboard::IncrRound, this)), SDL_KEYDOWN, SDLK_p);
 
 	Title = new UIpane(TextGenerator::GenText("BADABOOM", 1024, SDL_Colour{ 107, 3, 57 }, "Round"), Vector2(0, 0.5), Vector2(0.3, 0.2), Vector2(0.1, -0.5));
 	Linked->AddChild(Title);
@@ -47,4 +45,10 @@ void Scoreboard::Update()
 {
 	Timer -= Time::deltaTime();
 	SetNumbers(Tim, Timer, Vector2(0.5, -0.5), Vector2(0.2, 1), Vector2(-0.55, -0.025));
+
+	if (Timer <= 0)
+	{
+		Button::Reload = true;
+		Button::ToLoad = "MM";
+	}
 }

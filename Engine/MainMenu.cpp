@@ -4,8 +4,6 @@ Sprite *Menu::Button = nullptr;
 
 void Menu::Init()
 {
-	TextGenerator::PrepareFont("BADABOOM", 512);
-
 	double SizePer = 0.6 / Options.size();
 	for (int i = 0; i < Options.size(); i++)
 	{

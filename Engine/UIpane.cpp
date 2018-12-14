@@ -16,8 +16,8 @@ void UIpane::Update()
 Object* UIpane::Clone(ObjectData *From)
 {
 	UIpane *temp = new UIpane(From->Sprite);
-	Anchor = From->Pos;
-	Offset = From->Rotation;
-	RelativeSize = From->Size;
+	temp->Anchor = From->Pos;
+	temp->Offset = From->Rotation;
+	temp->RelativeSize = From->Size;
 	return temp;
 }
