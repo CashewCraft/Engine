@@ -19,7 +19,7 @@ Script::Script(Object* a)
 Script::~Script()
 {
 	Release();
-	for (Hook *i : AttachedHooks) { i->Zombie = true; }
+	for (Hook *i : AttachedHooks) { i->Zombie = true; i->ClearCallback(); }
 	Linked->AttachedScripts.erase(std::remove(Linked->AttachedScripts.begin(), Linked->AttachedScripts.end(), this), Linked->AttachedScripts.end());
 }
 

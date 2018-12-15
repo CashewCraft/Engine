@@ -12,9 +12,12 @@ void Scoreboard::Init()
 	Tim = new UIpane(TextGenerator::GenText("BADABOOM", 1024, SDL_Colour{ 107, 3, 57 }, "Time!"), Vector2(0.5, 0.5), Vector2(0.15, 0.1), Vector2(-0.5, -0.5));
 	Linked->AddChild(Tim);
 
-	for (int i = 0; i < 10; i++)
+	if (Numbers[0] == nullptr)
 	{
-		Numbers[i] = TextGenerator::GenText("BADABOOM", 1024, SDL_Colour{ 214, 3, 57 }, std::to_string(i));
+		for (int i = 0; i < 10; i++)
+		{
+			Numbers[i] = TextGenerator::GenText("BADABOOM", 1024, SDL_Colour{ 214, 3, 57 }, std::to_string(i));
+		}
 	}
 
 	Title->AddChild(new UIpane(Numbers[0], Vector2(-0.5, -0.5), Vector2(0.2, 1), Vector2(0.15, 0.15)));
@@ -48,7 +51,7 @@ void Scoreboard::Update()
 
 	if (Timer <= 0)
 	{
-		Button::Reload = true;
-		Button::ToLoad = "MM";
+		StateManager::NewScene = true;
+		StateManager::SceneName = "MM";
 	}
 }

@@ -2,7 +2,7 @@
 
 void CharController::Init()
 {
-	Debug::Log("Initalising Charcontroller");
+	Linked->Tag = "Player";
 	GameObject = (PhysObject*)Linked;
 
 	Generate_Hook(std::bind(&CharController::Set_Key, this, 1, true), SDL_KEYDOWN, SettingLoader::GetControlFor("Thrust", SDLK_UP));
@@ -82,13 +82,14 @@ void CharController::Shoot()
 {
 	PhysObject *Bullet = new PhysObject(ResourceManager::ResourceDict["Bullet"]);
 	Bullet->Name = "Bill";
+	Bullet->Tag = GameObject->Tag;
 	//Object::Workspace->AddChild(Bullet);
 	Bullet->Transform.Position = GameObject->Transform.Position;
 	Bullet->body.Velocity = GameObject->Transform.Rotation.Normalize()*320;
 
 	Object::Instanciate(Bullet, Object::Workspace);
 
-	new Projectile(Bullet, Linked);
+	new Projectile(Bullet);
 }
 
 void CharController::OnCollision(Object *hit)

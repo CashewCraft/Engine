@@ -9,8 +9,9 @@ void LoaderTool::init()
 	Script::AddPrototype(0, new CharController());
 	Script::AddPrototype(1, new AI());
 	Script::AddPrototype(2, new Scoreboard());
-	Script::AddPrototype(3, new Button());
-	Script::AddPrototype(4, new MenuManager());
+	Script::AddPrototype(3, new MenuManager());
+	Script::AddPrototype(4, new RelayButton());
+	Script::AddPrototype(5, new DifficultyButton());
 
 	std::ifstream From;
 	From.open("LoadSound.txt");

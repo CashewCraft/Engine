@@ -29,6 +29,8 @@ class Object
 
 	public:
 
+	std::string Tag;
+
 	Sprite Anim;
 
 	static void Instanciate(Object *ToAdd, Object *Parent);

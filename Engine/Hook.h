@@ -18,4 +18,6 @@ class Hook
 
 	void Execute() { F(); };
 	bool Valid() { return !Zombie; };
+
+	void ClearCallback() { F = NULL; }
 };

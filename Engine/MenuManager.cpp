@@ -1,6 +1,6 @@
 #include "MenuManager.h"
 
-std::map<int, std::pair<Object*, callback_function>> MenuManager::Buttons;
+std::map<int, std::pair<Object*, std::pair<callback_function, callback_function>>> MenuManager::Buttons;
 int MenuManager::Selected = 0;
 bool MenuManager::AnySelected = false;
 
@@ -19,6 +19,7 @@ void MenuManager::Init()
 	Generate_Hook(std::bind(&MenuManager::CheckCursor, this), SDL_MOUSEMOTION, 0);
 
 	Generate_Hook(std::bind(&MenuManager::Click, this), SDL_MOUSEBUTTONDOWN, SDL_BUTTON_LEFT);
+	Generate_Hook(std::bind(&MenuManager::UnClick, this), SDL_MOUSEBUTTONUP, SDL_BUTTON_LEFT);
 }
 
 void MenuManager::Update()
@@ -41,14 +42,12 @@ void MenuManager::CheckCursor()
 		Vector2 P = Mouse::Pos;
 		AnySelected = false;
 
-		for (std::pair<int, std::pair<Object*, callback_function>> i : Buttons)
+		for (std::pair<int, std::pair<Object*, std::pair<callback_function, callback_function>>> i : Buttons)
 		{
 			Vector2 BR = i.second.first->Transform.Position + (i.second.first->Size / 2);
 			Vector2 TL = i.second.first->Transform.Position - (i.second.first->Size / 2);
 
-			Selected = (P.x < BR.x && P.x > TL.x && P.y < BR.y && P.y > TL.y);
-
-			if (Selected)
+			if ((P.x < BR.x && P.x > TL.x && P.y < BR.y && P.y > TL.y))
 			{
 				i.second.first->Anim.SetState("Selected");
 				Selected = i.first;
@@ -66,7 +65,14 @@ void MenuManager::Click()
 {
 	if (AnySelected)
 	{
-		Buttons[Selected].second();
+		Buttons[Selected].second.first();
+	}
+}
+void MenuManager::UnClick()
+{
+	if (AnySelected)
+	{
+		Buttons[Selected].second.second();
 	}
 }
 

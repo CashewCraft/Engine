@@ -12,7 +12,7 @@
 #include "Mouse.h"
 #include "TextGenerator.h"
 
-#include "UIpane.h"
+#include "StateManager.h"
 
 //Screen dimension constants
 int SCREEN_WIDTH = 640;
@@ -263,7 +263,7 @@ int main(int argc, char* args[])
 
 		Time::Incr();
 
-		if (Button::Reload)
+		if (StateManager::NewScene)
 		{
 			MenuManager::ClearAll();
 			for (Object *i : Object::Workspace->GetChildren())
@@ -275,12 +275,12 @@ int main(int argc, char* args[])
 				Object::UI->DelChild(i);
 			}
 
-			if (LoaderTool::LoadScene(Object::Workspace, Object::UI, Button::ToLoad.c_str()) < 0)
+			if (LoaderTool::LoadScene(Object::Workspace, Object::UI, StateManager::SceneName.c_str()) < 0)
 			{
 				std::cin.get();
 				return -1;
 			}
-			Button::Reload = false;
+			StateManager::NewScene = false;
 		}
 	}
 
