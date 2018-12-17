@@ -64,7 +64,7 @@ Object::~Object()
 	}
 	for (Script* i : AttachedScripts)
 	{
-		delete i;
+		i->Kill();
 	}
 }
 
@@ -91,6 +91,13 @@ void Object::AddChild(Object *p)
 	p->Parent = this;
 }
 
+void Object::PurgeChildren()
+{
+	for (Object *i : GetChildren())
+	{
+		DelChild(i);
+	}
+}
 void Object::DelChild(Object *p)
 {
 	int count = 0;

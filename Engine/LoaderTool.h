@@ -20,6 +20,7 @@
 #include "Button.h"
 #include "Scoreboard.h"
 #include "MenuManager.h"
+#include "SliderNest.h"
 
 class LoaderTool
 {

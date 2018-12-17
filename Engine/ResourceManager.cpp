@@ -10,7 +10,14 @@ SDL_Texture *ResourceManager::GetSprite(std::string Name)
 	if (ResourceDict[Name] == nullptr)
 	{
 		ResourceDict[Name] = SDL_CreateTextureFromSurface(r, SDL_LoadBMP(("Sprites/" + Name + ".bmp").c_str()));
-		Debug::Loading("Added sprite " + Name + " to resource directory");
+		if (ResourceDict[Name] == NULL)
+		{
+			Debug::Error("Problem loading sprite " + Name + " to resource directory: "+ (std::string)SDL_GetError());
+		}
+		else
+		{
+			Debug::Loading("Added sprite " + Name + " to resource directory");
+		}
 	}
 	return ResourceDict[Name];
 }

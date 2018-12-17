@@ -61,6 +61,7 @@ class Object
 
 	void AddChild(Object *p);
 
+	void PurgeChildren();
 	void DelChild(Object *p);
 
 	void PrepareDelete();

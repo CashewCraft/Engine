@@ -12,6 +12,9 @@ void LoaderTool::init()
 	Script::AddPrototype(3, new MenuManager());
 	Script::AddPrototype(4, new RelayButton());
 	Script::AddPrototype(5, new DifficultyButton());
+	Script::AddPrototype(6, new ControlButton());
+	Script::AddPrototype(7, new SliderNest());
+	Script::AddPrototype(8, new Mute());
 
 	std::ifstream From;
 	From.open("LoadSound.txt");

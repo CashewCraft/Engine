@@ -2,12 +2,13 @@
 
 std::map<int, Script*> Script::PrototypeDict;
 
-void Script::Generate_Hook(callback_function f, int eventtype, int key)
+Hook *Script::Generate_Hook(callback_function f, int eventtype, int key)
 {
 	Debug::Flag("Hooking for event type [" + std::to_string(eventtype) + "] with key [" + std::to_string(key) + "]");
 	Hook *h = new Hook(f);
 	KeyHooks::Register(h, eventtype, key);
 	AttachedHooks.push_back(h);
+	return h;
 }
 
 Script::Script(Object* a)

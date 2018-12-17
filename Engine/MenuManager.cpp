@@ -4,15 +4,24 @@ std::map<int, std::pair<Object*, std::pair<callback_function, callback_function>
 int MenuManager::Selected = 0;
 bool MenuManager::AnySelected = false;
 
+Sound *MenuManager::ClickSound = nullptr;
+
 std::vector<MenuManager*> MenuManager::ins = std::vector<MenuManager*>();
 
 void MenuManager::ClearAll()
 {
+	AnySelected = false;
+	Selected = 0;
 	Buttons.erase(Buttons.begin(), Buttons.end());
 }
 
 void MenuManager::Init()
 {
+	if (ClickSound == nullptr)
+	{
+		ClickSound = new Sound("Click", true);
+	}
+
 	Generate_Hook(std::bind(&MenuManager::IncrSelect, this), SDL_KEYDOWN, SDLK_UP);
 	Generate_Hook(std::bind(&MenuManager::DecrSelect, this), SDL_KEYDOWN, SDLK_DOWN);
 
@@ -20,6 +29,9 @@ void MenuManager::Init()
 
 	Generate_Hook(std::bind(&MenuManager::Click, this), SDL_MOUSEBUTTONDOWN, SDL_BUTTON_LEFT);
 	Generate_Hook(std::bind(&MenuManager::UnClick, this), SDL_MOUSEBUTTONUP, SDL_BUTTON_LEFT);
+
+	Generate_Hook(std::bind(&MenuManager::Click, this), SDL_KEYDOWN, SDLK_RETURN);
+	Generate_Hook(std::bind(&MenuManager::UnClick, this), SDL_KEYUP, SDLK_RETURN);
 }
 
 void MenuManager::Update()
@@ -63,6 +75,7 @@ void MenuManager::CheckCursor()
 
 void MenuManager::Click()
 {
+	ClickSound->PlayOnce();
 	if (AnySelected)
 	{
 		Buttons[Selected].second.first();
@@ -76,7 +89,7 @@ void MenuManager::UnClick()
 	}
 }
 
-void MenuManager::IncrSelect()
+void MenuManager::DecrSelect()
 {
 	AnySelected = true;
 	Buttons[Selected].first->Anim.SetState("");
@@ -89,7 +102,7 @@ void MenuManager::IncrSelect()
 		Selected++;
 	}
 }
-void MenuManager::DecrSelect()
+void MenuManager::IncrSelect()
 {
 	AnySelected = true;
 	Buttons[Selected].first->Anim.SetState("");

@@ -23,3 +23,10 @@ void Sprite::AddFrame(std::string Name, SDL_Texture *Resource)
 	}
 	Frames[Name] = Resource;
 }
+
+SDL_Texture *Sprite::SetDefault(SDL_Texture *N)
+{
+	SDL_Texture *Temp = Default;
+	Default = N;
+	return Temp;
+}

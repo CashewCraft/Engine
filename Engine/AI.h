@@ -5,6 +5,8 @@
 #include "Mouse.h"
 #include "Debug.h"
 
+#include "Scoreboard.h"
+
 #include <iostream>
 #include <random>
 
@@ -28,6 +30,8 @@ class AI : public Script
 	AI(Object* a) : Script(a) { GameObject = (PhysObject*)Linked; Target = InsideCircle(10); Init(); };
 	AI(Object* a, ScriptData i) : AI(a) {};
 	AI() : Script() {};
+
+	virtual void Release();
 
 	void Update();
 

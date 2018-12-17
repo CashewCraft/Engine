@@ -13,6 +13,7 @@
 
 #include "Hook.h"
 #include "Debug.h"
+#include "StateManager.h"
 
 class KeyHooks
 {

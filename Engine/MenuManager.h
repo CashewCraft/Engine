@@ -5,6 +5,7 @@
 
 #include "Script.h"
 #include "Mouse.h"
+#include "Sound.h"
 
 typedef std::function<void(void)> callback_function;
 
@@ -13,6 +14,8 @@ class MenuManager : public Script
 	static std::map<int, std::pair<Object*,std::pair<callback_function, callback_function>>> Buttons;
 	static int Selected;
 	static bool AnySelected;
+
+	static Sound *ClickSound;
 
 	static std::vector<MenuManager*> ins;
 
@@ -33,8 +36,8 @@ class MenuManager : public Script
 	void Click();
 	void UnClick();
 
-	void IncrSelect();
 	void DecrSelect();
+	void IncrSelect();
 
 	virtual Script* Clone(Object* Target, ScriptData In);
 };

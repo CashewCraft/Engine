@@ -17,7 +17,7 @@ void CharController::Init()
 	GameObject->Anim.AddFrame("Moving", ResourceManager::GetSprite("GoodSpaceShip_Thrust"));
 	GameObject->Anim.AddFrame("Slowing", ResourceManager::GetSprite("GoodSpaceShip_Slow"));
 
-	ThrustNoise = new Sound("Thrust");
+	ThrustNoise = new Sound("Thrust", true);
 
 	GameObject->body.MaxSpeed = 500;
 	GameObject->body.MaxForce = 0.4;

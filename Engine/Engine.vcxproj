@@ -152,6 +152,7 @@
     <ClCompile Include="Scoreboard.cpp" />
     <ClCompile Include="Script.cpp" />
     <ClCompile Include="SettingLoader.cpp" />
+    <ClCompile Include="SliderNest.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="SpacialHash.cpp" />
     <ClCompile Include="Sprite.cpp" />
@@ -184,6 +185,7 @@
     <ClInclude Include="Scoreboard.h" />
     <ClInclude Include="Script.h" />
     <ClInclude Include="SettingLoader.h" />
+    <ClInclude Include="SliderNest.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="SpacialHash.h" />
     <ClInclude Include="Sprite.h" />
