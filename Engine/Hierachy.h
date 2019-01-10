@@ -29,6 +29,8 @@ class Object
 
 	public:
 
+	std::string Tag;
+
 	Sprite Anim;
 
 	static void Instanciate(Object *ToAdd, Object *Parent);
@@ -59,6 +61,7 @@ class Object
 
 	void AddChild(Object *p);
 
+	void PurgeChildren();
 	void DelChild(Object *p);
 
 	void PrepareDelete();

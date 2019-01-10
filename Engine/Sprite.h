@@ -20,6 +20,8 @@ class Sprite
 	SDL_Texture *GetCurrSprite();
 	void SetState(std::string State);
 	void AddFrame(std::string Name, SDL_Texture *Resource);
+
+	SDL_Texture *SetDefault(SDL_Texture *NewDefault);
 };
 
 #endif

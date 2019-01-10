@@ -15,14 +15,14 @@ class Script
 
 	protected:
 
-	void Generate_Hook(callback_function f, int eventtype, int key);
+	Hook *Generate_Hook(callback_function f, int eventtype, int key);
 
 	Script(Object* attach);
 
+	~Script();
+
 	public:
 	Object *Linked;
-
-	~Script();
 
 	Script() {};
 
@@ -31,8 +31,9 @@ class Script
 	virtual void Update() {};
 	virtual void FixedUpdate() {};
 	virtual void OnCollision(Object *hit) {};
-	virtual void Release() {};
+	virtual void Release() { };
 
+	virtual void Kill() { Release(); delete this; }
 
 	//factory methods
 	static void AddPrototype(int key, Script *ToClone);

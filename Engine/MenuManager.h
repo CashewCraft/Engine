@@ -5,14 +5,17 @@
 
 #include "Script.h"
 #include "Mouse.h"
+#include "Sound.h"
 
 typedef std::function<void(void)> callback_function;
 
 class MenuManager : public Script
 {
-	static std::map<int, std::pair<Object*,callback_function>> Buttons;
+	static std::map<int, std::pair<Object*,std::pair<callback_function, callback_function>>> Buttons;
 	static int Selected;
 	static bool AnySelected;
+
+	static Sound *ClickSound;
 
 	static std::vector<MenuManager*> ins;
 
@@ -22,7 +25,7 @@ class MenuManager : public Script
 	MenuManager(Object* a, ScriptData In) : MenuManager(a) {};
 	MenuManager() : Script() {};
 
-	static void RegisterButton(int index, Object *b, callback_function Run) { Buttons[index] = std::make_pair(b, Run); };
+	static void RegisterButton(int index, Object *b, callback_function On, callback_function Off) { Buttons[index] = std::make_pair(b, std::make_pair(On,Off)); };
 	static void ClearAll();
 
 	void Init();
@@ -31,9 +34,10 @@ class MenuManager : public Script
 	void CheckCursor();
 
 	void Click();
+	void UnClick();
 
-	void IncrSelect();
 	void DecrSelect();
+	void IncrSelect();
 
 	virtual Script* Clone(Object* Target, ScriptData In);
 };

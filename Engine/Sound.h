@@ -7,14 +7,21 @@
 
 class Sound
 {
-	static int Volume;
-
 	Mix_Chunk *Track;
 	int Channel;
 	bool Playing = false;
 
+	bool Fore;
+
 	public:
-	Sound(std::string Name);
+
+	static bool ForeMuted;
+	static bool BackMuted;
+	static int ForeVolume;
+	static int BackVolume;
+
+	Sound(std::string Name, bool Fore);
+	~Sound();
 
 	void PlayOnce();
 	void Play();

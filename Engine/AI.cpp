@@ -6,6 +6,15 @@ void AI::Init()
 	GameObject->body.MaxForce = 0.4;
 }
 
+void AI::Release()
+{
+	Debug::Flag("Enemy was killed");
+	if (Scoreboard::ins != nullptr)
+	{
+		Scoreboard::ins->IncrScore(15);
+	}
+}
+
 Vector2 AI::InsideCircle(double Radius)
 {
 	double x = (Radius * 2) * ((double)rand() / (double)RAND_MAX) - Radius;

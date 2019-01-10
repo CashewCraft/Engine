@@ -1,12 +1,15 @@
 #include "Scoreboard.h"
 
 SDL_Texture *Scoreboard::Numbers[10] {};
+Scoreboard *Scoreboard::ins = nullptr;
 
 void Scoreboard::Init()
 {
-	Generate_Hook(std::bind(&Scoreboard::IncrRound, this), SDL_KEYDOWN, SDLK_p);
+	ins = this;
 
-	Title = new UIpane(TextGenerator::GenText("BADABOOM", 1024, SDL_Colour{ 107, 3, 57 }, "Round"), Vector2(0, 0.5), Vector2(0.3, 0.2), Vector2(0.1, -0.5));
+	//Generate_Hook(std::bind(&Scoreboard::IncrScore, this, 1), SDL_KEYDOWN, SDLK_p);
+
+	Title = new UIpane(TextGenerator::GenText("BADABOOM", 1024, SDL_Colour{ 107, 3, 57 }, "Score"), Vector2(0, 0.5), Vector2(0.3, 0.2), Vector2(0.1, -0.5));
 	Linked->AddChild(Title);
 
 	Tim = new UIpane(TextGenerator::GenText("BADABOOM", 1024, SDL_Colour{ 107, 3, 57 }, "Time!"), Vector2(0.5, 0.5), Vector2(0.15, 0.1), Vector2(-0.5, -0.5));
@@ -20,21 +23,26 @@ void Scoreboard::Init()
 		}
 	}
 
-	Title->AddChild(new UIpane(Numbers[0], Vector2(-0.5, -0.5), Vector2(0.2, 1), Vector2(0.15, 0.15)));
+	Title->AddChild(new UIpane(Numbers[0], Vector2(-0.525, -0.5), Vector2(0.2, 1), Vector2(0.15, 0.15)));
 }
 
-void Scoreboard::IncrRound()
+void Scoreboard::Release()
 {
-	Round++;
-	SetNumbers(Title, Round, Vector2(-0.5, -0.5), Vector2(0.2, 1), Vector2(0.15, 0.15));
+	delete Tim->Anim.GetCurrSprite();
+	delete Title->Anim.GetCurrSprite();
+
+	ins = nullptr;
+}
+
+void Scoreboard::IncrScore(int amt)
+{
+	StateManager::Score += amt;
+	SetNumbers(Title, StateManager::Score, Vector2(-0.525, -0.5), Vector2(0.2, 1), Vector2(0.15, 0.15));
 }
 
 void Scoreboard::SetNumbers(Object *par, unsigned int num, Vector2 Anchor, Vector2 Size, Vector2 Offset)
 {
-	for (Object *i : par->GetChildren())
-	{
-		par->DelChild(i);
-	}
+	par->PurgeChildren();
 
 	std::string ToString = std::to_string(num);
 
@@ -51,7 +59,7 @@ void Scoreboard::Update()
 
 	if (Timer <= 0)
 	{
-		Button::Reload = true;
-		Button::ToLoad = "MM";
+		StateManager::NewScene = true;
+		StateManager::SceneName = "MM";
 	}
 }

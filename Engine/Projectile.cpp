@@ -11,7 +11,7 @@ void Projectile::Update()
 
 void Projectile::OnCollision(Object *hit)
 {
-	if (hit != im)
+	if (hit->Tag != Linked->Tag)
 	{
 		hit->PrepareDelete();
 		Linked->PrepareDelete();

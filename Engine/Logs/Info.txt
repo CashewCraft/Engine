@@ -1,22 +1,17 @@
-[14/12/18 19:50:45] INFO: Output file Info.txt opened for logs
-[14/12/18 19:50:45] INFO: Output file Debug.txt opened for logs
-[14/12/18 19:50:45] INFO: Output file Error.txt opened for logs
-[14/12/18 19:50:45] INFO: Output file Load.txt opened for logs
-[14/12/18 19:50:47] INFO: Successfully initalised, begining load process.
-[14/12/18 19:50:47] INFO: Initialised font BADABOOM with size 512
-[14/12/18 19:50:47] INFO: Created new text pane with font BADABOOM at size 512 saying "Button2"
-[14/12/18 19:50:47] INFO: Created new text pane with font BADABOOM at size 512 saying "Button1"
-[14/12/18 19:50:49] INFO: Initalising Charcontroller
-[14/12/18 19:50:49] INFO: Initialised font BADABOOM with size 1024
-[14/12/18 19:50:49] INFO: Created new text pane with font BADABOOM at size 1024 saying "Round"
-[14/12/18 19:50:49] INFO: Created new text pane with font BADABOOM at size 1024 saying "Time!"
-[14/12/18 19:50:49] INFO: Created new text pane with font BADABOOM at size 1024 saying "0"
-[14/12/18 19:50:49] INFO: Created new text pane with font BADABOOM at size 1024 saying "1"
-[14/12/18 19:50:49] INFO: Created new text pane with font BADABOOM at size 1024 saying "2"
-[14/12/18 19:50:49] INFO: Created new text pane with font BADABOOM at size 1024 saying "3"
-[14/12/18 19:50:49] INFO: Created new text pane with font BADABOOM at size 1024 saying "4"
-[14/12/18 19:50:49] INFO: Created new text pane with font BADABOOM at size 1024 saying "5"
-[14/12/18 19:50:49] INFO: Created new text pane with font BADABOOM at size 1024 saying "6"
-[14/12/18 19:50:49] INFO: Created new text pane with font BADABOOM at size 1024 saying "7"
-[14/12/18 19:50:49] INFO: Created new text pane with font BADABOOM at size 1024 saying "8"
-[14/12/18 19:50:49] INFO: Created new text pane with font BADABOOM at size 1024 saying "9"
+[17/12/18 02:30:36] INFO: Output file Info.txt opened for logs
+[17/12/18 02:30:36] INFO: Output file Debug.txt opened for logs
+[17/12/18 02:30:36] INFO: Output file Error.txt opened for logs
+[17/12/18 02:30:36] INFO: Output file Load.txt opened for logs
+[17/12/18 02:30:39] INFO: Successfully initalised, begining load process.
+[17/12/18 02:30:39] INFO: Initialised font BADABOOM with size 512
+[17/12/18 02:30:39] INFO: Created new text pane with font BADABOOM at size 512 saying "Settings"
+[17/12/18 02:30:39] INFO: Created new text pane with font BADABOOM at size 512 saying "Options"
+[17/12/18 02:30:39] INFO: Created new text pane with font BADABOOM at size 512 saying "Play"
+[17/12/18 02:30:42] INFO: Created new text pane with font BADABOOM at size 512 saying ""
+[17/12/18 02:30:42] INFO: Created new text pane with font BADABOOM at size 512 saying ""
+[17/12/18 02:30:42] INFO: Created new text pane with font BADABOOM at size 512 saying ""
+[17/12/18 02:30:42] INFO: Created new text pane with font BADABOOM at size 512 saying ""
+[17/12/18 02:30:42] INFO: Created new text pane with font BADABOOM at size 512 saying "Back"
+[17/12/18 02:31:29] INFO: Created new text pane with font BADABOOM at size 512 saying "Settings"
+[17/12/18 02:31:29] INFO: Created new text pane with font BADABOOM at size 512 saying "Options"
+[17/12/18 02:31:29] INFO: Created new text pane with font BADABOOM at size 512 saying "Play"

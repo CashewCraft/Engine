@@ -34,17 +34,35 @@ void KeyHooks::Execute(SDL_Event e)
 			break;
 	}
 
-	for (Hook *i : Callbacks[e.type][Key])
+	//Hooks with -1 are just looking for any press of a given type
+	for (Hook *i : Callbacks[e.type][-1])
 	{
 		if (i->Valid())
 		{
+			StateManager::KeyReturn = Key;
 			i->Execute();
 		}
 		else
 		{
-			Debug::Flag("Removing hook for event type [" + std::to_string(e.type) + "] with key [" + std::to_string(Key) + "]");
-			delete i;
-			Callbacks[e.type][Key].erase(std::remove(Callbacks[e.type][Key].begin(), Callbacks[e.type][Key].end(), i), Callbacks[e.type][Key].end());
+			Debug::Flag("Removing hook for event type [" + std::to_string(e.type) + "] with key [-1]");
+			Callbacks[e.type][-1].erase(std::remove(Callbacks[e.type][-1].begin(), Callbacks[e.type][-1].end(), i), Callbacks[e.type][-1].end());
+		}
+	}
+
+	if (!StateManager::LockInput)
+	{
+		for (Hook *i : Callbacks[e.type][Key])
+		{
+			if (i->Valid())
+			{
+				i->Execute();
+			}
+			else
+			{
+				Debug::Flag("Removing hook for event type [" + std::to_string(e.type) + "] with key [" + std::to_string(Key) + "]");
+				delete i;
+				Callbacks[e.type][Key].erase(std::remove(Callbacks[e.type][Key].begin(), Callbacks[e.type][Key].end(), i), Callbacks[e.type][Key].end());
+			}
 		}
 	}
 }
